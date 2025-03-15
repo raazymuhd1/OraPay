@@ -4,6 +4,13 @@
   background: linear-gradient(to right, rgba(82,122,254,255) 19%, rgba(29,220,255,255) 91%);
 }
 
+.text-bg-gradient {
+   background: linear-gradient(to right, rgba(29,220,255,255) 19%, rgba(82,122,254,255) 71%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .shadow {
   text-shadow: 2px 2px #fff;
 }
