@@ -1,8 +1,11 @@
 import React from 'react'
+import { Dashboard } from '@/components'
 
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
+    <section className="w-full">
+       <Dashboard />
+    </section>
   )
 }
 

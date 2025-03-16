@@ -20,6 +20,14 @@
    box-shadow: 2px 2px 192px 2px #5d5858, -2px -2px 92px 2px #5d5858;
 }
 
+/* dashboard styles */
+.bg-brown {
+    background-color: rgba(22,22,23,255);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
 /* libraries styles */
 
 /* squares canvas style */
