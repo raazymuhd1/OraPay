@@ -2,10 +2,12 @@
 import React from 'react'
 import Steps from './Steps'
 import BalanceTracker from "./BalanceTracker"
+import QuickActions from './QuickActions'
+import YieldInfos from './YieldInfos'
 
 const Dashboard = () => {
   return (
-    <section className="flex flex-col w-full gap-[40px]">
+    <section className="flex flex-col w-full gap-[40px] pb-[40px]">
        <div className="flex w-full flex-col gap-[20px] items-center mt-[40px]">
          <h2 className="text-[2.5vmax] font-bold"> Your Portfolio </h2>
          <p className="text-[1vmax] font-semibold text-[#7f7f80]"> Track your deposits, yields, and token holdings in one place </p>
@@ -13,10 +15,14 @@ const Dashboard = () => {
 
         {/* steps */}
        <Steps />
-       <div className="flex items-center gap-[20px] w-full">
+       <div className="flex items-center gap-[20px] w-[80%] mx-auto">
          {/* balance tracker */}
          <BalanceTracker />
+         {/* quick actions */}
+         <QuickActions />
        </div>
+
+       <YieldInfos />
     </section>
   )
 }

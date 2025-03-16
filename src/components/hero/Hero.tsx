@@ -3,7 +3,7 @@ import React from 'react'
 import { MoveRight } from "lucide-react"
 import { CustomButton } from "@/components"
 import Link from 'next/link'
-import Squares from '../ui/Squares'
+import Squares from '../library-ui/Squares'
 
 const Hero = () => {
   return (

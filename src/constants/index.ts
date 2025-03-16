@@ -1,4 +1,6 @@
 import { Plus, Calculator, CreditCard } from 'lucide-react'
+import { LuWallet, LuChartNoAxesColumn  } from "react-icons/lu";
+import { ImStack } from "react-icons/im";
 
 const navbarLists = [
     { id: 0, title: "Home", url: "/" },
@@ -21,15 +23,15 @@ const steps = [
 ]
 
 const balances = [
-    { id: 1, "title": "Deposits", value: "$8,240", titleLogo: "", desc: "+12.4% this month" },
-    { id: 2, "title": "PT Holdings", value: "8,240 PT", titleLogo: "", desc: "Expiry: 12/31/2023" },
-    { id: 3, "title": "YT Holdings", value: "240 YT", titleLogo: "", desc: "Available for payments" }
+    { id: 1, "title": "Deposits", value: "$8,240", titleLogo: LuWallet, desc: "+12.4% this month" },
+    { id: 2, "title": "PT Holdings", value: "8,240 PT", titleLogo: ImStack, desc: "Expiry: 12/31/2023" },
+    { id: 3, "title": "YT Holdings", value: "240 YT", titleLogo: LuChartNoAxesColumn , desc: "Available for payments" }
 ]
 
 const quickActionBtns = [
-    { id: 1, title: "Deposit Funds", btnLogo: "" },
-    { id: 1, title: "Browse Marketplace", btnLogo: "" },
-    { id: 1, title: "Calculate YT Earnings", btnLogo: "" },
+    { id: 1, title: "Deposit Funds", btnLogo: LuWallet },
+    { id: 2, title: "Browse Marketplace", btnLogo: LuChartNoAxesColumn },
+    { id: 3, title: "Calculate YT Earnings", btnLogo: Calculator },
 ]
 
 export {navbarLists, intros, steps, balances, quickActionBtns}
