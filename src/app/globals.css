@@ -15,6 +15,13 @@
   text-shadow: 2px 2px #fff;
 }
 
+/* intro styles */
+.intro-card {
+   box-shadow: 2px 2px 192px 2px #5d5858, -2px -2px 92px 2px #5d5858;
+}
+
+/* libraries styles */
+
 /* squares canvas style */
 .squares-canvas {
   width: 100%;

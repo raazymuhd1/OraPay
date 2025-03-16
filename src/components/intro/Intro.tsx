@@ -11,7 +11,8 @@ const Intro = () => {
 
         <div className="flex items-center justify-center flex-wrap w-[80%] gap-[30px] mt-[60px]">
             { intros.map(intro => (
-                <div key={intro.id} className="flex flex-col gap-[10px] basis-[400px] border-[1px] border-[#7f7f80] h-[250px] rounded-[10px] p-[20px]">
+                <div key={intro.id} 
+                    className="flex flex-col gap-[10px] basis-[400px] border-[1px] border-[#7f7f80] h-[250px] rounded-[20px] p-[20px] hover:mt-[-10px] transition-[margin] duration-500 cursor-pointer intro-card ">
                     <h3 className='font-bold text-[1.2vmax]'> {intro.title} </h3>
                     <p className='font-semibold text-[#7f7f80]'> {intro.desc} </p>
                 </div>
