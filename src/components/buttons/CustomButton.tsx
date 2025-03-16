@@ -11,7 +11,7 @@ const CustomButton = ({ children, onClick, disabled, style }: IProps) => {
   return (
     <button 
         onClick={onClick}
-        className={`flex items-center justify-center gap-[10px] text-white font-semibold rounded-[10px] py-[6px] px-[10px] ${style} `}>
+        className={`flex items-center justify-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] ${style} `}>
         { children }
     </button>
   )

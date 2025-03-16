@@ -12,7 +12,7 @@ const Header = () => {
   }, [window.scrollY])
 
   return (
-    <header className="w-full h-[70px] py-[15px]">
+    <header className="w-full sticky bg-[rgba(9,9,11,255)] top-0 h-[70px] py-[15px] border-b-[1px] border-b-[#202021] z-[2]">
         <Nav />
     </header>
   )
