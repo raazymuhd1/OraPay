@@ -1,8 +1,15 @@
 import React from 'react'
 import { quickActionBtns } from '@/constants'
 import { CustomButton } from "@/components"
+import { usePeyPeyContext } from "../PeyPeyContext"
 
 const QuickActions = () => {
+    const { setDepositModal, setCalculatorModal} = usePeyPeyContext()
+
+    const buttonClickHandler = (stepId: number) => {
+       stepId == 1 ? setDepositModal(true) : stepId == 3 ? setCalculatorModal(true) : null;
+    }
+
   return (
     <aside className="w-[30%] h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
         <div>
@@ -15,7 +22,7 @@ const QuickActions = () => {
           { quickActionBtns.map(action => (
              <CustomButton
                   key={action.id} 
-                  onClick={() => {}}
+                  onClick={() => buttonClickHandler(action.id)}
                   disabled={false}
                   style={` ${action.id == 1 ? "bg-gradient " : action.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] border-[#7f7f80]`}
                     >

@@ -4,8 +4,11 @@ import Steps from './Steps'
 import BalanceTracker from "./BalanceTracker"
 import QuickActions from './QuickActions'
 import YieldInfos from './YieldInfos'
+import DepositModal from  "./DepositModal"
+import CalculatorModal from "./CalculatorModal"
 
 const Dashboard = () => {
+
   return (
     <section className="flex flex-col w-full gap-[40px] pb-[40px]">
        <div className="flex w-full flex-col gap-[20px] items-center mt-[40px]">
@@ -23,6 +26,10 @@ const Dashboard = () => {
        </div>
 
        <YieldInfos />
+
+       {/* modals */}
+       <DepositModal /> 
+       <CalculatorModal />
     </section>
   )
 }
