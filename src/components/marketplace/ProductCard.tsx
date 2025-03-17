@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import Image, { StaticImageData } from "next/image"
 import { CustomButton } from "@/components"
 import { ShoppingBag, Tag } from 'lucide-react'
@@ -10,13 +10,14 @@ interface IProps {
   price: string;
   tag: string;
   productImg: StaticImageData
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProductCard = ({ id, title, desc, price, tag, productImg }: IProps) => {
+const ProductCard = ({ id, title, desc, price, tag, productImg, setOpenModal  }: IProps) => {
 
   return (
      <div className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden cursor-pointer">
-        <Image src={productImg} alt={title} className="w-full h-[40%] object-cover hover:scale-[1.1] transition-[transform] duration-500" />
+        <Image src={productImg} alt={title} className="w-full h-[40%] object-cover hover:scale-[1.1] transition-all duration-500" />
 
         <div className="flex flex-col h-[50%] justify-between p-[10px]">
 
@@ -33,7 +34,7 @@ const ProductCard = ({ id, title, desc, price, tag, productImg }: IProps) => {
 
               {/* action button */}
               <CustomButton
-                onClick={() => {}}
+                onClick={() => setOpenModal(true)}
                 disabled={false}
                 style={`bg-gradient`}
                       >

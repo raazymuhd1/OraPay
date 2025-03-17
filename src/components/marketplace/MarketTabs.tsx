@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import {
   Tabs,
   TabsContent,
@@ -8,7 +8,11 @@ import {
 import { marketplaceDatas } from '@/constants'
 import ProductCard from "./ProductCard"
 
-const MarketTabs = () => {
+type TProps = {
+  setOpenModal: Dispatch<SetStateAction<boolean>>
+}
+
+const MarketTabs = ({ setOpenModal }: TProps) => {
     const [marketDatas, setMarketDatas] = useState(marketplaceDatas)
 
     console.log(marketDatas['all-items']())
@@ -27,7 +31,7 @@ const MarketTabs = () => {
               <ProductCard 
                 key={id}
                 {
-                  ...{ id, title, desc, price, tag, productImg }
+                  ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
                 />
            )) }
@@ -37,7 +41,7 @@ const MarketTabs = () => {
                 <ProductCard
                   key={id}
                   {
-                  ...{ id, title, desc, price, tag, productImg }
+                  ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
                 />
              )) }
@@ -47,7 +51,7 @@ const MarketTabs = () => {
                 <ProductCard
                   key={id}
                   {
-                  ...{ id, title, desc, price, tag, productImg }
+                  ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
                 />
              )) }
@@ -57,7 +61,7 @@ const MarketTabs = () => {
                 <ProductCard
                   key={id}
                   {
-                  ...{ id, title, desc, price, tag, productImg }
+                  ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
                 />
              )) }

@@ -1,9 +1,14 @@
 "use client"
-import React from 'react'
+import { useState } from 'react'
 import SearchBar from './SearchBar'
 import MarketTabs from './MarketTabs'
+import PaymentModal from './PaymentModal'
 
 const Marketplace = () => {
+      const [openPayModal, setOpenPayModal] = useState<boolean>(false)
+
+      console.log(openPayModal)
+
   return (
     <div className="flex w-[70%] mx-auto flex-col gap-[30px]">
        <div className="flex w-full flex-col gap-[20px] items-center mt-[40px]">
@@ -12,7 +17,8 @@ const Marketplace = () => {
        </div>
 
        <SearchBar />
-       <MarketTabs />
+       <MarketTabs setOpenModal={setOpenPayModal} />
+       <PaymentModal openModal={openPayModal} setOpenModal={setOpenPayModal} />
     </div>
   )
 }
