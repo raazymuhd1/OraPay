@@ -6,6 +6,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import YieldOverview from './YieldOverview'
+import YieldExpDate from './YieldExpDate'
 
 const YieldInfos = () => {
   return (
@@ -20,11 +21,11 @@ const YieldInfos = () => {
           <TabsContent value="overview" className="mt-[20px]">
               <YieldOverview />
           </TabsContent>
-          <TabsContent value="expected-returns">
+          <TabsContent value="expected-returns"  className="mt-[20px]">
              <h2> Expected Returns </h2>
           </TabsContent>
-          <TabsContent value="expiry">
-            <h2> Expiry </h2>
+          <TabsContent value="expiry"  className="mt-[20px]">
+            <YieldExpDate />
           </TabsContent>
        </Tabs>
 
