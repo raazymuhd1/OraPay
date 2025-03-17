@@ -5,7 +5,7 @@ import { CircleHelp } from 'lucide-react'
 
 const Steps = () => {
   return (
-    <aside className="w-[80%] h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#7f7f80] bg-brown">
+    <aside className="w-[70%] min-h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
       {/* top content */}
         <div className="w-full flex items-center justify-between">
             <aside>
@@ -21,13 +21,13 @@ const Steps = () => {
             { steps.map(step => (
                <div 
                   key={step.id}
-                  className="flex flex-col gap-[10px] w-[400px] py-[25px] px-[15px] border-[1px] border-[#7f7f80] rounded-[15px] bg-brown">
+                  className="flex flex-col gap-[10px] w-[400px] py-[25px] px-[15px] rounded-[15px] glass-card">
                 <h3 className="text-[1.3vmax] font-bold"> Step {step.id}: {step.title} </h3>
-                <p className="text-[#7f7f80] font-medium text-[.9vmax] whitespace-nowrap"> { step.desc } </p>  
+                <p className="text-[#7f7f80] font-medium text-[.9vmax]"> { step.desc } </p>  
                   <CustomButton
                         onClick={() => {}}
                         disabled={false}
-                        style={`${step.id == 1 ? "bg-gradient" : "bg-[#272729)]"}`}
+                        style={`${step.id == 1 ? "bg-gradient" : "glass-card"}`}
                               >
                         <step.BtnLogo className="" />
                         { step.btnText }

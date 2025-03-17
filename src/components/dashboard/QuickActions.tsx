@@ -4,7 +4,7 @@ import { CustomButton } from "@/components"
 
 const QuickActions = () => {
   return (
-    <aside className="w-[30%] h-[300px] rounded-[15px] border-[1px] border-[#7f7f80] p-[20px] flex flex-col gap-[30px] bg-brown">
+    <aside className="w-[30%] h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
         <div>
             <h3 className="font-bold text-[1.5vmax]"> Quick Actions </h3>
             <p className="text-[#7f7f80]"> Common operations you can perform </p>
@@ -17,7 +17,7 @@ const QuickActions = () => {
                   key={action.id} 
                   onClick={() => {}}
                   disabled={false}
-                  style={` ${action.id == 1 ? "bg-gradient" : action.id == 2 ? "bg-[#272729)]" : "bg-[rgba(9,9,11,255)]"} justify-start`}
+                  style={` ${action.id == 1 ? "bg-gradient " : action.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] border-[#7f7f80]`}
                     >
                     <action.btnLogo className="" />
                     { action.title }

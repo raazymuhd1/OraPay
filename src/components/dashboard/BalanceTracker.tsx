@@ -7,7 +7,7 @@ const BalanceTracker = () => {
       const [userBalances, updateUserBalance] = useState(balances);
 
   return (
-    <aside className="w-[70%] h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#7f7f80] bg-brown">
+    <aside className="w-[70%] h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
         {/* top  */}
         <div className="w-full flex items-center justify-between">
             <aside>
@@ -21,7 +21,7 @@ const BalanceTracker = () => {
         <aside className="w-full flex items-center justify-center gap-[20px] mt-[10px]">
            { userBalances.map(balance => (
                <div 
-                className="flex flex-col gap-[10px] w-[250px] bg-brown"
+                className="flex flex-col gap-[10px] w-[250px] glass-card p-[20px]"
                 key={balance.id}>
 
                   <div className='w-full flex items-center justify-between'>

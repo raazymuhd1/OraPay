@@ -1,8 +1,11 @@
 import React from 'react'
+import { Marketplace } from "@/components"
 
 const MarketplacePage = () => {
   return (
-    <div>MarketplacePage</div>
+    <div>
+      <Marketplace />
+    </div>
   )
 }
 

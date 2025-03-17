@@ -6,7 +6,7 @@ import { CgMenuOreos } from "react-icons/cg";
 
 const Nav = () => {
   return (
-    <nav className="flex items-center md:justify-around justify-between w-[90%] md:w-[100%] mx-auto h-full">
+    <nav className="flex items-center justify-between w-[70%] mx-auto h-full">
         <Link href="/" className="md:text-[1.4vmax] flex items-center text-[1.3rem] cursor-pointer font-bold"> 
           <p className="text-bg-gradient"> NoPey </p> 
           <span className="text-[#fff]">Pey</span> 

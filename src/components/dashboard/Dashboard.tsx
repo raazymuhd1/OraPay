@@ -15,7 +15,7 @@ const Dashboard = () => {
 
         {/* steps */}
        <Steps />
-       <div className="flex items-center gap-[20px] w-[80%] mx-auto">
+       <div className="flex items-center gap-[20px] w-[70%] mx-auto">
          {/* balance tracker */}
          <BalanceTracker />
          {/* quick actions */}
