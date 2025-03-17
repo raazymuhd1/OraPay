@@ -1,6 +1,7 @@
 import React from 'react'
 import Image, { StaticImageData } from "next/image"
 import { CustomButton } from "@/components"
+import { ShoppingBag, Tag } from 'lucide-react'
 
 interface IProps {
   id: number;
@@ -14,20 +15,36 @@ interface IProps {
 const ProductCard = ({ id, title, desc, price, tag, productImg }: IProps) => {
 
   return (
-     <div className="flex flex-col gap-[15px] rounded-[15px]">
-        <Image src={productImg} alt={title} className="w-full h-[40%] object-cover" />
+     <div className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden cursor-pointer">
+        <Image src={productImg} alt={title} className="w-full h-[40%] object-cover hover:scale-[1.1] transition-[transform] duration-500" />
 
-        <div className="h-[50%] flex flex-col gap-[10px] w-full p-[20px]">
+        <div className="flex flex-col h-[50%] justify-between p-[10px]">
 
-           <div className="flex items-center w-full justify-between
-           ">
-              <h2> { title } </h2>
-              <p> { price } </p>
-           </div>
+            <div className="h-[50%] flex flex-col gap-[10px] w-full">
+              <div className="flex items-center w-full justify-between
+              ">
+                  <h2 className="font-bold text-[.9vmax] w-[70%]"> { title } </h2>
+                  <p className="text-[#11afb8] font-bold text-[.9vmax]"> ${ price } </p>
+              </div>
 
-           <p> {desc} </p>
-           <p> {tag} </p>
+              <p className="text-[.8vmax] text-[#7f7f80]"> {desc} </p>
+              <p className="flex items-center text-[#7f7f80] text-[.6vmax] font-semibold">  <Tag className="w-[10px]" /> {tag} </p>
+            </div>
+
+              {/* action button */}
+              <CustomButton
+                onClick={() => {}}
+                disabled={false}
+                style={`bg-gradient`}
+                      >
+                <ShoppingBag className="" />
+                Buy Now
+            </CustomButton>
+
         </div>
+
+
+
      </div>
   )
 }

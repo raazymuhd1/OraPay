@@ -40,6 +40,16 @@
 
 }
 
+
+/* marketplace styles */
+
+@layer {
+    .tabs-content {
+      @apply mt-[30px] flex items-center gap-[25px] w-full flex-wrap; 
+    }
+
+}
+
 /* libraries styles */
 
 /* squares canvas style */

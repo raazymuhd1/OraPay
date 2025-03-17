@@ -43,6 +43,11 @@ const yields = [
 
 // marketplaces
 const marketplaceDatas = {
+    ["all-items"]: function() {
+        const allItems = [...this.subs, ...this.products, ...this.courses]
+        console.log(allItems)
+        return allItems;
+    } ,
     subs: [
         { id: 1, title: "Premium Streaming Subscription", desc: "Access to unlimited movies, TV shows, and documentaries", price: "15.99", tag: "StreamFlix", productImg: subs1 },
         { id: 2, title: "Music Streaming Premium", desc: "Ad-free music with unlimited skips and downloads", price: "9.99", tag: "SoundWave", productImg: subs2 },
