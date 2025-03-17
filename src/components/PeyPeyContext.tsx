@@ -1,9 +1,37 @@
-import React from 'react'
+"use client"
+import { useState, use, createContext, ReactNode } from 'react'
+interface IProps {
+  children: ReactNode
+}
 
-const PeyPeyContext = () => {
+interface IModalState {
+  openDepositModal: boolean,
+  setDepositModal: React.Dispatch<React.SetStateAction<boolean>>
+  openCalculatorModal: boolean,
+  setCalculatorModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+// @ts-ignore
+const PeyPeyContext = createContext<IModalState>(null);
+
+
+const PeyPeyContextProvider = ({ children }: IProps) => {
+      const [openDepositModal, setDepositModal] = useState<boolean>(false)
+      const [openCalculatorModal, setCalculatorModal] = useState<boolean>(false)
+
   return (
-    <div>PeyPeyContext</div>
+    <PeyPeyContext.Provider
+      value={{
+         openDepositModal, setDepositModal,
+        openCalculatorModal, setCalculatorModal
+      }}
+    >
+      { children }
+    </PeyPeyContext.Provider>
   )
 }
 
-export default PeyPeyContext
+export default PeyPeyContextProvider
+
+
+export const usePeyPeyContext = () => use(PeyPeyContext);
