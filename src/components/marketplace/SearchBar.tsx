@@ -9,15 +9,15 @@ const SearchBar = () => {
             <input type='text' className="bg-transparent border-none outline-none h-full w-[90%] " placeholder='Search Marketplace' /> 
         </aside>
 
-        <aside className="flex items-center gap-[20px]">
-            <div className="flex items-center gap-[10px] cursor-pointer bg-[rgba(9,9,11,255)] border-[1px] border-[#202021] rounded-[15px] py-[5px] px-[10px]">
-               <Filter className="" />
+        <aside className="flex items-center gap-[20px] w-[35%]">
+            <div className="w-[50%] flex items-center gap-[10px] cursor-pointer bg-[rgba(9,9,11,255)] border-[1px] border-[#202021] rounded-[15px] py-[5px] px-[10px]">
+               <Filter className="w-[15px]" />
                Filter
             </div>
 
-            <div className="flex items-center gap-[10px] cursor-pointer bg-brown border-[1px] border-[#202021] rounded-[15px] py-[5px] px-[10px]">
-               <ShoppingBag className="" />
-               Your Orders
+            <div className="w-[50%] flex items-center gap-[10px] cursor-pointer bg-brown border-[1px] border-[#202021] rounded-[15px] py-[5px] px-[10px]">
+               <ShoppingBag className="w-[15px]" />
+               Your orders
             </div>
         </aside>
     </div>

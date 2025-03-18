@@ -19,10 +19,12 @@ const PaymentModal = ({ openModal, setOpenModal }: IProps) => {
    }
 
    const handleDepositDetails = (title: string, value: string) => {
+    console.log("title", title)
+
       return (
           <div className="w-full flex items-center justify-between">
-            <h3 className="text-[#7f7f80] font-bold"> {title} </h3>
-            <h4 className={`font-bold ${title.toLowerCase() == "estimated yield" && "text-[#11afb8]"} `}> {value} </h4>
+            <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
+            <h4 className={`font-bold ${title.toLowerCase() == "estimated yield" && "text-[#11afb8]"}`}> {value} </h4>
          </div>
       )
    }
@@ -61,17 +63,17 @@ const PaymentModal = ({ openModal, setOpenModal }: IProps) => {
                     <div className="flex flex-col gap-[10px]">
                         <aside className="flex w-full items-center gap-[10px] cursor-pointer justify-between">
                             <h3> Buy Now, Pay Never </h3>
-                            <h3 className="font-bold"> Recommended </h3>
+                            <h3 className="font-bold text-[#11afb8]"> Recommended </h3>
                         </aside>
 
                         <div className="w-full flex flex-col gap-[15px]">
                           <p> Pay using your future yield without upfront payment. We'll allocate a portion of your yield to cover this purchase over time. </p>
                           {/* separator */}
-                          <div className="w-full h-[0.5px] bg-[red]" />
+                          <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
                           {/* deposit details */}
-                          { handleDepositDetails("Required Deposit:", "650 PT") }
-                          { handleDepositDetails("Estimated Yield:", "129.99 YT / month") }
+                          { handleDepositDetails("Required Deposit", "650 PT") }
+                          { handleDepositDetails("Estimated Yield", "129.99 YT / month") }
                         </div>
                     </div>
                 </div>

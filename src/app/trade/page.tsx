@@ -1,8 +1,11 @@
 import React from 'react'
+import {Trade } from "@/components"
 
 const TradePage = () => {
   return (
-    <div>TradePage</div>
+    <div>
+      <Trade />
+    </div>
   )
 }
 
