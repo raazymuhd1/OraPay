@@ -21,14 +21,14 @@ const config = createConfig(
     },
 
     // Required API Keys
-    walletConnectProjectId: "",
+    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECTKIT as string,
 
     // Required App Info
     appName: "NoPeyPey",
 
     // Optional App Info
     appDescription: "Buy Now, Pay Never",
-    appUrl: "https://family.co", // your app's url
+    appUrl: "https://nopeypey.vercel.app/", // your app's url
     appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
   }),
 );

@@ -1,7 +1,9 @@
 import React from 'react'
 import { quickActionBtns } from '@/constants'
+import { LuChartNoAxesColumn  } from "react-icons/lu"
 import { CustomButton } from "@/components"
 import { usePeyPeyContext } from "../PeyPeyContext"
+import Link from "next/link"
 
 const QuickActions = () => {
     const { setDepositModal, setCalculatorModal} = usePeyPeyContext()
@@ -20,7 +22,12 @@ const QuickActions = () => {
         {/* action buttons */}
         <div className="w-full flex flex-col gap-[15px]">
           { quickActionBtns.map(action => (
-             <CustomButton
+            action.title.toLowerCase() == "browse marketplace" 
+            ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
+               <LuChartNoAxesColumn className='' />
+               {action.title} 
+               </Link> 
+            : <CustomButton
                   key={action.id} 
                   onClick={() => buttonClickHandler(action.id)}
                   disabled={false}
