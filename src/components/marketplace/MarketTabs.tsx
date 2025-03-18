@@ -27,9 +27,9 @@ const MarketTabs = ({ setOpenModal }: TProps) => {
         </TabsList>
 
         <TabsContent value="all-items" className="tabs-content">
-           { marketDatas['all-items']().map(({ id, title, desc, price, tag, productImg }) => (
+           { marketDatas['all-items']().map(({ id, title, desc, price, tag, productImg }, idx) => (
               <ProductCard 
-                key={id}
+                key={idx}
                 {
                   ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
@@ -37,9 +37,9 @@ const MarketTabs = ({ setOpenModal }: TProps) => {
            )) }
         </TabsContent>
         <TabsContent value="subscriptions" className='tabs-content'>
-             { marketDatas.subs.map(({ id, title, desc, price, tag, productImg }) => (
+             { marketDatas.subs.map(({ id, title, desc, price, tag, productImg }, idx) => (
                 <ProductCard
-                  key={id}
+                  key={idx}
                   {
                   ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
@@ -47,9 +47,9 @@ const MarketTabs = ({ setOpenModal }: TProps) => {
              )) }
         </TabsContent>
         <TabsContent value="products" className='tabs-content'>
-             { marketDatas.products.map(({ id, title, desc, price, tag, productImg }) => (
+             { marketDatas.products.map(({ id, title, desc, price, tag, productImg }, idx) => (
                 <ProductCard
-                  key={id}
+                  key={idx}
                   {
                   ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
@@ -57,9 +57,9 @@ const MarketTabs = ({ setOpenModal }: TProps) => {
              )) }
         </TabsContent>
         <TabsContent value="courses" className='tabs-content'>
-             { marketDatas.courses.map(({ id, title, desc, price, tag, productImg }) => (
+             { marketDatas.courses.map(({ id, title, desc, price, tag, productImg }, idx) => (
                 <ProductCard
-                  key={id}
+                  key={idx}
                   {
                   ...{ id, title, desc, price, tag, productImg, setOpenModal }
                 }
