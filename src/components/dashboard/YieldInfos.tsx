@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/tabs"
 import YieldOverview from './YieldOverview'
 import YieldExpDate from './YieldExpDate'
+import YieldExpReturns from "./YieldExpReturns"
 
 const YieldInfos = () => {
   return (
@@ -22,7 +23,7 @@ const YieldInfos = () => {
               <YieldOverview />
           </TabsContent>
           <TabsContent value="expected-returns"  className="mt-[20px]">
-             <h2> Expected Returns </h2>
+             <YieldExpReturns />
           </TabsContent>
           <TabsContent value="expiry"  className="mt-[20px]">
             <YieldExpDate />
