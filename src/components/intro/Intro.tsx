@@ -3,7 +3,7 @@ import { intros } from '@/constants'
 
 const Intro = () => {
   return (
-    <section className="h-[600px] flex flex-col items-center justify-center w-full gap-[10px] bg-[rgba(22,22,23,255)]">
+    <section className="min-h-[600px] flex flex-col items-center justify-center w-full gap-[10px] bg-[rgba(22,22,23,255)] p-[40px]">
         <div className="flex flex-col items-center gap-[10px]">
             <h2 className="text-bg-gradient text-[2vmax] font-bold "> The Future of Financial Freedom </h2>
             <p className="text-[#7f7f80] text-[1vmax] font-semibold"> NoPeyPey offers a comprehensive DeFi solution that lets you <br /> maintain your capital while spending only the yield you generate. </p>
