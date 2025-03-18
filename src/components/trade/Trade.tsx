@@ -20,13 +20,13 @@ const Trade = () => {
     <div className="w-full h-screen flex flex-col items-center gap-[20px] justify-center">
 
          <aside className="flex flex-col gap-[10px] items-center">
-              <h3 className="font-bold text-[2vmax]"> Trade </h3>
-              <p className="text-[#7f7f80] text-[1.2vmax]"> Swap between PT, YT tokens and stablecoins </p>
+              <h3 className="font-bold lg:text-[2vmax] text-[4vmax]"> Trade </h3>
+              <p className="text-[#7f7f80] lg:text-[1.2vmax] text-[2vmax]"> Swap between PT, YT tokens and stablecoins </p>
         </aside>
 
-       <div className="bg-brown md:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
+       <div className="bg-brown lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
           <aside className="flex flex-col gap-[10px]">
-              <h3 className="font-bold text-[1.3vmax]"> Swap </h3>
+              <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
               <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
           </aside>
 

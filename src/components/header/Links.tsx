@@ -2,12 +2,15 @@ import React from 'react'
 import { navbarLists } from '@/constants'
 import { CustomButton } from "@/components"
 import Link from 'next/link'
+import { ConnectKitButton } from 'connectkit'
+import { useAccount } from 'wagmi'
 import { LuWallet } from "react-icons/lu";
 import { useSelectedLayoutSegment, usePathname  } from 'next/navigation'
 
 const Links = () => {
     const segment = useSelectedLayoutSegment();
     const path = usePathname()
+    // const { address } = useAccount();
 
     console.log(path.split('/')[1])
 
@@ -16,18 +19,22 @@ const Links = () => {
             { navbarLists.map(list => (
                 <Link
                   className={`cursor-pointer ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"}`}
-                  key={list.id} href={list.url}> 
+                  key={list.id} href={list.url || "/"}> 
                   { list.title } 
                 </Link>
             )) }
-            <CustomButton
-                onClick={() => {}}
-                disabled={false}
-                style={`bg-gradient`}
-              >
-                <LuWallet size={20}/>
-                Connect Wallet
-            </CustomButton>
+            <ConnectKitButton.Custom >
+               { ({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
+                   return  <CustomButton
+                            onClick={show}
+                            disabled={false}
+                            style={`bg-gradient`}
+                          >
+                            <LuWallet size={20}/>
+                            { isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}
+                        </CustomButton>
+               } }
+            </ConnectKitButton.Custom>
     </ul>
   )
 }

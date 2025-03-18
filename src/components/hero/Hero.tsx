@@ -18,7 +18,7 @@ const Hero = () => {
         }
 
   return (
-    <section className="w-full h-[700px] mx-auto flex items-center gap-[10px]">
+    <section className="w-full h-[700px] relative bottom-0 mx-auto flex items-center gap-[10px]">
         
         <div className=" h-[200px] rounded-[50%] shadowing-left bg-[rgba(82,122,254,255)]" />
 

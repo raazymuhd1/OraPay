@@ -11,3 +11,4 @@ export { default as Marketplace } from "./marketplace/Marketplace"
 export { default as Trade } from "./trade/Trade"
 // Global State Provider
 export { default as PeyPeyContextProvider } from "./PeyPeyContext"
+export { default as Web3Provider } from "./Web3Provider"

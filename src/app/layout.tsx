@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header, PeyPeyContextProvider } from "@/components"
+import { Header, PeyPeyContextProvider, Web3Provider } from "@/components"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <PeyPeyContextProvider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
-          >
-            <Header />
-            {children}
-          </body>
-      </PeyPeyContextProvider>
+      <Web3Provider>
+        <PeyPeyContextProvider>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
+            >
+              <Header />
+              {children}
+            </body>
+        </PeyPeyContextProvider>
+      </Web3Provider>
     </html>
   );
 }
