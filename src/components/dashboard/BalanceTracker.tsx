@@ -12,7 +12,7 @@ const BalanceTracker = () => {
         <div className="w-full flex items-center justify-between">
             <aside>
               <h3 className="font-bold text-[1.5vmax]"> Your Balance </h3>
-              <p className="text-[#7f7f80]"> Track your deposit and token holdings </p>
+              <p className="text-(--paraph-color)"> Track your deposit and token holdings </p>
             </aside>
 
             <h4 className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] hover:text-[#fff]   transition-[background] duration-500 cursor-pointer text-[#11afb8]"> <MdArrowOutward className="w-[18px]" /> Manage </h4>
@@ -27,14 +27,14 @@ const BalanceTracker = () => {
                   <div className='w-full flex items-center justify-between'>
                       <div className="flex items-center gap-[10px]">
                         <balance.titleLogo />
-                        <h3 className="text-[#7f7f80] font-semibold"> { balance.title } </h3>
+                        <h3 className="text-(--paraph-color) font-semibold"> { balance.title } </h3>
                       </div>
 
                       <BsExclamation className={`${balance.id == 1 && "hidden" } block border-[1px] rounded-[50%] cursor-pointer hover:bg-[rgba(29,220,255,255)] transition-[background] duration-500`} />
                   </div>
 
                   <h2 className="font-bold text-[1.3vmax]"> { balance.value } </h2>
-                  <p className={`${balance.id == 3 ? "text-[#7f7f80]" : "text-[#11afb8]"} `}> {balance.desc} </p>
+                  <p className={`${balance.id == 3 ? "text-(--paraph-color)" : "text-[#11afb8]"} `}> {balance.desc} </p>
                </div>
            )) }
         </aside>

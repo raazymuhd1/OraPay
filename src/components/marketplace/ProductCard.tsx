@@ -2,7 +2,7 @@ import { useState, Dispatch, SetStateAction } from 'react'
 import Image, { StaticImageData } from "next/image"
 import { CustomButton } from "@/components"
 import { ShoppingBag, Tag } from 'lucide-react'
-
+import { usePeyPeyContext } from "@/components/PeyPeyContext"
 interface IProps {
   id: number;
   title: string;
@@ -10,10 +10,10 @@ interface IProps {
   price: string;
   tag: string;
   productImg: StaticImageData
-  setOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProductCard = ({ id, title, desc, price, tag, productImg, setOpenModal  }: IProps) => {
+const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
+  const { setOpenPayModal } = usePeyPeyContext()
 
   return (
      <div className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden cursor-pointer">
@@ -34,7 +34,7 @@ const ProductCard = ({ id, title, desc, price, tag, productImg, setOpenModal  }:
 
               {/* action button */}
               <CustomButton
-                onClick={() => setOpenModal(true)}
+                onClick={() => setOpenPayModal(true)}
                 disabled={false}
                 style={`bg-gradient`}
                       >

@@ -5,9 +5,6 @@ import MarketTabs from './MarketTabs'
 import PaymentModal from './PaymentModal'
 
 const Marketplace = () => {
-      const [openPayModal, setOpenPayModal] = useState<boolean>(false)
-
-      console.log(openPayModal)
 
   return (
     <div className="flex w-[70%] mx-auto flex-col gap-[30px]">
@@ -17,8 +14,8 @@ const Marketplace = () => {
        </div>
 
        <SearchBar />
-       <MarketTabs setOpenModal={setOpenPayModal} />
-       <PaymentModal openModal={openPayModal} setOpenModal={setOpenPayModal} />
+       <MarketTabs  />
+       <PaymentModal />
     </div>
   )
 }

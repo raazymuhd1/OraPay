@@ -1,13 +1,10 @@
 import { Dispatch, SetStateAction } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
+import { usePeyPeyContext } from "@/components/PeyPeyContext"
 
-type IProps = {
-    openModal: boolean;
-    setOpenModal: Dispatch<SetStateAction<boolean>>
-}
-
-const PaymentModal = ({ openModal, setOpenModal }: IProps) => {
+const PaymentModal = () => {
+        const { openPayModal, setOpenPayModal } = usePeyPeyContext()
 
    const handleItemDetails = (title: string, value: string) => {
        return (
@@ -31,10 +28,10 @@ const PaymentModal = ({ openModal, setOpenModal }: IProps) => {
 
   return (
     <div 
-      className={`transition-all duration-500 ${!openModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
+      className={`transition-all duration-500 ${!openPayModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
 
        <div 
-          onClick={() => setOpenModal(false)}
+          onClick={() => setOpenPayModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
@@ -46,7 +43,7 @@ const PaymentModal = ({ openModal, setOpenModal }: IProps) => {
                     <p className="font-normal text-[.9vmax]"> Select how you'd like to pay for this purchase </p>
                 </div>
 
-                <X className="w-[20px] cursor-pointer" onClick={() => setOpenModal(false)} />
+                <X className="w-[20px] cursor-pointer" onClick={() => setOpenPayModal(false)} />
             </div>
 
             <div className="flex flex-col gap-[10px] border-b-[1px] border-[rgba(255, 255, 255, 0.125)] p-[10px]">

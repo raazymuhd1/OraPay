@@ -9,7 +9,7 @@ const DepositModal = () => {
      const handleItemDetails = (title: string, value: string) => {
        return (
          <div className="w-full flex items-center justify-between">
-            <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
+            <h3 className="text-(--paraph-color) font-bold"> {title}: </h3>
             <h4 className={`font-bold  ${title == "Approximate USD value" && "text-[#11afb8]"}`}> {title == "price" && "$"}{value} </h4>
          </div>
        )
@@ -55,7 +55,7 @@ const DepositModal = () => {
                   <div className="w-full h-[1px] bg-[#7f7f80]" />
                   <div>
                       <h4 className="font-semibold text-[1vmax]"> What you can do with this yield: </h4>
-                      <p className="font-medium text-[.9vmax] text-[#7f7f80]"> Increase your deposit amountor time period to see what you can buy </p>
+                      <p className="font-medium text-[.9vmax] text-(--paraph-color)"> Increase your deposit amountor time period to see what you can buy </p>
                   </div>
                 </div>
             </div>

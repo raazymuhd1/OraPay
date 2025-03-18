@@ -5,7 +5,7 @@ const YieldExpDate = () => {
     <div className="w-full rounded-[15px] p-[30px] bg-brown min-h-[300px] flex flex-col gap-[20px] bg-brown">
          <aside>
               <h3 className="font-bold text-[1.5vmax]"> Expiry Dates </h3>
-              <p className="text-[#7f7f80]"> Timeline for your token expirations </p>
+              <p className="text-(--paraph-color)"> Timeline for your token expirations </p>
           </aside>
 
           <div className="flex flex-col gap-[15px] rounded-[15px] p-[15px] glass-card">
@@ -27,7 +27,7 @@ const YieldExpDate = () => {
                   </div>
               </div>
 
-               <p className="text-[#7f7f80]"> When PT tokens expire, your principal will be returned to you automatically. You can redeem your PT tokens early with a small fee. </p>
+               <p className="text-(--paraph-color)"> When PT tokens expire, your principal will be returned to you automatically. You can redeem your PT tokens early with a small fee. </p>
           </div>
     </div>
   )

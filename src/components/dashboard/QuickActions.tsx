@@ -16,14 +16,14 @@ const QuickActions = () => {
     <aside className="w-[30%] h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
         <div>
             <h3 className="font-bold text-[1.5vmax]"> Quick Actions </h3>
-            <p className="text-[#7f7f80]"> Common operations you can perform </p>
+            <p className="text-(--paraph-color)"> Common operations you can perform </p>
         </div>
 
         {/* action buttons */}
         <div className="w-full flex flex-col gap-[15px]">
           { quickActionBtns.map(action => (
             action.title.toLowerCase() == "browse marketplace" 
-            ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
+            ? <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
                <LuChartNoAxesColumn className='' />
                {action.title} 
                </Link> 
