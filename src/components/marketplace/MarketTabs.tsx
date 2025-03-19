@@ -14,8 +14,9 @@ const MarketTabs = () => {
     console.log(marketDatas['all-items']())
 
   return (
-    <Tabs defaultValue='all-items' className="w-full">
-        <TabsList className="flex items-center gap-[10px] bg-brown">
+    <Tabs defaultValue='all-items' className=" w-full p-[15px] ">
+        <TabsList className="md:w-[40%] w-full gap-[10px] flex items-center 
+        bg-brown">
            <TabsTrigger value="all-items" className="cursor-pointer"> All Items </TabsTrigger>
            <TabsTrigger value="subscriptions" className="cursor-pointer"> Subscriptions </TabsTrigger>
            <TabsTrigger value="products" className="cursor-pointer"> Products </TabsTrigger>

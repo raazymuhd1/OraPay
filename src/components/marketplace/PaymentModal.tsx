@@ -35,12 +35,12 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[70%] w-[30%] mx-auto translate-y-[100px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[25px] p-[20px] overflow-y-scroll">
+        <div className="flex h-[70%] w-[60%] lg:w-[30%] mx-auto translate-y-[100px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[25px] p-[20px] overflow-y-scroll">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
-                    <h2 className="font-bold text-[1.2vmax]"> Choose Payment Method </h2>
-                    <p className="font-normal text-[.9vmax]"> Select how you'd like to pay for this purchase </p>
+                    <h2 className="font-bold responsive-headerText"> Choose Payment Method </h2>
+                    <p className="font-normal responsive-paraph"> Select how you'd like to pay for this purchase </p>
                 </div>
 
                 <X className="w-[20px] cursor-pointer" onClick={() => setOpenPayModal(false)} />
@@ -52,7 +52,7 @@ const PaymentModal = () => {
               { handleItemDetails("Source", "HomeStyle") }
             </div>
 
-            <h2 className="font-bold text-[1.2vmax]"> Payment Methods </h2>
+            <h2 className="font-bold responsive-headerText"> Payment Methods </h2>
             <div className="flex w-full flex-col border-[1px] border-[rgba(255, 255, 255, 0.125)] p-[20px] rounded-[15px]">
                 <div className="w-full flex items-start gap-[10px]">
                     <input type='radio' className=""  name='buy' />

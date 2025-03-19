@@ -49,7 +49,7 @@ const DepositModal = () => {
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
                     <h2 className="font-bold responsive-headerTabs "> Deposit USDC </h2>
-                    <p className="font-normal responsive-paraph"> Deposit USDC to receive Principal Tokens (PT) and start earning yield </p>
+                    <p className="font-normal text-(--paraph-color) responsive-paraph"> Deposit USDC to receive Principal Tokens (PT) and start earning yield </p>
                 </div>
 
                 <X className="w-[20px] cursor-pointer" onClick={() => setDepositModal(false)} />

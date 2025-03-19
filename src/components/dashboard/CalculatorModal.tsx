@@ -9,8 +9,8 @@ const DepositModal = () => {
      const handleItemDetails = (title: string, value: string) => {
        return (
          <div className="w-full flex items-center justify-between">
-            <h3 className="text-(--paraph-color) font-bold text-[1.7vmax] md:text-[.9vmax]"> {title}: </h3>
-            <h4 className={`font-bold text-[1.7vmax] md:text-[.0vmax] ${title == "Approximate USD value" && "text-[#11afb8]"}`}> {title == "price" && "$"}{value} </h4>
+            <h3 className="text-(--paraph-color) font-bold text-[1.7vmax] md:text-[1.5vmax] lg:text-[.9vmax]"> {title}: </h3>
+            <h4 className={`font-bold text-[1.7vmax] md:text-[1.5vmax] lg:text-[.9vmax] ${title == "Approximate USD value" && "text-[#11afb8]"}`}> {title == "price" && "$"}{value} </h4>
          </div>
        )
    }
@@ -29,8 +29,8 @@ const DepositModal = () => {
             {/* top card */}
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
-                    <h2 className="font-bold responsive-headerTabs"> YT Yield Calculator </h2>
-                    <p className="font-normal responsive-paraph"> Calculate how much YT you can earn based on your deposit </p>
+                    <h2 className="font-bold responsive-headerText"> YT Yield Calculator </h2>
+                    <p className="font-normal text-(--paraph-color) responsive-paraph"> Calculate how much YT you can earn based on your deposit </p>
                 </div>
 
                 <X className="w-[20px] cursor-pointer" onClick={() => setCalculatorModal(false)} />
@@ -42,8 +42,8 @@ const DepositModal = () => {
                     <h3 className="font-bold resp-headerCard"> Deposit Amount {`(USDC)`} </h3>
                     <input type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-none mt-[10px]" />
                 </div>
-                <div className="flex items-start justify-between w-full p-[10px]">
-                  <h3 className='resp-headerCard'> Time Period {"(Days)"} </h3>
+                <div className="flex items-start justify-between w-full">
+                  <h3 className='resp-headerCard font-bold'> Time Period {"(Days)"} </h3>
                   {/* select option */}
                 </div>
 
@@ -65,9 +65,9 @@ const DepositModal = () => {
                 <CustomButton
                   onClick={() => setCalculatorModal(false)}
                   disabled={false}
-                  style={`bg-[rgba(9,9,11,255)]`}
+                  style={`bg-[rgba(9,9,11,255)] responsive-btnText`}
                         >
-                  <X className="" />
+                  <X className="w-[15px]" />
                    Close
               </CustomButton>
                 <CustomButton
@@ -77,9 +77,9 @@ const DepositModal = () => {
                       setDepositModal(true)
                   }}
                   disabled={false}
-                  style={`bg-gradient`}
+                  style={`bg-gradient responsive-btnText`}
                         >
-                  <CreditCard className="" />
+                  <CreditCard className="w-[15px]" />
                     Deposit Now
               </CustomButton>
 

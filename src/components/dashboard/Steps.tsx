@@ -34,8 +34,8 @@ const Steps = () => {
                 <div 
                     key={step.id}
                     className="flex flex-col gap-[10px] lg:w-[30%] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
-                  <h3 className="text-[1.9vmax] md:text-[1.2vmax] font-bold"> Step {step.id}: {step.title} </h3>
-                  <p className="text-(--paraph-color) font-medium text-[1.5vmax] md:text-[1vmax]"> { step.desc } </p>  
+                  <h3 className="text-[1.9vmax] md:text-[1.5vmax] font-bold"> Step {step.id}: {step.title} </h3>
+                  <p className="text-(--paraph-color) font-medium text-[1.5vmax] md:text-[1.3vmax]"> { step.desc } </p>  
                   { step.btnText.toLowerCase() == "browse marketplace" 
                       ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-[1.5vmax] md:text-[2.5vmax] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] responsive-btnText" >
                         <LuChartNoAxesColumn className='' />

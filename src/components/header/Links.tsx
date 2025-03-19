@@ -5,10 +5,9 @@ import Link from 'next/link'
 import { ConnectKitButton } from 'connectkit'
 import { useAccount } from 'wagmi'
 import { LuWallet } from "react-icons/lu";
-import { useSelectedLayoutSegment, usePathname  } from 'next/navigation'
+import {  usePathname  } from 'next/navigation'
 
 const Links = () => {
-    const segment = useSelectedLayoutSegment();
     const path = usePathname()
     // const { address } = useAccount();
 
@@ -28,7 +27,7 @@ const Links = () => {
                    return  <CustomButton
                             onClick={show}
                             disabled={false}
-                            style={`bg-gradient`}
+                            style={`bg-gradient min-w-[fit-content]`}
                           >
                             <LuWallet size={20}/>
                             { isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}

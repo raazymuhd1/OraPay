@@ -1,8 +1,10 @@
 "use client"
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
+import MobileLinks from './MobileLinks';
 import Nav from './Nav'
 
 const Header = () => {
+    const [showNav, updateShowNav] = useState<boolean>(false)
 
   useEffect(() => {
      if(typeof window != "undefined") {
@@ -13,7 +15,8 @@ const Header = () => {
 
   return (
     <header className="w-full sticky bg-[rgba(9,9,11,255)] top-0 h-[70px] py-[15px] border-b-[1px] border-b-[#202021] z-[2]">
-        <Nav />
+        <Nav updateShowNav={updateShowNav} /> 
+        <MobileLinks { ...{showNav, updateShowNav} } />
     </header>
   )
 }

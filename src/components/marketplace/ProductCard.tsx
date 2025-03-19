@@ -24,21 +24,21 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
             <div className="h-[50%] flex flex-col gap-[10px] w-full">
               <div className="flex items-center w-full justify-between
               ">
-                  <h2 className="font-bold text-[.9vmax] w-[70%]"> { title } </h2>
-                  <p className="text-[#11afb8] font-bold text-[.9vmax]"> ${ price } </p>
+                  <h2 className="font-bold text-[1.9vmax] lg:text-[1.2vmax] w-[70%]"> { title } </h2>
+                  <p className="text-[#11afb8] font-bold text-[1.9vmax] lg:text-[1.2vmax]"> ${ price } </p>
               </div>
 
-              <p className="text-[.8vmax] text-[#7f7f80]"> {desc} </p>
-              <p className="flex items-center text-[#7f7f80] text-[.6vmax] font-semibold">  <Tag className="w-[10px]" /> {tag} </p>
+              <p className="text-[1.7vmax] lg:text-[1vmax] text-[#7f7f80]"> {desc} </p>
+              <p className="flex items-center text-[#7f7f80] text-[1.5vmax] lg:text-[.8vmax] font-semibold">  <Tag className="w-[10px]" /> {tag} </p>
             </div>
 
               {/* action button */}
               <CustomButton
                 onClick={() => setOpenPayModal(true)}
                 disabled={false}
-                style={`bg-gradient`}
+                style={`bg-gradient responsive-btnText`}
                       >
-                <ShoppingBag className="" />
+                <ShoppingBag className="w-[15px]" />
                 Buy Now
             </CustomButton>
 

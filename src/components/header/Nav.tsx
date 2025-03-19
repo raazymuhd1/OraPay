@@ -1,20 +1,26 @@
 "use client"
-import React from 'react'
+import {Dispatch, SetStateAction} from 'react'
 import Link from 'next/link'
-import Links from './Links'
 import { CgMenuOreos } from "react-icons/cg";
+import Links from './Links'
+import MobileLinks from './MobileLinks';
 
-const Nav = () => {
+type PProps = {
+  updateShowNav: Dispatch<SetStateAction<boolean>>
+}
+
+const Nav = ({updateShowNav}: PProps) => {
+
   return (
-    <nav className="flex items-center justify-between w-[70%] mx-auto h-full">
-        <Link href="/" className="md:text-[1.4vmax] flex items-center text-[1.3rem] cursor-pointer font-bold"> 
+    <nav className="flex items-center justify-between lg:w-[70%] w-[90%] mx-auto h-full">
+        <Link href="/" className="lg:text-[1.5vmax] md:text-[2vmax] flex items-center text-[1.5rem] cursor-pointer font-bold"> 
           <p className="text-bg-gradient"> NoPey </p> 
           <span className="text-[#fff]">Pey</span> 
          </Link>
 
         <Links />
         {/* @ts-ignore */}
-        <CgMenuOreos className="text-[20px] cursor-pointer md:hidden" />
+        <CgMenuOreos onClick={() => updateShowNav(true)} className="text-[20px] cursor-pointer md:hidden" />
     </nav>
   )
 }
