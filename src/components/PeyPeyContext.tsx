@@ -1,16 +1,9 @@
 "use client"
 import { useState, use, createContext, ReactNode } from 'react'
+import { IModalState } from "@/types"
+
 interface IProps {
   children: ReactNode
-}
-
-interface IModalState {
-  openDepositModal: boolean,
-  setDepositModal: React.Dispatch<React.SetStateAction<boolean>>
-  openCalculatorModal: boolean,
-  setCalculatorModal: React.Dispatch<React.SetStateAction<boolean>>;
-  openPayModal: boolean;
-  setOpenPayModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // @ts-ignore
@@ -36,6 +29,5 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
 }
 
 export default PeyPeyContextProvider
-
-
+// a custom hook for exporting the context
 export const usePeyPeyContext = () => use(PeyPeyContext);

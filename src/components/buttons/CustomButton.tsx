@@ -17,7 +17,7 @@ const CustomButton = forwardRef(({ children, onClick, disabled, style, mouseEven
         onClick={onClick}
         onMouseOver={mouseEvent}
         onMouseLeave={mouseLeave}
-        className={`flex items-center justify-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] ${style} `}>
+        className={`flex items-center justify-center gap-[10px] text-white font-semibold ${disabled ? "cursor-not-allowed opacity-[.8]" : "cursor-pointer"} rounded-[10px] py-[6px] px-[10px] ${style} `}>
         { children }
     </button>
   )

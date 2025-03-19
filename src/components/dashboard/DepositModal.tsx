@@ -1,10 +1,38 @@
-import React from 'react'
+import { useRef, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
+import { useWriteContract, useAccount, useBalance } from 'wagmi'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
+        const inputRef = useRef<HTMLInputElement>(null)
+        const [depositAmount, setDepositAmount] = useState<string>("")
+        const { address } = useAccount()
+        const userBalance = useBalance({ chainId: 1, address, token: "0x" })
+
+        console.log("ref", inputRef.current?.textContent)
+
+        /**
+         * @dev depositing an underlying assets into a platform
+         */
+        const handleAssetsDeposit = () => {
+            
+        }
+
+        const handleBalanceSelection = (value: number) => {
+            // (userBalance / value) * 100;
+            inputRef.current?.focus();
+            let dividedAmount;
+
+            if(value == 50) {
+                dividedAmount = userBalance?.data && (Number(userBalance?.data?.value) / 50) * 100;
+                setDepositAmount("5")
+              } else if(value == 100) {
+                dividedAmount = userBalance?.data && (Number(userBalance?.data?.value) / 100) * 100;
+                setDepositAmount(String(dividedAmount))
+              }
+        }
 
   return (
       <div 
@@ -31,19 +59,25 @@ const DepositModal = () => {
               {/* deposit details */}
             <div className='w-full flex flex-col gap-[10px]'>
                 <h2 className="font-bold text-[1.2vmax]"> Amount {`(USDC)`} </h2>
-                <input type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-noe" />
+                <input 
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(e.target.value)}
+                    ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-noe" />
             </div>
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p> Available balance: </p>
               <aside>
                   <h4> 10,000 USDC </h4>
-                  <p className="text-[#11afb8] underline flex items-center gap-[3px]"> <span className="cursor-pointer"> 50% </span> | <span className="cursor-pointer"> 100% </span> </p>
+                  <p className="text-[#11afb8] underline flex items-center gap-[3px] "> 
+                    <span onClick={() => handleBalanceSelection(50)} className="cursor-pointer"> 50% </span> 
+                    | 
+                    <span onClick={() => handleBalanceSelection(100)} className="cursor-pointer"> 100% </span> </p>
               </aside>
             </div>
 
             <CustomButton
               onClick={() => {}}
-              disabled={false}
+              disabled={depositAmount.length <= 0 ? true : false}
               style={`bg-gradient`}
                     >
               <CreditCard className="" />
