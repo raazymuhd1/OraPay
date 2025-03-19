@@ -13,10 +13,10 @@ const QuickActions = () => {
     }
 
   return (
-    <aside className="w-[30%] h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
+    <aside className="lg:w-[30%] w-full h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
         <div>
-            <h3 className="font-bold text-[1.5vmax]"> Quick Actions </h3>
-            <p className="text-(--paraph-color)"> Common operations you can perform </p>
+            <h3 className="font-bold responsive-headerText"> Quick Actions </h3>
+            <p className="text-(--paraph-color) responsive-paraph"> Common operations you can perform </p>
         </div>
 
         {/* action buttons */}
@@ -31,7 +31,7 @@ const QuickActions = () => {
                   key={action.id} 
                   onClick={() => buttonClickHandler(action.id)}
                   disabled={false}
-                  style={` ${action.id == 1 ? "bg-gradient " : action.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] border-[#7f7f80]`}
+                  style={` ${action.id == 1 ? "bg-gradient " : action.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} responsive-btnText justify-start border-[1px] border-[#7f7f80]`}
                     >
                     <action.btnLogo className="" />
                     { action.title }

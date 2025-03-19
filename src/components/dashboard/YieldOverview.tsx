@@ -6,38 +6,38 @@ import { CustomButton } from "@/components"
 
 const YieldOverview = () => {
   return (
-    <div className="w-full h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
+    <div className="w-full lg:h-[300px] min-h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
         <aside>
-           <h3 className="font-bold text-[1.5vmax]"> Yield Overview </h3>
-           <p className="text-(--paraph-color)"> This overview shows your current yield generation and performance metrics. Use this to track how efficiently your deposits are working for you. </p>
+           <h3 className="font-bold responsive-headerTabs"> Yield Overview </h3>
+           <p className="text-(--paraph-color) responsive-paraph"> This overview shows your current yield generation and performance metrics. Use this to track how efficiently your deposits are working for you. </p>
         </aside>
 
-        <aside className="w-full flex items-center gap-[20px] mt-[20px]">
-          <div className="w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
+        <aside className="w-full flex items-center flex-wrap gap-[20px] mt-[20px]">
+          <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
-                  <h2 className="font-bold"> Current APY </h2>
+                  <h2 className="font-bold resp-headerCard"> Current APY </h2>
                   <p className="flex items-center text-[#11afb8] font-semibold"> <TbArrowBearRight /> 8.2% </p>
               </div>
                <div className="flex flex-col gap-[10px] mt-[10px]">
-                  <p className="text-(--paraph-color)"> Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average. </p>
-                  <p className="text-(--paraph-color) text-[.8vmax]">APY is variable and changes based on market conditions</p>
+                  <p className="text-(--paraph-color) resp-paraphCard"> Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average. </p>
+                  <p className="text-(--paraph-color) text-[1.5vmax] md:text-[.8vmax]">APY is variable and changes based on market conditions</p>
                </div>
           </div>
 
-          <div className="w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
+          <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
-                  <h2 className="font-bold"> YT Generation </h2>
+                  <h2 className="font-bold resp-headerCard"> YT Generation </h2>
                   <p className="flex items-center gap-[10px] text-[#11afb8] font-semibold"> +12.4 YT/day </p>
               </div>
              <div className="flex flex-col gap-[10px] mt-[10px]">
-                  <p className="text-(--paraph-color)">At the current rate, you are generating approximately 12.4 YT tokens per day from your deposits.</p>
+                  <p className="text-(--paraph-color) resp-paraphCard">At the current rate, you are generating approximately 12.4 YT tokens per day from your deposits.</p>
                   <CustomButton
                     onClick={() => {}}
                     disabled={false}
-                    style={`glass-card`}
+                    style={`glass-card responsive-btnText`}
                           >
                     View detailed analytics
-                  <MoveRight className="" />
+                  <MoveRight className="w-[15px]" />
                 </CustomButton>
             </div> 
 
