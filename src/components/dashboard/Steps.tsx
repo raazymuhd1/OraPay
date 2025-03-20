@@ -21,11 +21,11 @@ const Steps = () => {
           <div className="w-full flex items-center justify-between">
               <aside>
                 <h3 className="font-bold responsive-headerText"> Welcome to NoPeyPey </h3>
-                <p className="text-(--paraph-color) responsive-paraph "> The Buy Now, Pay Never protocol </p>
+                <p className="text-(--paraph-color) font-semibold responsive-paraph"> The Buy Now, Pay Never protocol </p>
               </aside>
 
               <h4 
-                className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] transition-[background] duration-500 cursor-pointer text-[1.5vmax] md:text-[1.3vmax]"> <CircleHelp className="w-[18px]" /> How it works </h4>
+                className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] transition-[background] duration-500 cursor-pointer text-[clamp(12px,1.5vw,16px)]"> <CircleHelp className="w-[18px]" /> How it works </h4>
           </div>
 
           {/* card items */}
@@ -34,10 +34,10 @@ const Steps = () => {
                 <div 
                     key={step.id}
                     className="flex flex-col gap-[10px] lg:w-[30%] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
-                  <h3 className="text-[1.9vmax] md:text-[1.5vmax] font-bold"> Step {step.id}: {step.title} </h3>
-                  <p className="text-(--paraph-color) font-medium text-[1.5vmax] md:text-[1.3vmax]"> { step.desc } </p>  
+                  <h3 className="text-[clamp(16px,1vw,18px)] font-bold"> Step {step.id}: {step.title} </h3>
+                  <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)]"> { step.desc } </p>  
                   { step.btnText.toLowerCase() == "browse marketplace" 
-                      ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-[1.5vmax] md:text-[2.5vmax] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] responsive-btnText" >
+                      ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] text-[clamp(14px,1vw,16px)]" >
                         <LuChartNoAxesColumn className='' />
                         {step.btnText} 
                         </Link> 
@@ -45,7 +45,7 @@ const Steps = () => {
                             key={step.id} 
                             onClick={() => buttonClickHandler(step.id)}
                             disabled={false}
-                            style={` ${step.id == 1 ? "bg-gradient " : step.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] responsive-btnText border-[#7f7f80]`}
+                            style={` ${step.id == 1 ? "bg-gradient " : step.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] text-[clamp(14px,1vw,16px)] border-[#7f7f80]`}
                               >
                               <step.BtnLogo className="w-[15px]" />
                               { step.title }

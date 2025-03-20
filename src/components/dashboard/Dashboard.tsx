@@ -11,9 +11,9 @@ const Dashboard = () => {
 
   return (
     <section className="flex flex-col w-full gap-[40px] pb-[40px]">
-       <div className="flex w-full flex-col gap-[20px] items-center mt-[40px]">
-         <h2 className="text-[3.5vmax] md:text-[3vmax] font-bold"> Your Portfolio </h2>
-         <p className="text-[2vmax] md:text-[1.5vmax] font-semibold text-(--paraph-color)"> Track your deposits, yields, and token holdings in one place </p>
+       <div className="flex w-[80%] flex-col gap-[20px] mx-auto items-center mt-[40px]">
+         <h2 className="page-headerText font-bold"> Your Portfolio </h2>
+         <p className="page-paraphText font-semibold text-(--paraph-color)"> Track your deposits, yields, and token holdings in one place </p>
        </div>
 
         {/* steps */}

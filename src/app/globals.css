@@ -38,19 +38,27 @@
 
 @layer {
    .responsive-headerText {
-     @apply lg:text-[1.5vmax] md:text-[2.3vmax] text-[2vmax];
+     @apply text-[clamp(16px,3vw,18px)];
    }
 
    .responsive-paraph {
-    @apply lg:text-[1vmax] sm:text-[1.5vmax] md:text-[1.9vmax] text-[1.9vmax];
+    @apply text-[clamp(14px,2vw,16px)];
    }
 
    .responsive-btnText {
-     @apply text-[1.5vmax] lg:text-[1vmax];
+     @apply text-[clamp(14px,1vw,16px)];
    }
 
    /* dashboard tabs */
    @layer {
+      .page-headerText {
+         @apply text-[clamp(25px,5vw,35px)];
+      }
+
+      .page-paraphText {
+         @apply text-[clamp(16px,2vw,22px)];
+      }
+
      .responsive-headerTabs {
         @apply text-[2.4vmax] md:text-[2.4vmax] lg:text-[1.5vmax];
      }
@@ -60,7 +68,7 @@
      }
 
      .resp-headerCard {
-        @apply text-[2vmax] md:text-[1.7vmax] lg:text-[.9vmax];
+        @apply text-[clamp(14px,1vw,18px)];
      }
 
      .resp-paraphCard {
