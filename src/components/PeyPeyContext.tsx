@@ -18,7 +18,8 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
          id: 0,
          title: "",
          desc: "", 
-         price: ""
+         price: "",
+         tag: ""
       });
 
   return (

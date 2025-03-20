@@ -4,7 +4,7 @@ import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
 
 const PaymentModal = () => {
-        const { openPayModal, setOpenPayModal } = usePeyPeyContext()
+        const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
 
    const handleItemDetails = (title: string, value: string) => {
        return (
@@ -35,7 +35,7 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[70%] w-[60%] lg:w-[30%] mx-auto translate-y-[100px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[25px] p-[20px] overflow-y-scroll">
+        <div className="flex h-[70%] w-[60%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[100px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[25px] p-[20px] overflow-y-scroll">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
@@ -46,10 +46,10 @@ const PaymentModal = () => {
                 <X className="w-[20px] cursor-pointer" onClick={() => setOpenPayModal(false)} />
             </div>
 
-            <div className="flex flex-col gap-[10px] border-b-[1px] border-[rgba(255, 255, 255, 0.125)] p-[10px]">
-              { handleItemDetails("Item", "Home Furniture Set") }
-              { handleItemDetails("Price", "129.99") }
-              { handleItemDetails("Source", "HomeStyle") }
+            <div className="w-full flex flex-col gap-[10px] border-b-[1px] border-[rgba(255, 255, 255, 0.125)] p-[10px]">
+              { handleItemDetails("Item", selectedProduct.title) }
+              { handleItemDetails("Price", `$${selectedProduct.price}`) }
+              { handleItemDetails("Source", selectedProduct.tag) }
             </div>
 
             <h2 className="font-bold responsive-headerText"> Payment Methods </h2>

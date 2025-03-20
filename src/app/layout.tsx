@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header, PeyPeyContextProvider, Web3Provider } from "@/components"
+import { Header, PeyPeyContextProvider, Web3Provider, ConnectWallet } from "@/components"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +32,7 @@ export default function RootLayout({
             >
               <Header />
               {children}
+              <ConnectWallet />
             </body>
         </PeyPeyContextProvider>
       </Web3Provider>

@@ -30,7 +30,7 @@ const Links = () => {
                             style={`bg-gradient min-w-[fit-content]`}
                           >
                             <LuWallet size={20}/>
-                            { isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}
+                            { isConnecting ? "Connecting" : isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}
                         </CustomButton>
                } }
             </ConnectKitButton.Custom>

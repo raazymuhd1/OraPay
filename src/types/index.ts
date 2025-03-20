@@ -5,6 +5,7 @@ interface IProduct {
     title: string;
     desc: string;
     price: string;
+    tag: string;
 }
 
 export interface IModalState {
