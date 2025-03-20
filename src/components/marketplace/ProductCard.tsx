@@ -24,12 +24,12 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
             <div className="h-[50%] flex flex-col gap-[10px] w-full">
               <div className="flex items-center w-full justify-between
               ">
-                  <h2 className="font-bold text-[1.9vmax] lg:text-[1.2vmax] w-[70%]"> { title } </h2>
-                  <p className="text-[#11afb8] font-bold text-[1.9vmax] lg:text-[1.2vmax]"> ${ price } </p>
+                  <h2 className="font-bold resp-headerCard w-[70%]"> { title } </h2>
+                  <p className="text-[#11afb8] resp-headerCard font-bold text-[1.9vmax] lg:text-[1.2vmax]"> ${ price } </p>
               </div>
 
-              <p className="text-[1.7vmax] lg:text-[1vmax] text-[#7f7f80]"> {desc} </p>
-              <p className="flex items-center text-[#7f7f80] text-[1.5vmax] lg:text-[.8vmax] font-semibold">  <Tag className="w-[10px]" /> {tag} </p>
+              <p className="resp-paraphCard text-[#7f7f80]"> {desc} </p>
+              <p className="flex items-center text-[#7f7f80] text-[clamp(10px,1vw,14px)] font-semibold">  <Tag className="w-[10px]" /> {tag} </p>
             </div>
 
               {/* action button */}

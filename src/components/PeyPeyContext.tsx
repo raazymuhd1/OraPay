@@ -14,13 +14,20 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
       const [openDepositModal, setDepositModal] = useState<boolean>(false)
       const [openCalculatorModal, setCalculatorModal] = useState<boolean>(false)
       const [openPayModal, setOpenPayModal] = useState<boolean>(false)
+      const [selectedProduct, setSelectedProduct] = useState({
+         id: 0,
+         title: "",
+         desc: "", 
+         price: ""
+      });
 
   return (
     <PeyPeyContext.Provider
       value={{
          openDepositModal, setDepositModal,
         openCalculatorModal, setCalculatorModal,
-        openPayModal, setOpenPayModal
+        openPayModal, setOpenPayModal,
+        selectedProduct, setSelectedProduct
       }}
     >
       { children }

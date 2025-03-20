@@ -72,7 +72,7 @@
      }
 
      .resp-paraphCard {
-        @apply text-[1.7vmax] md:text-[1.1vmax] lg:text-[.8vmax];
+        @apply text-[clamp(12px,1vw,16px)];
      }
    }
 }

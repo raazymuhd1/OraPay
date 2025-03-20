@@ -40,7 +40,7 @@ const PaymentModal = () => {
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
                     <h2 className="font-bold responsive-headerText"> Choose Payment Method </h2>
-                    <p className="font-normal responsive-paraph"> Select how you'd like to pay for this purchase </p>
+                    <p className="font-semibold text-(--paraph-color) responsive-paraph"> Select how you'd like to pay for this purchase </p>
                 </div>
 
                 <X className="w-[20px] cursor-pointer" onClick={() => setOpenPayModal(false)} />
@@ -59,12 +59,12 @@ const PaymentModal = () => {
 
                     <div className="flex flex-col gap-[10px]">
                         <aside className="flex w-full items-center gap-[10px] cursor-pointer justify-between">
-                            <h3> Buy Now, Pay Never </h3>
+                            <h3 className="font-bold"> Buy Now, Pay Never </h3>
                             <h3 className="font-bold text-[#11afb8]"> Recommended </h3>
                         </aside>
 
                         <div className="w-full flex flex-col gap-[15px]">
-                          <p> Pay using your future yield without upfront payment. We'll allocate a portion of your yield to cover this purchase over time. </p>
+                          <p className="text-(--paraph-color) font-semibold"> Pay using your future yield without upfront payment. We'll allocate a portion of your yield to cover this purchase over time. </p>
                           {/* separator */}
                           <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
