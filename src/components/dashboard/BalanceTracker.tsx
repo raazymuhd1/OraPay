@@ -15,7 +15,7 @@ const BalanceTracker = () => {
               <p className="text-(--paraph-color) font-semibold responsive-paraph"> Track your deposit and token holdings </p>
             </aside>
 
-            <h4 className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] hover:text-[#fff]   transition-[background] duration-500 cursor-pointer text-[#11afb8] text-[1.5vmax] md:text-[1.3vmax]"> <MdArrowOutward className="w-[18px]" /> Manage </h4>
+            <h4 className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] hover:text-[#fff]   transition-[background] duration-500 cursor-pointer text-[#11afb8] text-[clamp(14px),1vw,16px]"> <MdArrowOutward className="w-[18px]" /> Manage </h4>
         </div>
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap justify-center gap-[20px] mt-[10px]">

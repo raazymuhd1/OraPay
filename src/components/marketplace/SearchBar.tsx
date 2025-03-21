@@ -15,7 +15,7 @@ const SearchBar = () => {
                Filter
             </div>
 
-            <div className="w-[fit-content] whitespace-nowrap flex items-center gap-[10px] cursor-pointer bg-brown border-[1px] border-[#202021] rounded-[15px] py-[5px] text-[clamp(14px,1vw,16px)]">
+            <div className="w-[fit-content] whitespace-nowrap flex items-center gap-[10px] cursor-pointer bg-brown border-[1px] border-[#202021] rounded-[15px] py-[5px] px-[10px] text-[clamp(14px,1vw,16px)]">
                <ShoppingBag className="w-[15px]" />
                Your orders
             </div>

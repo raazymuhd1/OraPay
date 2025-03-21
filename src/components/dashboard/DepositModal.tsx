@@ -3,6 +3,7 @@ import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWriteContract, useAccount, useBalance } from 'wagmi'
+import toast from "react-hot-toast"
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
@@ -16,7 +17,11 @@ const DepositModal = () => {
          * @dev depositing an underlying assets into a platform
          */
         const handleAssetsDeposit = () => {
-            
+            if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                toast.error("please kindly connect your wallet before proceeding..", {
+                   position: "top-right"
+                })
+            }
         }
 
         const handleBalanceSelection = (value: number) => {
@@ -75,7 +80,7 @@ const DepositModal = () => {
             </div>
 
             <CustomButton
-              onClick={() => {}}
+              onClick={() => handleAssetsDeposit}
               disabled={depositAmount.length <= 0 ? true : false}
               style={`bg-gradient`}
                     >

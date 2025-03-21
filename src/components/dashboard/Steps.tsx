@@ -36,6 +36,7 @@ const Steps = () => {
                     className="flex flex-col gap-[10px] lg:w-[30%] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
                   <h3 className="text-[clamp(16px,1vw,18px)] font-bold"> Step {step.id}: {step.title} </h3>
                   <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)]"> { step.desc } </p>  
+
                   { step.btnText.toLowerCase() == "browse marketplace" 
                       ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] text-[clamp(14px,1vw,16px)]" >
                         <LuChartNoAxesColumn className='' />
@@ -45,7 +46,7 @@ const Steps = () => {
                             key={step.id} 
                             onClick={() => buttonClickHandler(step.id)}
                             disabled={false}
-                            style={` ${step.id == 1 ? "bg-gradient " : step.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} justify-start border-[1px] text-[clamp(14px,1vw,16px)] border-[#7f7f80]`}
+                            style={` ${step.id == 1 ? "bg-gradient " : step.id == 2 ? "bg-[rgba(9,9,11,255)]" : "glass-card"} justify-start border-[1px] text-[clamp(14px,1vw,16px)] border-[#7f7f80]`}
                               >
                               <step.BtnLogo className="w-[15px]" />
                               { step.title }
