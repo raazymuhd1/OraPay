@@ -8,10 +8,9 @@ const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
-        const { address } = useAccount()
-        const userBalance = useBalance({ chainId: 1, address, token: "0x" })
+        const { address: userAddr } = useAccount()
+        const userBalance = useBalance({ chainId: 1, address: userAddr, token: "0x" })
 
-        console.log("ref", inputRef.current?.textContent)
 
         /**
          * @dev depositing an underlying assets into a platform

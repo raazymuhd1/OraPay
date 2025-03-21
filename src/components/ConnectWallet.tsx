@@ -1,16 +1,33 @@
 "use client"
-import {useState} from 'react'
+import {useState, useEffect, ReactNode} from 'react'
 import { ConnectKitButton } from 'connectkit'
+import { useAccount } from 'wagmi'
 import { CustomButton } from "@/components"
 import { LuWallet } from "react-icons/lu";
 
+interface IProps {
+    children: ReactNode;
+}
+
 const ConnectWallet = () => {
     const [walletConnect, setWalletConnect] = useState(true)
+    const { address: userAddr } = useAccount();
     const [connectionStatus, setConnectionStatus] = useState({
         isConnected: false
     })    
 
-    console.log(connectionStatus.isConnected)
+    useEffect(() => {
+        const handleModalClosing = () => {
+            if(userAddr?.length! > 0 && typeof userAddr != "undefined") {
+                setConnectionStatus({
+                    isConnected: true
+                })
+                setWalletConnect(false)
+            }
+        }
+
+        handleModalClosing()
+    }, [userAddr])
 
   return (
     <div className={`transition-all duration-500 ${!walletConnect ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `} >

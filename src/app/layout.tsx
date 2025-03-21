@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import {  ReactNode } from "react"
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header, PeyPeyContextProvider, Web3Provider, ConnectWallet } from "@/components"
@@ -23,6 +24,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // const handleGlobalWalletModal = (): ReactNode => {
+  //     return <ConnectWallet />
+  // }
+
   return (
     <html lang="en">
       <Web3Provider>

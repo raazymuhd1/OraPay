@@ -18,14 +18,20 @@ const MobileLinks = ({showNav, updateShowNav}: IProps) => {
      console.log("showing mobile nav", showNav)
 
   return (
-    <ul className={`flex flex-col fixed top-[100px] right-0 h-[400px] bg-[red] z-[22] w-full gap-[40px] ${showNav ? "opacity-1 translate-x-[0]" : "hidden opacity-0 translate-x-[-100px]"}`}>
-                { navbarLists.map(list => (
-                    <Link
-                      className={`cursor-pointer ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"}`}
-                      key={list.id} href={list.url || "/"}> 
-                      { list.title } 
-                    </Link>
-                )) }
+    <ul className={`bg-[rgba(9,9,11,255)] z-[22] w-full gap-[40px] ${showNav ? "opacity-[1] flex flex-col fixed top-[0] h-[35vh] right-0 translate-y-0" : "translate-y-[-350px] h-0 w-0"} p-[20px] transition-all duration-500`}>
+                <div className="w-full flex justify-between">
+                  <div className="flex flex-col gap-[20px]">
+                    { navbarLists.map(list => (
+                        <Link
+                          className={`cursor-pointer  font-bold ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"} hover:bg-[#2caec5] py-[6px] px-[10px] rounded-[10px] `}
+                          key={list.id} href={list.url || "/"}> 
+                          { list.title } 
+                        </Link>
+                    )) }
+                  </div>
+
+                  <X onClick={() => updateShowNav(false)} className="cursor-pointer" />
+                </div>
                 <ConnectKitButton.Custom >
                    { ({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
                        return  <CustomButton

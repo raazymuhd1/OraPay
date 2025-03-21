@@ -17,14 +17,14 @@ const Trade = () => {
    }
 
   return (
-    <div className="w-full h-screen flex flex-col items-center gap-[20px] justify-center">
+    <div className="w-full h-full p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
-         <div className="flex w-[80%]mx-auto flex-col gap-[20px] items-center mt-[40px]">
+         <div className="flex w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
             <h2 className="page-headerText font-bold"> Trade </h2>
             <p className="page-paraphText font-semibold text-[#7f7f80]"> Swap between PT, YT tokens and stablecoins </p>
        </div>
 
-       <div className="bg-brown lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
+       <div className="bg-brown xl:w-[30%] lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
           <aside className="flex flex-col gap-[10px]">
               <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
               <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
