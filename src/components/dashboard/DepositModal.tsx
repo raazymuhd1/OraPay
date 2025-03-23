@@ -4,6 +4,7 @@ import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWriteContract, useAccount, useBalance } from 'wagmi'
 import toast from "react-hot-toast"
+import CustomWalletConnect from '../header/CustomWalletConnect'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
@@ -79,14 +80,19 @@ const DepositModal = () => {
               </aside>
             </div>
 
-            <CustomButton
-              onClick={() => handleAssetsDeposit}
-              disabled={depositAmount.length <= 0 ? true : false}
-              style={`bg-gradient`}
-                    >
-              <CreditCard className="" />
-                Deposit Now
-          </CustomButton>
+            {/* action buttons */}
+            {  userAddr ?  
+                <CustomButton
+                    onClick={() => handleAssetsDeposit}
+                    disabled={depositAmount.length <= 0 ? true : false}
+                    style={`bg-gradient`}
+                          >
+                    <CreditCard className="" />
+                      Deposit Now
+                </CustomButton> 
+                  :   
+                <CustomWalletConnect />
+            }
         </div>
 
 

@@ -39,7 +39,7 @@ export default function RootLayout({
             >
               <Header />
               {children}
-              <ConnectWallet />
+              {/* <ConnectWallet /> */}
               <Toaster />
             </body>
         </PeyPeyContextProvider>

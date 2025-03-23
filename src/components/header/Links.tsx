@@ -6,6 +6,7 @@ import { ConnectKitButton } from 'connectkit'
 import { useAccount } from 'wagmi'
 import { LuWallet } from "react-icons/lu";
 import {  usePathname  } from 'next/navigation'
+import CustomWalletConnect from "./CustomWalletConnect"
 
 const Links = () => {
     const path = usePathname()
@@ -21,18 +22,8 @@ const Links = () => {
                   { list.title } 
                 </Link>
             )) }
-            <ConnectKitButton.Custom >
-               { ({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
-                   return  <CustomButton
-                            onClick={show}
-                            disabled={false}
-                            style={`bg-gradient min-w-[fit-content]`}
-                          >
-                            <LuWallet size={20}/>
-                            { isConnecting ? "Connecting" : isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}
-                        </CustomButton>
-               } }
-            </ConnectKitButton.Custom>
+            
+          <CustomWalletConnect />
     </ul>
   )
 }
