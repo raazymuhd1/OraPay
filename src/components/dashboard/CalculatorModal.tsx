@@ -2,9 +2,12 @@ import React from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
+import { useAccount, useWriteContract, useReadContract } from "wagmi"
+import CustomWalletConnect from '../header/CustomWalletConnect'
 
 const DepositModal = () => {
         const { setCalculatorModal, openCalculatorModal, setDepositModal} = usePeyPeyContext()
+        const { address: userAddr } = useAccount()
 
      const handleItemDetails = (title: string, value: string) => {
        return (
@@ -55,35 +58,40 @@ const DepositModal = () => {
                   <div className="w-full h-[1px] bg-[#7f7f80]" />
                   <div>
                       <h4 className="font-semibold resp-headerCard"> What you can do with this yield: </h4>
-                      <p className="font-medium resp-paraphCard text-(--paraph-color)"> Increase your deposit amountor time period to see what you can buy </p>
+                      <p className="font-medium resp-paraphCard text-(--paraph-color)"> Increase your deposit amount or time period to see what you can buy </p>
                   </div>
                 </div>
             </div>
 
-            <div className="w-full flex items-center justify-end gap-[15px]">
-                {/* action buttons*/}
-                <CustomButton
-                  onClick={() => setCalculatorModal(false)}
-                  disabled={false}
-                  style={`bg-[rgba(9,9,11,255)] responsive-btnText`}
-                        >
-                  <X className="w-[15px]" />
-                   Close
-              </CustomButton>
-                <CustomButton
+            { userAddr ? 
+            
+                 <div className="w-full flex items-center justify-end gap-[15px]">
+                      {/* action buttons*/}
+                      <CustomButton
+                        onClick={() => setCalculatorModal(false)}
+                        disabled={false}
+                        style={`bg-[rgba(9,9,11,255)] responsive-btnText`}
+                              >
+                        <X className="w-[15px]" />
+                        Close
+                    </CustomButton>
+                      <CustomButton
 
-                  onClick={() => {
-                      setCalculatorModal(false)
-                      setDepositModal(true)
-                  }}
-                  disabled={false}
-                  style={`bg-gradient responsive-btnText`}
-                        >
-                  <CreditCard className="w-[15px]" />
-                    Deposit Now
-              </CustomButton>
+                        onClick={() => {
+                            setCalculatorModal(false)
+                            setDepositModal(true)
+                        }}
+                        disabled={false}
+                        style={`bg-gradient responsive-btnText`}
+                              >
+                        <CreditCard className="w-[15px]" />
+                          Deposit Now
+                    </CustomButton>
+                </div>
+                :
+                <CustomWalletConnect />
+            }
 
-            </div>
         </div>
 
 

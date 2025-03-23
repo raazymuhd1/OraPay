@@ -16,16 +16,13 @@ const config = createConfig(
     transports: {
       // RPC URL for each chain
       [mainnet.id]: http(
-        `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
+        `https://eth.llamarpc.com`,
       ),
     },
-
     // Required API Keys
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECTKIT as string,
-
     // Required App Info
     appName: "NoPeyPey",
-
     // Optional App Info
     appDescription: "Buy Now, Pay Never",
     appUrl: "https://nopeypey.vercel.app/", // your app's url

@@ -2,9 +2,10 @@ import { useRef, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWriteContract, useAccount, useBalance } from 'wagmi'
+import { useWriteContract, useReadContract, useAccount, useBalance } from 'wagmi'
 import toast from "react-hot-toast"
 import CustomWalletConnect from '../header/CustomWalletConnect'
+import { erc20Abi } from 'viem'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
@@ -12,7 +13,14 @@ const DepositModal = () => {
         const [depositAmount, setDepositAmount] = useState<string>("")
         const { address: userAddr } = useAccount()
         const userBalance = useBalance({ chainId: 1, address: userAddr, token: "0x" })
+        const result = useReadContract({
+           abi: erc20Abi,
+           address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+           functionName: "name"
+        })
 
+          console.log(userBalance.data)
+          console.log("token name", result.data)
 
         /**
          * @dev depositing an underlying assets into a platform

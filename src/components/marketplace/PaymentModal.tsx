@@ -2,9 +2,13 @@ import { Dispatch, SetStateAction } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
+import { useAccount } from 'wagmi'
+import CustomWalletConnect from '../header/CustomWalletConnect'
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
+        const { address: userAddr } = useAccount()
+
 
    const handleItemDetails = (title: string, value: string) => {
        return (
@@ -76,14 +80,18 @@ const PaymentModal = () => {
                 </div>
             </div>
 
-               <CustomButton
-                  onClick={() => {}}
-                  disabled={false}
-                  style={`bg-gradient`}
-                        >
-                  <CreditCard className="" />
-                   Pay Now
-              </CustomButton>
+              { userAddr ? 
+                <CustomButton
+                    onClick={() => {}}
+                    disabled={false}
+                    style={`bg-gradient`}
+                          >
+                    <CreditCard className="" />
+                    Pay Now
+                </CustomButton>
+                :
+                <CustomWalletConnect />
+              }
         </div>
 
 
