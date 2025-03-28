@@ -62,4 +62,14 @@ const marketplaceDatas = {
     ] 
 }
 
-export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas}
+// contracts details
+const allContracts = {
+   fundsVault: { address: '0x310E7DAEA5f4F4037ED4b96e013daA8E3084B2Eb', abi: "" },
+   treasury: { address: '0x4E29dd2E75F66441f35Ad6Cd814a6D8004d49C58', abi: "" },
+   yieldToken: { address: '0xDb2aCEb7eBdc4af837018F5f4880587DB7E6D55D', abi: "" },
+   principalToken: { address: '0xEF735f2a1012C7f040A73A5878508c2bD2638613', abi: "" },
+   mockUsdc: { address: '0x1fA4218847A4E8F8839AA1E06eE295563b3E5727', abi: "" },
+   mockAavePool: { address: '0xc0a2F87Bd4c926048a722791Aa73ffbaD3D72C27', abi: "" },
+}
+
+export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts}
