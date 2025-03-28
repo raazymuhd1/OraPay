@@ -66,12 +66,12 @@ const marketplaceDatas = {
 
 // contracts details
 const allContracts = {
-   fundsVault: { address: '0x310E7DAEA5f4F4037ED4b96e013daA8E3084B2Eb', abi: Vault.abi },
-   treasury: { address: '0x4E29dd2E75F66441f35Ad6Cd814a6D8004d49C58', abi: "" },
-   yieldToken: { address: '0xDb2aCEb7eBdc4af837018F5f4880587DB7E6D55D', abi: "" },
-   principalToken: { address: '0xEF735f2a1012C7f040A73A5878508c2bD2638613', abi: "" },
-   mockUsdc: { address: '0x1fA4218847A4E8F8839AA1E06eE295563b3E5727', abi: MockUsdc.abi },
-   mockAavePool: { address: '0xc0a2F87Bd4c926048a722791Aa73ffbaD3D72C27', abi: "" },
+   fundsVault: { address: '0xf99A974B779D33ae6a2660fc3c7B655c3576a50C', abi: Vault.abi },
+   treasury: { address: '0x0e6De35d1975c9D0d9f0a0aFE157cD51ffA57dA0', abi: "" },
+   yieldToken: { address: '0xbD0E32CcDBa67c7058dF5C2B0B29dF2869a048A1', abi: "" },
+   principalToken: { address: '0xc484175bD0cf2440BDE014739454e6d908c56730', abi: "" },
+   mockUsdc: { address: '0x7dd3706ed233E18a0B3a35eE1d715DcEDaC8723F', abi: MockUsdc.abi },
+   mockAavePool: { address: '0x9e0bF096E16C769d80131cd5B3FD2Fe1dE4AbE8D', abi: "" },
 }
 
 export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts}

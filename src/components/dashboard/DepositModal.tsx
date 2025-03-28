@@ -23,9 +23,6 @@ const DepositModal = () => {
            functionName: "name"
           })
 
-          console.log(userBalance.data)
-          console.log("token name", result.data)
-
         /**
          * @dev depositing an underlying assets into a platform
          */
@@ -43,6 +40,7 @@ const DepositModal = () => {
               args: [Number(depositAmount) * 10**6],
               gas: BigInt("3000000")
             })
+
         }
 
         const handleTokenApproval = () => {
