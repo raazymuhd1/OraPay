@@ -6,18 +6,22 @@ import { useWriteContract, useReadContract, useAccount, useBalance } from 'wagmi
 import toast from "react-hot-toast"
 import CustomWalletConnect from '../header/CustomWalletConnect'
 import { erc20Abi } from 'viem'
+import { allContracts } from '@/constants'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
+        const [isApproved, setIsApproved] = useState(false)
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
         const { address: userAddr } = useAccount()
-        const userBalance = useBalance({ chainId: 1, address: userAddr, token: "0x" })
+        const { writeContract } = useWriteContract();
+        const { fundsVault, mockUsdc } = allContracts;
+        const userBalance = useBalance({ chainId: 11155111, address: userAddr, token: mockUsdc.address as `0x${string}` })
         const result = useReadContract({
-           abi: erc20Abi,
-           address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+           abi: fundsVault.abi,
+           address: fundsVault.address as `0x${string}`,
            functionName: "name"
-        })
+          })
 
           console.log(userBalance.data)
           console.log("token name", result.data)
@@ -31,6 +35,25 @@ const DepositModal = () => {
                    position: "top-right"
                 })
             }
+
+            writeContract({
+              abi: fundsVault.abi,
+              address: fundsVault.address as `0x${string}`,
+              functionName: "deposit",
+              args: [Number(depositAmount) * 10**6],
+              gas: BigInt("3000000")
+            })
+        }
+
+        const handleTokenApproval = () => {
+             const result =  writeContract({
+                abi: mockUsdc.abi,
+                address: mockUsdc.address as `0x${string}`,
+                functionName: "approve",
+                args: [fundsVault.address, Number(depositAmount) * 10**6],
+            })
+            console.log(result)
+             setIsApproved(true)
         }
 
         const handleBalanceSelection = (value: number) => {
@@ -91,12 +114,12 @@ const DepositModal = () => {
             {/* action buttons */}
             {  userAddr ?  
                 <CustomButton
-                    onClick={() => handleAssetsDeposit}
+                    onClick={() => isApproved ? handleAssetsDeposit() : handleTokenApproval()}
                     disabled={depositAmount.length <= 0 ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
-                      Deposit Now
+                     { !isApproved ? "Approve" : "Deposit Now" }
                 </CustomButton> 
                   :   
                 <CustomWalletConnect />

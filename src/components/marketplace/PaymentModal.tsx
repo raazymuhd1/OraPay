@@ -1,13 +1,29 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
-import { useAccount } from 'wagmi'
+import { useAccount, useWriteContract } from 'wagmi'
 import CustomWalletConnect from '../header/CustomWalletConnect'
+import { allContracts } from '@/constants'
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
         const { address: userAddr } = useAccount()
+        const [requiredDepo, setRequiredDepo] = useState("50")
+        const [estYield, setEstYield] = useState("10");
+        const { fundsVault, mockUsdc } = allContracts
+        const {writeContract} = useWriteContract();
+
+        const payPurchasedItem = () => {
+           const result = writeContract({
+              abi: fundsVault.abi,
+              address: fundsVault.address as `0x${string}` ,
+              functionName: "payMerchant",
+              args: [requiredDepo, "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
+            })
+
+            console.log(result)
+        }
 
 
    const handleItemDetails = (title: string, value: string) => {
@@ -73,8 +89,8 @@ const PaymentModal = () => {
                           <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
                           {/* deposit details */}
-                          { handleDepositDetails("Required Deposit", "650 PT") }
-                          { handleDepositDetails("Estimated Yield", "129.99 YT / month") }
+                          { handleDepositDetails("Required Deposit", `${requiredDepo}PT`) }
+                          { handleDepositDetails("Estimated Yield", `${estYield}YT / Month`) }
                         </div>
                     </div>
                 </div>
@@ -82,7 +98,7 @@ const PaymentModal = () => {
 
               { userAddr ? 
                 <CustomButton
-                    onClick={() => {}}
+                    onClick={() => payPurchasedItem()}
                     disabled={false}
                     style={`bg-gradient`}
                           >
