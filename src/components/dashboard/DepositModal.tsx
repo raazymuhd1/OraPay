@@ -17,11 +17,7 @@ const DepositModal = () => {
         const { writeContract } = useWriteContract();
         const { fundsVault, mockUsdc } = allContracts;
         const userBalance = useBalance({ chainId: 11155111, address: userAddr, token: mockUsdc.address as `0x${string}` })
-        const result = useReadContract({
-           abi: fundsVault.abi,
-           address: fundsVault.address as `0x${string}`,
-           functionName: "name"
-          })
+       
 
         /**
          * @dev depositing an underlying assets into a platform
@@ -44,7 +40,7 @@ const DepositModal = () => {
                   args,
                   gas: BigInt("3000000")
               })
-              console.log(result)
+              // console.log(result)
 
             } catch(err) {
                 console.log(err)
