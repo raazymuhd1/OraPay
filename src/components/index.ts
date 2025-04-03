@@ -15,3 +15,4 @@ export { default as Web3Provider } from "./Web3Provider"
 
 // global wallet connect
 export { default as ConnectWallet } from "./ConnectWallet"
+export { default as CustomConnectButton } from "./buttons/ConnectWallet"

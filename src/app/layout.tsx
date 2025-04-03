@@ -32,18 +32,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Web3Provider>
-        <PeyPeyContextProvider>
             <body
               className={`${geistSans.variable} ${geistMono.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
-            >
-              <Header />
-              {children}
-              {/* <ConnectWallet /> */}
-              <Toaster />
+              >
+              <Web3Provider>
+                <PeyPeyContextProvider>
+                  <Header />
+                  {children}
+                  {/* <ConnectWallet /> */}
+                  <Toaster />
+                </PeyPeyContextProvider>
+            </Web3Provider>
             </body>
-        </PeyPeyContextProvider>
-      </Web3Provider>
     </html>
   );
 }

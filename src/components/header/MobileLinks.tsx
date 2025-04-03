@@ -1,10 +1,9 @@
 import React, { SetStateAction, Dispatch } from 'react'
-import { ConnectKitButton } from 'connectkit'
+import { CustomConnectButton } from '@/components'
 import {  usePathname  } from 'next/navigation'
 import { navbarLists } from '@/constants'
 import Link from 'next/link'
 import { LuWallet } from "react-icons/lu";
-import { CustomButton } from "@/components"
 import { X } from 'lucide-react'
 
 interface IProps {
@@ -32,18 +31,7 @@ const MobileLinks = ({showNav, updateShowNav}: IProps) => {
 
                   <X onClick={() => updateShowNav(false)} className="cursor-pointer" />
                 </div>
-                <ConnectKitButton.Custom >
-                   { ({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
-                       return  <CustomButton
-                                onClick={show}
-                                disabled={false}
-                                style={`bg-gradient min-w-[fit-content]`}
-                              >
-                                <LuWallet size={20}/>
-                                { isConnected ? `${address?.slice(0, 5)}...${address?.slice(35, address?.length-1)}` : "Connect Wallet"}
-                            </CustomButton>
-                   } }
-                </ConnectKitButton.Custom>
+                <CustomConnectButton />
         </ul>
   )
 }

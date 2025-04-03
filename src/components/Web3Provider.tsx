@@ -1,44 +1,35 @@
 "use client"
+import '@rainbow-me/rainbowkit/styles.css';
 import { ReactNode } from "react";
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { ConnectKitProvider } from "connectkit";
+import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
 interface IProps {
     children: ReactNode;
 }
 
-const config = createConfig(
-  getDefaultConfig({
-    // Your dApps chains
-    chains: [mainnet],
-    transports: {
-      // RPC URL for each chain
-      [sepolia.id]: http(
-        `https://eth-sepolia.g.alchemy.com/v2/ebG2qNqkQ9BTV4EPazA-enTIlymdZaZ0`,
-      ),
-    },
-    // Required API Keys
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECTKIT as string,
-    // Required App Info
-    appName: "NoPeyPey",
-    // Optional App Info
-    appDescription: "Buy Now, Pay Never",
-    appUrl: "https://nopeypey.vercel.app/", // your app's url
-    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
-  }),
-);
+export const wagmiConfig = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+  ssr: true
+})
+
 
 const queryClient = new QueryClient();
 
 const Web3Provider = ({ children }: IProps) => {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider>
+        <RainbowKitProvider>
             {children}
-        </ConnectKitProvider>
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

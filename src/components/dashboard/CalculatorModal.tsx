@@ -3,7 +3,7 @@ import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useAccount, useWriteContract, useReadContract } from "wagmi"
-import CustomWalletConnect from '../header/CustomWalletConnect'
+import { CustomConnectButton } from '@/components'
 
 const DepositModal = () => {
         const { setCalculatorModal, openCalculatorModal, setDepositModal} = usePeyPeyContext()
@@ -89,7 +89,7 @@ const DepositModal = () => {
                     </CustomButton>
                 </div>
                 :
-                <CustomWalletConnect />
+                <CustomConnectButton />
             }
 
         </div>

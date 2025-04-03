@@ -1,12 +1,9 @@
 import React from 'react'
 import { navbarLists } from '@/constants'
-import { CustomButton } from "@/components"
 import Link from 'next/link'
-import { ConnectKitButton } from 'connectkit'
 import { useAccount } from 'wagmi'
-import { LuWallet } from "react-icons/lu";
 import {  usePathname  } from 'next/navigation'
-import CustomWalletConnect from "./CustomWalletConnect"
+import { CustomConnectButton } from "@/components"
 
 const Links = () => {
     const path = usePathname()
@@ -23,7 +20,7 @@ const Links = () => {
                 </Link>
             )) }
             
-          <CustomWalletConnect />
+          <CustomConnectButton />
     </ul>
   )
 }

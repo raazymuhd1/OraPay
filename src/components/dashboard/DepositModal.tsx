@@ -4,9 +4,9 @@ import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWriteContract, useReadContract, useAccount, useBalance } from 'wagmi'
 import toast from "react-hot-toast"
-import CustomWalletConnect from '../header/CustomWalletConnect'
 import { erc20Abi } from 'viem'
 import { allContracts } from '@/constants'
+import { CustomConnectButton } from '@/components'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
@@ -33,35 +33,33 @@ const DepositModal = () => {
                 })
             }
 
-            // try {
+            try {
               const lockPeriod = 10 * 86400; // 10 days
               const args = [Number(depositAmount) * 10**6, lockPeriod]
 
-              const result = writeContract({
-                abi: fundsVault.abi,
-                address: fundsVault.address as `0x${string}`,
-                functionName: "deposit",
-                args,
-                gas: BigInt("3000000")
+               writeContract({
+                  abi: fundsVault.abi,
+                  address: fundsVault.address as `0x${string}`,
+                  functionName: "deposit",
+                  args,
+                  gas: BigInt("3000000")
               })
-
               console.log(result)
 
-            // } catch(err) {
-                // console.log(err)
-            // }
+            } catch(err) {
+                console.log(err)
+            }
 
         }
 
-        const handleTokenApproval = () => {
+        const handleTokenApproval = (): void => {
              const result =  writeContract({
                 abi: mockUsdc.abi,
                 address: mockUsdc.address as `0x${string}`,
                 functionName: "approve",
                 args: [fundsVault.address, Number(depositAmount) * 10**6],
             })
-            console.log(result)
-             setIsApproved(true)
+             if(result?.data != "undefined") setIsApproved(true)
         }
 
         const handleBalanceSelection = (value: number) => {
@@ -122,7 +120,7 @@ const DepositModal = () => {
             {/* action buttons */}
             {  userAddr ?  
                 <CustomButton
-                    onClick={() => isApproved ? handleAssetsDeposit() : handleTokenApproval()}
+                    onClick={isApproved ? handleAssetsDeposit : handleTokenApproval}
                     disabled={depositAmount.length <= 0 ? true : false}
                     style={`bg-gradient`}
                           >
@@ -130,7 +128,7 @@ const DepositModal = () => {
                      { !isApproved ? "Approve" : "Deposit Now" }
                 </CustomButton> 
                   :   
-                <CustomWalletConnect />
+                <CustomConnectButton />
             }
         </div>
 
