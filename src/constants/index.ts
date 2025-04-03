@@ -1,7 +1,7 @@
 import { Plus, Calculator, CreditCard } from 'lucide-react'
 import { LuWallet, LuChartNoAxesColumn  } from "react-icons/lu";
 import { ImStack } from "react-icons/im";
-import { prod1, prod2, subs1, subs2, course1, course2 } from "@/assets"
+import { prod1, prod2, subs1, subs2, course1, course2, deposit, pay, trade } from "@/assets"
 import Vault from "../utils/abis/vault.json"
 import MockUsdc from "../utils/abis/mockUsdc.json"
 
@@ -13,9 +13,9 @@ const navbarLists = [
 ]
 
 const intros = [
-    { id: 0, title: "Deposit & Earn", desc: "Deposit your stablecoins and receive Principal Tokens (PT) to maintain your capital while earning yield." },
-    { id: 1, title: "Pay With Yield", desc: "Use your Yield Tokens (YT) as spending money—pay merchants without ever touching your principal." },
-    { id: 2, title: "Trade PT & TY", desc: "Easily swap between Principal and Yield tokens on our marketplace to optimize your strategy." },
+    { id: 0, title: "Deposit & Earn", desc: "Deposit your stablecoins and receive Principal Tokens (PT) to maintain your capital while earning yield.", img: deposit},
+    { id: 1, title: "Pay With Yield", desc: "Use your Yield Tokens (YT) as spending money—pay merchants without ever touching your principal.", img: pay },
+    { id: 2, title: "Trade PT & TY", desc: "Easily swap between Principal and Yield tokens on our marketplace to optimize your strategy.", img: trade },
 ]
 
 // dashboard
@@ -66,12 +66,12 @@ const marketplaceDatas = {
 
 // contracts details
 const allContracts = {
-   fundsVault: { address: '0xf99A974B779D33ae6a2660fc3c7B655c3576a50C', abi: Vault.abi },
-   treasury: { address: '0x0e6De35d1975c9D0d9f0a0aFE157cD51ffA57dA0', abi: "" },
-   yieldToken: { address: '0xbD0E32CcDBa67c7058dF5C2B0B29dF2869a048A1', abi: "" },
-   principalToken: { address: '0xc484175bD0cf2440BDE014739454e6d908c56730', abi: "" },
-   mockUsdc: { address: '0x7dd3706ed233E18a0B3a35eE1d715DcEDaC8723F', abi: MockUsdc.abi },
-   mockAavePool: { address: '0x9e0bF096E16C769d80131cd5B3FD2Fe1dE4AbE8D', abi: "" },
+   fundsVault: { address: '0x107a23Cf1eF466365F62E62fA00C4BBE16f50D2d', abi: Vault.abi },
+   treasury: { address: '0x88D053223A5748cf9B37A50290Fe364A2683BE94', abi: "" },
+   yieldToken: { address: '0x3740076C277564D365afF4d478e448A0520b60a5', abi: "" },
+   principalToken: { address: '0xe64aA4A962CD8c04724709a1ed9CdF2E27414486', abi: "" },
+   mockUsdc: { address: '0x313911a9cF6C7b03D062cF33D747F82d98f30C26', abi: MockUsdc.abi },
+   mockAavePool: { address: '0x3e8BBbb500bDA5CB334911e54B430d61555DD128', abi: "" },
 }
 
 export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts}

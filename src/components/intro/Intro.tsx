@@ -1,5 +1,6 @@
 import React from 'react'
 import { intros } from '@/constants'
+import Image from "next/image"
 
 const Intro = () => {
   return (
@@ -17,6 +18,7 @@ const Intro = () => {
             { intros.map(intro => (
                 <div key={intro.id} 
                     className="flex flex-col gap-[10px] basis-[200px] lg:basis-[400px] border-[1px] border-[#7f7f80] h-[250px] rounded-[20px] p-[20px] hover:translate-y-[-10px] transition-all duration-500 cursor-pointer intro-card glass-card">
+                    <Image src={intro.img} alt="" className="object-cover w-[40px] h-[40px]" />
                     <h3 className='font-bold text-[1.7vmax] lg:text-[1.2vmax]'> {intro.title} </h3>
                     <p className='font-semibold text-[#7f7f80] text-[1.5vmax] lg:text-[1vmax]'> {intro.desc} </p>
                 </div>

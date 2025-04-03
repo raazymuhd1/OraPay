@@ -1,10 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { balances } from "@/constants"
+import { useReadContract, useAccount } from 'wagmi';
+import { allContracts } from '@/constants';
 import { MdArrowOutward } from "react-icons/md";
 import { BsExclamation } from "react-icons/bs";
 
 const BalanceTracker = () => {
       const [userBalances, updateUserBalance] = useState(balances);
+      const { address: userAddr } = useAccount()
+      const [depositBalances, setDepositBalances] = useState({
+          deposited: "",
+          yieldBalance: "",
+          principalBalance: ""
+      })
+      const { fundsVault } = allContracts;
+      const holdingsResult = useReadContract({
+          abi: fundsVault.abi,
+          address: fundsVault.address as `0x${string}`,
+          functionName: 'getHoldings',
+          args: [userAddr]
+      })
+
+      console.log(holdingsResult.data)
+
+
+      // useEffect(() => {
+      //    const handleUserDepositedBalance = () => {
+      //       // const result = 
+      //    }
+      // }, [])
+
 
   return (
     <aside className="lg:w-[70%] w-full lg:h-[300px] min-h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">

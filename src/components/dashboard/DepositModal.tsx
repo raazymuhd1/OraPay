@@ -33,13 +33,23 @@ const DepositModal = () => {
                 })
             }
 
-            writeContract({
-              abi: fundsVault.abi,
-              address: fundsVault.address as `0x${string}`,
-              functionName: "deposit",
-              args: [Number(depositAmount) * 10**6],
-              gas: BigInt("3000000")
-            })
+            // try {
+              const lockPeriod = 10 * 86400; // 10 days
+              const args = [Number(depositAmount) * 10**6, lockPeriod]
+
+              const result = writeContract({
+                abi: fundsVault.abi,
+                address: fundsVault.address as `0x${string}`,
+                functionName: "deposit",
+                args,
+                gas: BigInt("3000000")
+              })
+
+              console.log(result)
+
+            // } catch(err) {
+                // console.log(err)
+            // }
 
         }
 
