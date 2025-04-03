@@ -33,14 +33,18 @@ const DepositModal = () => {
               const lockPeriod = 10 * 86400; // 10 days
               const args = [Number(depositAmount) * 10**6, lockPeriod]
 
-               writeContract({
+               const res = writeContract({
                   abi: fundsVault.abi,
                   address: fundsVault.address as `0x${string}`,
                   functionName: "deposit",
                   args,
                   gas: BigInt("3000000")
               })
-              // console.log(result)
+
+              if(res?.data) {
+                  console.log(res?.data)
+                  setDepositModal(false)
+              }
 
             } catch(err) {
                 console.log(err)
@@ -55,7 +59,11 @@ const DepositModal = () => {
                 functionName: "approve",
                 args: [fundsVault.address, Number(depositAmount) * 10**6],
             })
-             if(result?.data != "undefined") setIsApproved(true)
+
+            if(result?.data != "undefined") {
+               console.log(result?.data)
+                setIsApproved(true)
+             }
         }
 
         const handleBalanceSelection = (value: number) => {
