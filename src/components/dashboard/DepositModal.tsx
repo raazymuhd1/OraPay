@@ -60,7 +60,7 @@ const DepositModal = () => {
                 args: [fundsVault.address, Number(depositAmount) * 10**6],
             })
 
-            if(result?.data != "undefined") {
+            if(result?.data! != "undefined") {
                console.log(result?.data)
                 setIsApproved(true)
              }
