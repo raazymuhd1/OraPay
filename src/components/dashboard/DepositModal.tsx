@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWriteContract, useReadContract, useAccount, useBalance } from 'wagmi'
+import { useWriteContract, useReadContract, useAccount, useBalance, useChainId } from 'wagmi'
 import toast from "react-hot-toast"
 import { erc20Abi } from 'viem'
 import { allContracts } from '@/constants'
@@ -16,7 +16,10 @@ const DepositModal = () => {
         const { address: userAddr } = useAccount()
         const { writeContract } = useWriteContract();
         const { fundsVault, mockUsdc } = allContracts;
-        const userBalance = useBalance({ chainId: 11155111, address: userAddr, token: mockUsdc.address as `0x${string}` })
+        const chainId = useChainId()
+        const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
+
+        console.log(userBalance.data?.value)
        
 
         /**
@@ -68,15 +71,16 @@ const DepositModal = () => {
 
         const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
+            const bal = userBalance.data;
             inputRef.current?.focus();
             let dividedAmount;
 
             if(value == 50) {
-                dividedAmount = userBalance?.data && (Number(userBalance?.data?.value) / 50) * 100;
-                setDepositAmount("5")
-              } else if(value == 100) {
-                dividedAmount = userBalance?.data && (Number(userBalance?.data?.value) / 100) * 100;
+                dividedAmount = bal?.formatted && (Number(bal?.formatted) * 50) / 100;
                 setDepositAmount(String(dividedAmount))
+              } else if(value == 100) {
+                 dividedAmount = bal?.formatted && (Number(bal?.formatted) / 100) * 100;
+                setDepositAmount(bal?.formatted as string)
               }
         }
 
@@ -113,7 +117,7 @@ const DepositModal = () => {
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p className="resp-paraphCard"> Available balance: </p>
               <aside>
-                  <h4 className="resp-paraphCard font-bold"> 10,000 USDC </h4>
+                  <h4 className="resp-paraphCard font-bold"> { userBalance.data?.formatted } USDC </h4>
                   <p className="text-[#11afb8] resp-paraphCard underline flex items-center gap-[3px] "> 
                     <span onClick={() => handleBalanceSelection(50)} className="cursor-pointer"> 50% </span> 
                     | 
