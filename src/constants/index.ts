@@ -1,4 +1,4 @@
-import { Plus, Calculator, CreditCard } from 'lucide-react'
+import { Plus, Calculator, CreditCard, CircleDollarSign } from 'lucide-react'
 import { LuWallet, LuChartNoAxesColumn  } from "react-icons/lu";
 import { ImStack } from "react-icons/im";
 import { prod1, prod2, subs1, subs2, course1, course2, deposit, pay, trade } from "@/assets"
@@ -35,6 +35,7 @@ const quickActionBtns = [
     { id: 1, title: "Deposit Funds", btnLogo: LuWallet },
     { id: 2, title: "Browse Marketplace", btnLogo: LuChartNoAxesColumn },
     { id: 3, title: "Calculate YT Earnings", btnLogo: Calculator },
+    { id: 4, title: "Withdrawal", btnLogo: CircleDollarSign },
 ]
 
 const yields = [

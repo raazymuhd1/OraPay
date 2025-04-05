@@ -57,6 +57,7 @@ const DepositModal = () => {
                 toast.error("please kindly connect your wallet before proceeding..", {
                    position: "top-right"
                 })
+                return;
             }
 
             try {
@@ -78,11 +79,15 @@ const DepositModal = () => {
 
         }
 
+        /**
+         * @dev handling assets approval
+         */
         const handleTokenApproval = (): void => {
           if(typeof userAddr == "undefined" || userAddr.length == 0) {
                 toast.error("please kindly connect your wallet before proceeding..", {
                    position: "top-right"
                 })
+                return;
             }
            try {
              writeApproval({

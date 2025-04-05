@@ -14,6 +14,7 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
       const [openDepositModal, setDepositModal] = useState<boolean>(false)
       const [openCalculatorModal, setCalculatorModal] = useState<boolean>(false)
       const [openPayModal, setOpenPayModal] = useState<boolean>(false)
+      const [openWithdrawModal, setOpenWithdrawModal] = useState<boolean>(false);
       const [selectedProduct, setSelectedProduct] = useState({
          id: 0,
          title: "",
@@ -28,6 +29,7 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
          openDepositModal, setDepositModal,
         openCalculatorModal, setCalculatorModal,
         openPayModal, setOpenPayModal,
+        openWithdrawModal, setOpenWithdrawModal,
         selectedProduct, setSelectedProduct
       }}
     >

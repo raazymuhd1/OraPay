@@ -6,6 +6,7 @@ import QuickActions from './QuickActions'
 import YieldInfos from './YieldInfos'
 import DepositModal from  "./DepositModal"
 import CalculatorModal from "./CalculatorModal"
+import WithdrawalModal from "./WithdrawalModal"
 
 const Dashboard = () => {
 
@@ -30,6 +31,7 @@ const Dashboard = () => {
        {/* modals */}
        <DepositModal /> 
        <CalculatorModal />
+       <WithdrawalModal />
     </section>
   )
 }

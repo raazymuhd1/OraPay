@@ -15,6 +15,8 @@ export interface IModalState {
   setCalculatorModal: Dispatch<SetStateAction<boolean>>;
   openPayModal: boolean;
   setOpenPayModal: Dispatch<SetStateAction<boolean>>;
+  openWithdrawModal: boolean;
+  setOpenWithdrawModal: Dispatch<SetStateAction<boolean>>;
   selectedProduct: IProduct;
   setSelectedProduct: Dispatch<SetStateAction<IProduct>>;
 }

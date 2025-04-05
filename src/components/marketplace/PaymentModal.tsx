@@ -1,10 +1,13 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
 import { useAccount, useWriteContract } from 'wagmi'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
+import {ethers} from "ethers"
+import {Toaster} from "react-hot-toast"
+import toast from 'react-hot-toast'
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
@@ -12,18 +15,43 @@ const PaymentModal = () => {
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
         const { fundsVault, mockUsdc } = allContracts
-        const {writeContract, data: payData, status: payStatus} = useWriteContract();
+        const {writeContract: payMerchant, data: payData, status: payStatus} = useWriteContract();
 
+        /**
+         * 
+         * @dev handling purchased item's payment 
+         */
         const payPurchasedItem = () => {
-           const result = writeContract({
+             if(userAddr?.length! <= 0) {
+                 toast.error("Please connect to a wallet to proceed!")
+                 return
+             }
+
+           const result = payMerchant({
               abi: fundsVault.abi,
               address: fundsVault.address as `0x${string}` ,
               functionName: "payMerchant",
-              args: [requiredDepo, "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
+              args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
             })
 
             console.log(result)
         }
+
+        useEffect(() => {
+            const handlingPaymentProcess = () => {
+                if(payStatus === "success" && payData) {
+                    toast.success("Payment successful!", { position: "top-right" })
+
+                    setTimeout(() => {
+                      setOpenPayModal(false)
+                    }, 4000)
+                } else if(payStatus === "error") {
+                    toast.error("Payment failed!", { position: "top-right" })
+                }
+            }
+
+            handlingPaymentProcess()
+        }, [payStatus, payData])
 
 
    const handleItemDetails = (title: string, value: string) => {
@@ -50,6 +78,7 @@ const PaymentModal = () => {
     <div 
       className={`transition-all duration-500 ${!openPayModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
 
+       <Toaster />
        <div 
           onClick={() => setOpenPayModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
@@ -96,18 +125,14 @@ const PaymentModal = () => {
                 </div>
             </div>
 
-              {/* { userAddr ? 
-                <CustomButton
-                    onClick={() => payPurchasedItem()}
-                    disabled={false}
-                    style={`bg-gradient`}
-                          >
-                    <CreditCard className="" />
-                    Pay Now
-                </CustomButton>
-                // :
-                // <CustomWalletConnect />
-              } */}
+            <CustomButton
+                onClick={payPurchasedItem}
+                disabled={payStatus == "pending" ? true : false}
+                style={`bg-gradient`}
+                      >
+                <CreditCard className="" />
+                { payStatus == "pending" ? "Processing..." : "Pay Now" }
+            </CustomButton>
         </div>
 
 

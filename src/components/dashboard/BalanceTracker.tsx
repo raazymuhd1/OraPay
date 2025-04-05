@@ -15,7 +15,7 @@ const BalanceTracker = () => {
           yieldBalance: "",
           principalBalance: ""
       })
-      const { userDeposits, holdingsResult, holdingLoading, userDepositLoading } = useContractHooks()
+      const { userDeposits, holdingsResult, userDepositStatus, holdingStatus } = useContractHooks()
       const { fundsVault } = allContracts;
 
       console.log(parseFloat(userDeposits as string))
@@ -45,14 +45,14 @@ const BalanceTracker = () => {
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap justify-center gap-[20px] mt-[10px]">
             <BalancesCard 
-              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${String(userDeposits).slice(0, -6) ?? 0 }`, desc: userBalances[0].desc } } 
+              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `${userDepositStatus == "pending" ? "Loading" : `$${String(userDeposits).slice(0, -6) ?? 0}` }`, desc: userBalances[0].desc } } 
               />
             <BalancesCard 
               { ...{ 
                 id: userBalances[1].id, 
                 title: userBalances[1].title, 
                 TitleLogo: ImStack, 
-                value: `${holdingLoading ? "loading.." : (String(holdingsResult[1]).slice(0, -6) ?? 0) }`, 
+                value: `${holdingStatus == "pending" ? "loading.." : holdingsResult && (String(holdingsResult[1]).slice(0, -6) ?? 0) }`, 
                 desc: userBalances[1].desc 
                 } } 
               />
@@ -61,7 +61,7 @@ const BalanceTracker = () => {
                 id: userBalances[2].id, 
                 title: userBalances[2].title, 
                 TitleLogo: LuChartNoAxesColumn, 
-                value: `${holdingLoading ? "loading.." : (String(holdingsResult[0]).slice(0, -6) ?? 0)}`, 
+                value: `${holdingStatus == "pending" ? "loading.." : holdingsResult && (String(holdingsResult[0]).slice(0, -6) ?? 0)}`, 
                 desc: userBalances[2].desc 
               } } 
               />

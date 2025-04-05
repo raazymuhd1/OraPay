@@ -6,14 +6,14 @@ import { usePeyPeyContext } from "../PeyPeyContext"
 import Link from "next/link"
 
 const QuickActions = () => {
-    const { setDepositModal, setCalculatorModal} = usePeyPeyContext()
+    const { setDepositModal, setCalculatorModal, setOpenWithdrawModal} = usePeyPeyContext()
 
     const buttonClickHandler = (stepId: number) => {
-       stepId == 1 ? setDepositModal(true) : stepId == 3 ? setCalculatorModal(true) : null;
+       stepId == 1 ? setDepositModal(true) : stepId == 3 ? setCalculatorModal(true) : stepId == 4 ? setOpenWithdrawModal(true) : null;
     }
 
   return (
-    <aside className="lg:w-[30%] w-full h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[30px] bg-brown">
+    <aside className="lg:w-[30%] w-full h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[20px] bg-brown">
         <div>
             <h3 className="font-bold responsive-headerText"> Quick Actions </h3>
             <p className="text-(--paraph-color) responsive-paraph"> Common operations you can perform </p>
@@ -22,12 +22,15 @@ const QuickActions = () => {
         {/* action buttons */}
         <div className="w-full flex flex-col gap-[15px]">
           { quickActionBtns.map(action => (
+
             action.title.toLowerCase() == "browse marketplace" 
-            ? <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
+            ? 
+              <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
                <LuChartNoAxesColumn className='' />
                {action.title} 
                </Link> 
-            : <CustomButton
+            : 
+            <CustomButton
                   key={action.id} 
                   onClick={() => buttonClickHandler(action.id)}
                   disabled={false}
