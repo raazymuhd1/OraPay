@@ -13,6 +13,7 @@ const CustomButton = forwardRef(({ children, onClick, disabled, style, mouseEven
 
   return (
     <button 
+        disabled={disabled}
         ref={ref}
         onClick={onClick}
         onMouseOver={mouseEvent}

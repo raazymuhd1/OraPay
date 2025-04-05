@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
@@ -15,13 +15,41 @@ const DepositModal = () => {
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
         const { address: userAddr } = useAccount()
-        const { writeContract } = useWriteContract();
+        const { writeContract: writeDeposit, data: depoData, status: depositStatus } = useWriteContract();
+        const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval } = useWriteContract();
         const { fundsVault, mockUsdc } = allContracts;
         const chainId = useChainId()
         const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
 
-        console.log(userBalance.data?.value)
-       
+      console.log(approvalStatus)
+
+        useEffect(() => {
+           const handlingTxState = () => {
+
+              if(approveData) {
+                  console.log(approveData)
+                    toast.success("assets has been approved", {
+                        position: "top-right"
+                    })
+                  setIsApproved(true)
+                } 
+                
+              if(depoData && depositStatus == "success") {
+                  toast.success("assets has been deposited", {
+                        position: "top-right"
+                  })
+                  console.log(depoData)
+                  setTimeout(() => {
+                    setDepositModal(false)
+                  }, 4000)
+               }
+
+           }
+
+
+           handlingTxState()
+        }, [approveData, depoData, approvalStatus])
+
 
         /**
          * @dev depositing an underlying assets into a platform
@@ -37,19 +65,15 @@ const DepositModal = () => {
               const lockPeriod = 10 * 86400; // 10 days
               const args = [Number(depositAmount) * 10**6, lockPeriod]
 
-               const res = writeContract({
+               writeDeposit({
                   abi: fundsVault.abi,
                   address: fundsVault.address as `0x${string}`,
                   functionName: "deposit",
                   args,
                   gas: BigInt("3000000")
               })
-
-              if(res?.data) {
-                  console.log(res?.data)
-                  setDepositModal(false)
-              }
-
+              
+               resetApproval()
             } catch(err) {
                 console.log(err)
             }
@@ -57,17 +81,21 @@ const DepositModal = () => {
         }
 
         const handleTokenApproval = (): void => {
-             const result =  writeContract({
+          if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                toast.error("please kindly connect your wallet before proceeding..", {
+                   position: "top-right"
+                })
+            }
+           try {
+             writeApproval({
                 abi: mockUsdc.abi,
                 address: mockUsdc.address as `0x${string}`,
                 functionName: "approve",
                 args: [fundsVault.address, Number(depositAmount) * 10**6],
             })
-
-            if(result?.data! != "undefined") {
-               console.log(result?.data)
-                setIsApproved(true)
-             }
+           } catch(err) {
+              console.log(err)
+           }
         }
 
         const handleBalanceSelection = (value: number) => {
@@ -129,7 +157,25 @@ const DepositModal = () => {
             </div>
 
             {/* action buttons */}
-            {  userAddr ?  
+            { !isApproved ?  <CustomButton
+                    onClick={handleTokenApproval}
+                    disabled={depositAmount.length <= 0 || approvalStatus == "pending" ? true : false}
+                    style={`bg-gradient`}
+                          >
+                    <CreditCard className="" />
+                     { approvalStatus == "pending" ? "Approving..." : "Approve" }
+                </CustomButton>  
+               :
+                 <CustomButton
+                    onClick={handleAssetsDeposit}
+                    disabled={depositAmount.length <= 0 || depositStatus == "pending" ? true : false}
+                    style={`bg-gradient`}
+                          >
+                    <CreditCard className="" />
+                     { depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
+                </CustomButton>    
+            }
+            {/* {  userAddr ?  
                 <CustomButton
                     onClick={isApproved ? handleAssetsDeposit : handleTokenApproval}
                     disabled={depositAmount.length <= 0 ? true : false}
@@ -140,7 +186,7 @@ const DepositModal = () => {
                 </CustomButton> 
                   :   
                 <CustomConnectButton />
-            }
+            } */}
         </div>
 
 

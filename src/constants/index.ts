@@ -26,9 +26,9 @@ const steps = [
 ]
 
 const balances = [
-    { id: 1, "title": "Deposits", value: "$8,240", titleLogo: LuWallet, desc: "+12.4% this month" },
-    { id: 2, "title": "PT Holdings", value: "8,240 PT", titleLogo: ImStack, desc: "Expiry: 12/31/2023" },
-    { id: 3, "title": "YT Holdings", value: "240 YT", titleLogo: LuChartNoAxesColumn , desc: "Available for payments" }
+    { id: 1, "title": "Deposits", value: "$8,240", TitleLogo: LuWallet, desc: "+12.4% this month" },
+    { id: 2, "title": "PT Holdings", value: "8,240 PT", TitleLogo: ImStack, desc: "Expiry: 12/31/2023" },
+    { id: 3, "title": "YT Holdings", value: "240 YT", TitleLogo: LuChartNoAxesColumn , desc: "Available for payments" }
 ]
 
 const quickActionBtns = [
