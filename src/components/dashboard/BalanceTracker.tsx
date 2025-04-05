@@ -1,9 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import { balances } from "@/constants"
 import { useReadContract, useAccount } from 'wagmi';
 import { allContracts } from '@/constants';
 import { MdArrowOutward } from "react-icons/md";
 import { BsExclamation } from "react-icons/bs";
+import { IconType } from 'react-icons/lib';
+import { useContractHooks } from "@/utils/hooks"
+
+interface IBalances {
+  id: number;
+  value: string;
+  titleLogo: IconType;
+  desc: string;
+}
 
 const BalanceTracker = () => {
       const [userBalances, updateUserBalance] = useState(balances);
@@ -13,21 +22,31 @@ const BalanceTracker = () => {
           yieldBalance: "",
           principalBalance: ""
       })
+      const { userDeposits, holdingsResult } = useContractHooks()
       const { fundsVault } = allContracts;
-      const holdingsResult = useReadContract({
-          abi: fundsVault.abi,
-          address: fundsVault.address as `0x${string}`,
-          functionName: 'getHoldings',
-          args: [userAddr]
-      })
 
       console.log(holdingsResult.data)
 
 
       // useEffect(() => {
       //    const handleUserDepositedBalance = () => {
-      //       // const result = 
+      //      // @ts-ignore
+      //       updateUserBalance(userBal => {
+      //          return userBal.map(bal => {
+      //               if(bal.id == 1) {
+      //                   return { ...bal, value: userDeposits.data }
+      //               } else if( bal.id == 2) {
+      //                 // @ts-ignore
+      //                 return {...bal, value: holdingsResult?.data && holdingsResult?.data[0]! as string }
+      //               } else if( bal.id == 3) {
+      //                 // @ts-ignore
+      //                  return {...bal, value: holdingsResult?.data && holdingsResult?.data[1]! as string }
+      //               }
+      //           })
+      //       })
       //    }
+
+      //    handleUserDepositedBalance()
       // }, [])
 
 

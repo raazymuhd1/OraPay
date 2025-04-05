@@ -5,6 +5,7 @@ import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWriteContract, useReadContract, useAccount, useBalance, useChainId } from 'wagmi'
 import toast from "react-hot-toast"
 import { erc20Abi } from 'viem'
+import {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { CustomConnectButton } from '@/components'
 
@@ -87,6 +88,8 @@ const DepositModal = () => {
   return (
       <div 
       className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
+
+        <Toaster />
 
        <div 
           onClick={() => setDepositModal(false)}
