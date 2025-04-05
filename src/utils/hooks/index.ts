@@ -5,14 +5,14 @@ export const useContractHooks = () => {
      const { fundsVault } = allContracts;
      const { address: userAddr } = useAccount()
 
-       const holdingsResult = useReadContract({
+       const { data: holdingsResult, isLoading: holdingLoading } = useReadContract({
           abi: fundsVault.abi,
           address: fundsVault.address as `0x${string}`,
           functionName: 'getHoldings',
           args: [userAddr]
       })
 
-      const userDeposits = useReadContract({
+      const { data: userDeposits, isLoading: userDepositLoading } = useReadContract({
           abi: fundsVault.abi,
           address: fundsVault.address as `0x${string}`,
           functionName: 'userDeposits',
@@ -21,6 +21,6 @@ export const useContractHooks = () => {
 
 
       return { 
-        holdingsResult, userDeposits 
+        holdingsResult, userDeposits, holdingLoading, userDepositLoading
     };
 }

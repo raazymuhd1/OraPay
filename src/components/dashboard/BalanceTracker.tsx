@@ -15,11 +15,11 @@ const BalanceTracker = () => {
           yieldBalance: "",
           principalBalance: ""
       })
-      const { userDeposits, holdingsResult } = useContractHooks()
+      const { userDeposits, holdingsResult, holdingLoading, userDepositLoading } = useContractHooks()
       const { fundsVault } = allContracts;
 
-      console.log(parseFloat(userDeposits.data as string))
-      console.log(userDeposits.data)
+      console.log(parseFloat(userDeposits as string))
+      console.log(userDeposits)
 
 
       useEffect(() => {
@@ -45,13 +45,25 @@ const BalanceTracker = () => {
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap justify-center gap-[20px] mt-[10px]">
             <BalancesCard 
-              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${String(userDeposits.data).slice(0, -6) ?? 0 }`, desc: userBalances[0].desc } } 
+              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${String(userDeposits).slice(0, -6) ?? 0 }`, desc: userBalances[0].desc } } 
               />
             <BalancesCard 
-              { ...{ id: userBalances[1].id, title: userBalances[1].title, TitleLogo: ImStack, value: `${holdingsResult?.data! && (String(holdingsResult?.data[1]).slice(0, -6) ?? 0) }`, desc: userBalances[1].desc } } 
+              { ...{ 
+                id: userBalances[1].id, 
+                title: userBalances[1].title, 
+                TitleLogo: ImStack, 
+                value: `${holdingLoading ? "loading.." : (String(holdingsResult[1]).slice(0, -6) ?? 0) }`, 
+                desc: userBalances[1].desc 
+                } } 
               />
             <BalancesCard 
-              { ...{ id: userBalances[2].id, title: userBalances[2].title, TitleLogo: LuChartNoAxesColumn, value: `${holdingsResult?.data! && (String(holdingsResult?.data[0]).slice(0, -6) ?? 0) }`, desc: userBalances[2].desc } } 
+              { ...{ 
+                id: userBalances[2].id, 
+                title: userBalances[2].title, 
+                TitleLogo: LuChartNoAxesColumn, 
+                value: `${holdingLoading ? "loading.." : (String(holdingsResult[0]).slice(0, -6) ?? 0)}`, 
+                desc: userBalances[2].desc 
+              } } 
               />
         </aside>
     </aside>

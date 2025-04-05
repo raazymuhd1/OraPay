@@ -2,9 +2,8 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWriteContract, useReadContract, useAccount, useBalance, useChainId } from 'wagmi'
+import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
 import toast from "react-hot-toast"
-import { erc20Abi } from 'viem'
 import {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { CustomConnectButton } from '@/components'
@@ -45,7 +44,6 @@ const DepositModal = () => {
                }
 
            }
-
 
            handlingTxState()
         }, [approveData, depoData, approvalStatus])

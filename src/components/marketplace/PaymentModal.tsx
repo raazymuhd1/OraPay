@@ -3,7 +3,7 @@ import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
 import { useAccount, useWriteContract } from 'wagmi'
-import CustomWalletConnect from '../header/CustomWalletConnect'
+// import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
 
 const PaymentModal = () => {
@@ -12,7 +12,7 @@ const PaymentModal = () => {
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
         const { fundsVault, mockUsdc } = allContracts
-        const {writeContract} = useWriteContract();
+        const {writeContract, data: payData, status: payStatus} = useWriteContract();
 
         const payPurchasedItem = () => {
            const result = writeContract({
@@ -96,7 +96,7 @@ const PaymentModal = () => {
                 </div>
             </div>
 
-              { userAddr ? 
+              {/* { userAddr ? 
                 <CustomButton
                     onClick={() => payPurchasedItem()}
                     disabled={false}
@@ -105,9 +105,9 @@ const PaymentModal = () => {
                     <CreditCard className="" />
                     Pay Now
                 </CustomButton>
-                :
-                <CustomWalletConnect />
-              }
+                // :
+                // <CustomWalletConnect />
+              } */}
         </div>
 
 
