@@ -5,6 +5,7 @@ import toast from "react-hot-toast"
 import { CircleDollarSign, X } from "lucide-react"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
+import { useContractHooks } from '@/utils/hooks'
 import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
 
 const WithdrawalModal = () => {
@@ -15,7 +16,8 @@ const WithdrawalModal = () => {
      const chainId = useChainId()
      const { address: userAddr } = useAccount()
      const userBalance = useBalance({ chainId, address: userAddr, token: principalToken.address as `0x${string}` })
-     const { writeContract: writeWD, data: wdData, status: wdStatus } = useWriteContract()
+     const [ptBalance, setPtBalance] = useState("0");
+     const {handleAssetsWithdrawal, wdData, wdStatus} = useContractHooks()
 
        const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
@@ -33,6 +35,12 @@ const WithdrawalModal = () => {
         }
 
       useEffect(() => {
+          if(userBalance.data) {
+                setPtBalance(userBalance.data?.value.toString())
+          }
+      }, [userBalance?.data])
+
+      useEffect(() => {
 
         const handlwWithdrawalState = () => {
             if(wdStatus === "success" && wdData) {
@@ -42,6 +50,7 @@ const WithdrawalModal = () => {
 
                 setTimeout(() => {
                    setOpenWithdrawModal(false)
+                   setWithdrawalAmount("0")
                 }, 4000)
 
                 return;
@@ -57,39 +66,6 @@ const WithdrawalModal = () => {
         handlwWithdrawalState()
 
       }, [wdStatus, wdData])
-
-      const handleAssetsWithdrawal = () => {
-           if(typeof userAddr == "undefined" || userAddr.length == 0) {
-                toast.error("please kindly connect your wallet before proceeding..", {
-                   position: "top-right"
-                })
-                return;
-            }
-
-            if(userBalance.data?.value == BigInt(0)) {
-                toast.error("Insufficient funds to withdraw!", {
-                   position: "top-right"
-                })
-                return;
-            }
-
-            try {
-                  writeWD({
-                     abi: fundsVault.abi,
-                     address: fundsVault.address as `0x${string}`,
-                     functionName: 'withdrawPrincipal',
-                    args: []
-                  })
-
-            } catch (err) {
-                console.log(err)
-                toast.error(err as string, {
-                   position: "top-right"
-                })
-                return;
-            }
-      }
-
 
   return (
     <div
@@ -119,7 +95,7 @@ const WithdrawalModal = () => {
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p className="resp-paraphCard"> Available balance: </p>
               <aside>
-                  <h4 className="resp-paraphCard font-bold"> { userBalance.data?.formatted } PT </h4>
+                  <h4 className="resp-paraphCard font-bold"> { String(userBalance?.data?.value).slice(0, -6) || 0 } PT </h4>
                   <p className="text-[#11afb8] resp-paraphCard underline flex items-center gap-[3px] "> 
                     <span onClick={() => handleBalanceSelection(50)} className="cursor-pointer"> 50% </span> 
                     | 
@@ -128,7 +104,9 @@ const WithdrawalModal = () => {
             </div>
 
              <CustomButton
-                onClick={handleAssetsWithdrawal}
+                onClick={() => {
+                  handleAssetsWithdrawal(String(userBalance?.data?.value))
+                }} 
                 disabled={withdrawalAmount.length <= 0 || Number(withdrawalAmount) == 0 || wdStatus == "pending" ? true : false}
                 style={`bg-gradient`}
                       >

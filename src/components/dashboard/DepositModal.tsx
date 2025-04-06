@@ -6,6 +6,7 @@ import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
 import toast from "react-hot-toast"
 import {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
+import { useContractHooks } from '@/utils/hooks'
 import { CustomConnectButton } from '@/components'
 
 const DepositModal = () => {
@@ -14,11 +15,11 @@ const DepositModal = () => {
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
         const { address: userAddr } = useAccount()
-        const { writeContract: writeDeposit, data: depoData, status: depositStatus } = useWriteContract();
-        const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval } = useWriteContract();
-        const { fundsVault, mockUsdc } = allContracts;
+        const { mockUsdc } = allContracts;
         const chainId = useChainId()
         const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
+        const { handleAssetsDeposit, depositStatus, depoData,
+        handleTokenApproval, approvalStatus, approveData, resetApproval } = useContractHooks()
 
       console.log(approvalStatus)
 
@@ -51,65 +52,6 @@ const DepositModal = () => {
            handlingTxState()
         }, [approveData, depoData, approvalStatus])
 
-
-        /**
-         * @dev depositing an underlying assets into a platform
-         */
-        const handleAssetsDeposit = () => {
-            if(typeof userAddr == "undefined" || userAddr.length == 0) {
-                toast.error("please kindly connect your wallet before proceeding..", {
-                   position: "top-right"
-                })
-                return;
-            }
-
-            try {
-              const lockPeriod = 10 * 86400; // 10 days
-              const args = [Number(depositAmount) * 10**6, 0]
-
-               writeDeposit({
-                  abi: fundsVault.abi,
-                  address: fundsVault.address as `0x${string}`,
-                  functionName: "deposit",
-                  args,
-                  gas: BigInt("3000000")
-              })
-              
-            } catch(err) {
-                 console.log(err)
-                toast.error(err as string, {
-                   position: "top-right"
-                })
-                return;
-            }
-
-        }
-
-        /**
-         * @dev handling assets approval
-         */
-        const handleTokenApproval = (): void => {
-          if(typeof userAddr == "undefined" || userAddr.length == 0) {
-                toast.error("please kindly connect your wallet before proceeding..", {
-                   position: "top-right"
-                })
-                return;
-            }
-           try {
-             writeApproval({
-                abi: mockUsdc.abi,
-                address: mockUsdc.address as `0x${string}`,
-                functionName: "approve",
-                args: [fundsVault.address, Number(depositAmount) * 10**6],
-            })
-           } catch(err) {
-                console.log(err)
-                toast.error(err as string, {
-                   position: "top-right"
-                })
-                return;
-           }
-        }
 
         const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
@@ -170,7 +112,7 @@ const DepositModal = () => {
 
             {/* action buttons */}
             { !isApproved ?  <CustomButton
-                    onClick={handleTokenApproval}
+                    onClick={() => handleTokenApproval(Number(depositAmount))}
                     disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
@@ -179,7 +121,7 @@ const DepositModal = () => {
                 </CustomButton>  
                :
                  <CustomButton
-                    onClick={handleAssetsDeposit}
+                    onClick={() => handleAssetsDeposit(Number(depositAmount))}
                     disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || depositStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >

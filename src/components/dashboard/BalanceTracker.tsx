@@ -11,11 +11,11 @@ import BalancesCard from "./BalancesCard"
 const BalanceTracker = () => {
       const [userBalances, updateUserBalance] = useState(balances);
       const [depositBalances, setDepositBalances] = useState({
-          deposited: "",
-          yieldBalance: "",
-          principalBalance: ""
+          deposited: "$0",
+          yieldBalance: "0",
+          principalBalance: "0"
       })
-      const { userDeposits, holdingsResult, userDepositStatus, holdingStatus } = useContractHooks()
+      const { userDeposits, holdingsResult, userDepositStatus, holdingStatus, depositStatus } = useContractHooks()
       const { fundsVault } = allContracts;
 
       console.log(parseFloat(userDeposits as string))
@@ -25,10 +25,17 @@ const BalanceTracker = () => {
       useEffect(() => {
          const handleUserDepositedBalance = () => {
             //  i could pass a deposit status in the dependencies list to keep updating the balances
+            if(userDeposits && holdingsResult.length > 0) {
+                setDepositBalances({
+                  deposited: String(userDeposits).slice(0, -6) || "0",
+                  yieldBalance: String(holdingsResult[0]).slice(0, -6) || "0",
+                  principalBalance: String(holdingsResult[1]).slice(0, -6) || "0"
+                })
+            }
          }
 
          handleUserDepositedBalance()
-      }, [])
+      }, [userDeposits, holdingsResult, depositStatus])
 
 
   return (
@@ -45,14 +52,14 @@ const BalanceTracker = () => {
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap justify-center gap-[20px] mt-[10px]">
             <BalancesCard 
-              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `${userDepositStatus == "pending" ? "Loading" : `$${String(userDeposits).slice(0, -6) ?? 0}` }`, desc: userBalances[0].desc } } 
+              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${depositBalances.deposited}`, desc: userBalances[0].desc } } 
               />
             <BalancesCard 
               { ...{ 
                 id: userBalances[1].id, 
                 title: userBalances[1].title, 
                 TitleLogo: ImStack, 
-                value: `${ holdingsResult ? (String(holdingsResult[1]).slice(0, -6) ?? 0) : holdingStatus == "pending" ? "loading.." : "" }`, 
+                value: `${depositBalances.principalBalance}`, 
                 desc: userBalances[1].desc 
                 } } 
               />
@@ -61,7 +68,7 @@ const BalanceTracker = () => {
                 id: userBalances[2].id, 
                 title: userBalances[2].title, 
                 TitleLogo: LuChartNoAxesColumn, 
-                value: `${holdingsResult ? (String(holdingsResult[0]).slice(0, -6) ?? 0) : holdingStatus == "pending" ? "loading.." : ""}`, 
+                value: `${depositBalances.yieldBalance}`, 
                 desc: userBalances[2].desc 
               } } 
               />

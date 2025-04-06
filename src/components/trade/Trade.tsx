@@ -1,11 +1,37 @@
 "use client"
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { MoveDown } from 'lucide-react'
 import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
+import { allContracts } from '@/constants'
+import { useWriteContract, useReadContract } from 'wagmi'
+
+interface IState {
+   from?: {
+     address: string;
+     amount: number;
+   },
+   to?: {
+     address: string;
+     amount: number;
+   }
+}
+
 
 const Trade = () => {
+    const { fundsVault } = allContracts
+    const [selectedAsset, setSelectedAsset] = useState<IState>({
+        from: {
+           address: "",
+           amount: 0
+        },
+        to: {
+           address: "",
+           amount: 0
+        }
+    });
+    const { writeContract: writeSell, data: sellData, status: sellStatus } = useWriteContract()
 
     const handleTradeDetails = (title: string, value: string) => {
        return (
@@ -16,8 +42,26 @@ const Trade = () => {
        )
    }
 
+   const handleTrade = () => {
+       try {
+         console.log("trading")
+          writeSell({
+              abi: fundsVault.abi,
+              address: fundsVault.address as `0x${string}`,
+              functionName: "sellYieldTokensForTokens",
+              args: [selectedAsset?.from?.amount, selectedAsset?.to?.address],
+              gas: BigInt("3000000")
+          })
+          
+       } catch(err) {
+          console.log(err)
+       }
+   }
+
+   console.log(sellData)
+
   return (
-    <div className="w-full h-full p-[20px] flex flex-col items-center gap-[20px] justify-center">
+    <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
          <div className="flex w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
             <h2 className="page-headerText font-bold"> Trade </h2>
@@ -31,18 +75,18 @@ const Trade = () => {
           </aside>
 
           <div className="w-full flex flex-col items-center">
-            <InputFrom/>
+            <InputFrom selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
             <MoveDown className="translate-y-[20px]" />
-            <InputTo />
+            <InputTo selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
           </div>
           
           <div className="flex flex-col gap-[10px] glass-card p-[15px]">
-            { handleTradeDetails("Rate", "1 USDC = 0.98 PT-USDC") }
+            { handleTradeDetails("Rate", `1 USDC = 1 PT-USDC`) }
             { handleTradeDetails("Fee", "0.3%") }
           </div>
 
             <CustomButton
-              onClick={() => {}}
+              onClick={handleTrade}
               disabled={false}
               style={`bg-gradient`}
                     >
