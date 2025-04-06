@@ -24,7 +24,7 @@ const BalanceTracker = () => {
 
       useEffect(() => {
          const handleUserDepositedBalance = () => {
-             
+            //  i could pass a deposit status in the dependencies list to keep updating the balances
          }
 
          handleUserDepositedBalance()
@@ -52,7 +52,7 @@ const BalanceTracker = () => {
                 id: userBalances[1].id, 
                 title: userBalances[1].title, 
                 TitleLogo: ImStack, 
-                value: `${holdingStatus == "pending" ? "loading.." : holdingsResult && (String(holdingsResult[1]).slice(0, -6) ?? 0) }`, 
+                value: `${ holdingsResult ? (String(holdingsResult[1]).slice(0, -6) ?? 0) : holdingStatus == "pending" ? "loading.." : "" }`, 
                 desc: userBalances[1].desc 
                 } } 
               />
@@ -61,7 +61,7 @@ const BalanceTracker = () => {
                 id: userBalances[2].id, 
                 title: userBalances[2].title, 
                 TitleLogo: LuChartNoAxesColumn, 
-                value: `${holdingStatus == "pending" ? "loading.." : holdingsResult && (String(holdingsResult[0]).slice(0, -6) ?? 0)}`, 
+                value: `${holdingsResult ? (String(holdingsResult[0]).slice(0, -6) ?? 0) : holdingStatus == "pending" ? "loading.." : ""}`, 
                 desc: userBalances[2].desc 
               } } 
               />

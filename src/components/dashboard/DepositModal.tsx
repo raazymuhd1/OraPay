@@ -121,7 +121,6 @@ const DepositModal = () => {
       className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
 
         <Toaster />
-
        <div 
           onClick={() => setDepositModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
@@ -146,7 +145,7 @@ const DepositModal = () => {
                 <input 
                     value={depositAmount}
                     onChange={(e) => setDepositAmount(e.target.value)}
-                    ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-noe" />
+                    ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-none" />
             </div>
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p className="resp-paraphCard"> Available balance: </p>
@@ -178,18 +177,6 @@ const DepositModal = () => {
                      { depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
                 </CustomButton>    
             }
-            {/* {  userAddr ?  
-                <CustomButton
-                    onClick={isApproved ? handleAssetsDeposit : handleTokenApproval}
-                    disabled={depositAmount.length <= 0 ? true : false}
-                    style={`bg-gradient`}
-                          >
-                    <CreditCard className="" />
-                     { !isApproved ? "Approve" : "Deposit Now" }
-                </CustomButton> 
-                  :   
-                <CustomConnectButton />
-            } */}
         </div>
 
 
