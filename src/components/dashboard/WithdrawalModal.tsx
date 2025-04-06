@@ -1,6 +1,7 @@
-import {useRef, useState} from 'react'
+import {useRef, useState, useEffect} from 'react'
 import {Toaster} from "react-hot-toast"
 import { usePeyPeyContext } from "../PeyPeyContext"
+import toast from "react-hot-toast"
 import { CircleDollarSign, X } from "lucide-react"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
@@ -31,9 +32,62 @@ const WithdrawalModal = () => {
               }
         }
 
+      useEffect(() => {
+
+        const handlwWithdrawalState = () => {
+            if(wdStatus === "success" && wdData) {
+                 toast.success("Assets withdrawn successfully!", {
+                   position: "top-right"
+                })
+
+                setTimeout(() => {
+                   setOpenWithdrawModal(false)
+                }, 4000)
+
+                return;
+            } else if(wdStatus === "error") {
+                 toast.error("An error occurred while withdrawing assets. Please try again!", {
+                   position: "top-right"
+                })
+                return;
+            }
+            
+        }
+
+        handlwWithdrawalState()
+
+      }, [wdStatus, wdData])
 
       const handleAssetsWithdrawal = () => {
+           if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                toast.error("please kindly connect your wallet before proceeding..", {
+                   position: "top-right"
+                })
+                return;
+            }
 
+            if(userBalance.data?.value == BigInt(0)) {
+                toast.error("Insufficient funds to withdraw!", {
+                   position: "top-right"
+                })
+                return;
+            }
+
+            try {
+                  writeWD({
+                     abi: fundsVault.abi,
+                     address: fundsVault.address as `0x${string}`,
+                     functionName: 'withdrawPrincipal',
+                    args: []
+                  })
+
+            } catch (err) {
+                console.log(err)
+                toast.error(err as string, {
+                   position: "top-right"
+                })
+                return;
+            }
       }
 
 
@@ -52,7 +106,7 @@ const WithdrawalModal = () => {
                     <h2 className="font-bold responsive-headerTabs"> Funds Withdrawal </h2>
                     <p className='font-normal text-(--paraph-color) responsive-paraph'> You can only make a withdrawal when the lockup period has passed </p>
                 </div>
-                <X className="w-[20px] h-[20px]" />
+                <X className="w-[20px] h-[20px] cursor-pointer" onClick={() => setOpenWithdrawModal(false)} />
             </aside>
 
              <div className='w-full flex flex-col gap-[10px]'>
@@ -75,7 +129,7 @@ const WithdrawalModal = () => {
 
              <CustomButton
                 onClick={handleAssetsWithdrawal}
-                disabled={withdrawalAmount.length <= 0 || wdStatus == "pending" ? true : false}
+                disabled={withdrawalAmount.length <= 0 || Number(withdrawalAmount) == 0 || wdStatus == "pending" ? true : false}
                 style={`bg-gradient`}
                       >
                 <CircleDollarSign className="" />

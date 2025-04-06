@@ -38,6 +38,9 @@ const DepositModal = () => {
                         position: "top-right"
                   })
                   console.log(depoData)
+                  resetApproval()
+                  setIsApproved(false)
+
                   setTimeout(() => {
                     setDepositModal(false)
                   }, 4000)
@@ -62,7 +65,7 @@ const DepositModal = () => {
 
             try {
               const lockPeriod = 10 * 86400; // 10 days
-              const args = [Number(depositAmount) * 10**6, lockPeriod]
+              const args = [Number(depositAmount) * 10**6, 0]
 
                writeDeposit({
                   abi: fundsVault.abi,
@@ -72,9 +75,12 @@ const DepositModal = () => {
                   gas: BigInt("3000000")
               })
               
-               resetApproval()
             } catch(err) {
-                console.log(err)
+                 console.log(err)
+                toast.error(err as string, {
+                   position: "top-right"
+                })
+                return;
             }
 
         }
@@ -97,7 +103,11 @@ const DepositModal = () => {
                 args: [fundsVault.address, Number(depositAmount) * 10**6],
             })
            } catch(err) {
-              console.log(err)
+                console.log(err)
+                toast.error(err as string, {
+                   position: "top-right"
+                })
+                return;
            }
         }
 
@@ -161,7 +171,7 @@ const DepositModal = () => {
             {/* action buttons */}
             { !isApproved ?  <CustomButton
                     onClick={handleTokenApproval}
-                    disabled={depositAmount.length <= 0 || approvalStatus == "pending" ? true : false}
+                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
@@ -170,7 +180,7 @@ const DepositModal = () => {
                :
                  <CustomButton
                     onClick={handleAssetsDeposit}
-                    disabled={depositAmount.length <= 0 || depositStatus == "pending" ? true : false}
+                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || depositStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
