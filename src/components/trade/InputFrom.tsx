@@ -44,6 +44,7 @@ const InputFrom = ({ selectedAsset, setSelectedAsset } : IProps) => {
       handlingUserSelection()
    }, [selectAsst, amountFrom])
 
+   
   function handleSelectedAsset(asset: string) {
         const selectedAsst = asset.toLowerCase() == "usdc" ? mockUsdc.address : asset.toLowerCase() == "ytusdc" ? yieldToken.address : asset.toLowerCase() == "ptusdc" ? principalToken.address : ""
         console.log("selected", selectedAsset);

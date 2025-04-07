@@ -8,6 +8,7 @@ import { allContracts } from '@/constants'
 import { useWriteContract } from 'wagmi'
 import { IState } from "@/types"
 import { ethers } from 'ethers'
+import toast, { Toaster } from "react-hot-toast"
 
 const Trade = () => {
     const { fundsVault, mockUsdc } = allContracts
@@ -23,11 +24,30 @@ const Trade = () => {
            amount: 0
         }
     });
-    const { writeContract: writeSell, data: sellData, status: sellStatus } = useWriteContract()
+    const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling } = useWriteContract()
 
     useEffect(() => {
-        console.log("selecting asset", selectedAsset)
-    }, [selectedAsset])
+        const handleSwapProcess = () => {
+           if(sellData && sellStatus == "success") {
+                  toast.success("assets has been sold", {
+                        position: "top-right"
+                  })
+                  console.log(sellData)
+                  resetSelling()
+                return;
+            } else if(!sellData && sellStatus == "error") {
+               toast.error("Failed to sell assets", {
+                        position: "top-right"
+                  })
+                  console.log(sellData)
+                  resetSelling()
+                return;
+            }
+        }
+
+        handleSwapProcess()
+
+    }, [sellData, sellStatus])
 
     const handleTradeDetails = (title: string, value: string) => {
        return (
@@ -58,6 +78,8 @@ const Trade = () => {
   return (
     <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
+        <Toaster />
+
          <div className="flex w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
             <h2 className="page-headerText font-bold"> Trade </h2>
             <p className="page-paraphText font-semibold text-[#7f7f80]"> Swap between PT, YT tokens and stablecoins </p>
@@ -82,10 +104,10 @@ const Trade = () => {
 
             <CustomButton
               onClick={sellTokens}
-              disabled={false}
+              disabled={sellStatus == "pending" || selectedAsset?.from?.amount! <= 0 ? true : false}
               style={`bg-gradient`}
                     >
-              Swap
+              { sellStatus == "pending" ? "Processing..." : "Swap" }
          </CustomButton>
        </div>
     </div>

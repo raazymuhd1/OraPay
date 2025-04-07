@@ -3,19 +3,26 @@ import { TbArrowBearRight } from "react-icons/tb";
 import { MoveRight } from 'lucide-react'
 import { yields } from '@/constants';
 import { CustomButton } from "@/components"
-import { useReadContract } from 'wagmi';
+import { useReadContract, useAccount } from 'wagmi';
 import { allContracts } from '@/constants';
 
 const YieldOverview = () => {
-     const { fundsVault } = allContracts
+     const { fundsVault, mockAavePool } = allContracts
      const { data: currentAPY, status: apyStatus } = useReadContract({
         abi: fundsVault.abi,
         address: fundsVault.address as `0x${string}`,
         functionName: 'getCurrentAPY',
         args: []
      })
+     const { address: userAddr } = useAccount()
+     const { data: dailyYield, status: yieldStatus } = useReadContract({
+        abi: mockAavePool.abi,
+        address: mockAavePool.address as `0x${string}`,
+        functionName: 'calculateYield',
+        args: [userAddr]
+     })
 
-     console.log(currentAPY)
+     console.log(dailyYield)
 
   return (
     <div className="w-full lg:h-[300px] min-h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
@@ -31,7 +38,7 @@ const YieldOverview = () => {
                   <h2 className="font-bold resp-headerCard"> Current APY </h2>
                   <p className="flex items-center text-[#11afb8] text-[clamp(14px,1vw,18px)] font-semibold"> 
                       <TbArrowBearRight />
-                      { currentAPY || 0 } % 
+                      {  String(currentAPY) || 0 } % 
                   </p>
               </div>
                <div className="flex flex-col gap-[10px] mt-[10px]">
@@ -43,10 +50,10 @@ const YieldOverview = () => {
           <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
                   <h2 className="font-bold resp-headerCard"> YT Generation </h2>
-                  <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> +12.4 YT/day </p>
+                  <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { `+${dailyYield?.toString()}` || 0 } YT/day </p>
               </div>
              <div className="flex flex-col gap-[10px] mt-[10px]">
-                  <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold">At the current rate, you are generating approximately 12.4 YT tokens per day from your deposits.</p>
+                  <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold">At the current rate, you are generating approximately { `+${dailyYield?.toString()}` } YT tokens per day from your deposits.</p>
                   <CustomButton
                     onClick={() => {}}
                     disabled={false}

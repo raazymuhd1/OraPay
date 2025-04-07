@@ -31,6 +31,7 @@ const DepositModal = () => {
                         position: "top-right"
                     })
                   setIsApproved(true)
+                  return;
                 } 
                 
               if(depoData && depositStatus == "success") {
@@ -45,6 +46,8 @@ const DepositModal = () => {
                   setTimeout(() => {
                     setDepositModal(false)
                   }, 4000)
+
+                  return;
                }
 
            }
