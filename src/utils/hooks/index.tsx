@@ -3,22 +3,16 @@ import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
 
-interface IUserBal {
-    data: {
-        value: BigInt;
-        symbol: string;
-        decimals: number;
-        formattedValue: string;
-    }
-}
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
      const { address: userAddr } = useAccount()
      const chainId = useChainId()
+
       const { writeContract: writeDeposit, data: depoData, status: depositStatus, reset: resetDeposit, error: depositError } = useWriteContract();
       const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval, error: approvalError } = useWriteContract();
       const { writeContract: writeWD, data: wdData, status: wdStatus, reset: resetWd } = useWriteContract()
+      const { writeContract: writeFundsVault } = useWriteContract();
 
        const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
           abi: fundsVault.abi,
@@ -51,7 +45,7 @@ export const useContractHooks = () => {
                         address: fundsVault.address as `0x${string}`,
                         functionName: "deposit",
                         args,
-                        gas: BigInt("3000000")
+                        gas: BigInt("25000")
                     })
                     
                   } catch(err) {
@@ -121,16 +115,39 @@ export const useContractHooks = () => {
                     }
               }
 
-              const getContract = async() => {
-                  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL)
-                  const signer = new ethers.Wallet(process.env.PRIVATE_KEY)
-                  const contract = new ethers.Contract('', "", signer);
-              }
+
+        const getContract = async() => {
+                const provider = new ethers.BrowserProvider(window?.ethereum)
+                const signer = await provider.getSigner()
+            const contract = new ethers.Contract(fundsVault.address, fundsVault.abi, signer); 
+            const holdings =  await contract.getHoldings()
+            console.log("holdings", holdings)
+        }
+
+        const setFundsVault = () => {
+            try {
+                writeFundsVault({
+                    abi: principalToken.abi,
+                    address: principalToken.address as `0x${string}`,
+                    functionName: "setFundsVault",
+                    args: [fundsVault.address]
+                })
+
+                writeFundsVault({
+                    abi: yieldToken.abi,
+                    address: yieldToken.address as `0x${string}`,
+                    functionName: "setFundsVault",
+                    args: [fundsVault.address]
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
       return { 
         holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
         handleAssetsDeposit, depositStatus, depoData, resetDeposit, depositError,
         handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError,
-        handleAssetsWithdrawal, wdData, wdStatus, resetWd
+        handleAssetsWithdrawal, wdData, wdStatus, resetWd, getContract, setFundsVault
     };
 }

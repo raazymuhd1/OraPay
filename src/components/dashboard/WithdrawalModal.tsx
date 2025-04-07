@@ -6,6 +6,7 @@ import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
 import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
+import { ethers } from 'ethers'
 
 const WithdrawalModal = () => {
      const { fundsVault, principalToken } = allContracts;
@@ -94,7 +95,7 @@ const WithdrawalModal = () => {
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p className="resp-paraphCard"> Available balance: </p>
               <aside>
-                  <h4 className="resp-paraphCard font-bold"> { String(userBalance?.data?.value).slice(0, -6) || 0 } PT </h4>
+                  <h4 className="resp-paraphCard font-bold"> { userBalance?.data && ethers.formatUnits(String(userBalance?.data?.value), 6) || 0 } PT </h4>
                   <p className="text-[#11afb8] resp-paraphCard underline flex items-center gap-[3px] "> 
                     <span onClick={() => handleBalanceSelection(50)} className="cursor-pointer"> 50% </span> 
                     | 

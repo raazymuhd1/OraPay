@@ -11,8 +11,6 @@ import ProductCard from "./ProductCard"
 const MarketTabs = () => {
     const [marketDatas, setMarketDatas] = useState(marketplaceDatas)
 
-    console.log(marketDatas['all-items']())
-
   return (
     <Tabs defaultValue='all-items' className=" w-full p-[15px] ">
         <TabsList className="md:w-[60%] w-full  bg-brown">

@@ -28,14 +28,13 @@ const PaymentModal = () => {
              }
 
            try {
-             const result = payMerchant({
+              payMerchant({
                 abi: fundsVault.abi,
                 address: fundsVault.address as `0x${string}` ,
                 functionName: "payMerchant",
                 args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
               })
   
-              console.log(result)
            } catch (error) {
                 toast.error("An error occurred while withdrawing assets. Please try again!", {
                         position: "top-right"
@@ -79,8 +78,6 @@ const PaymentModal = () => {
    }
 
    const handleDepositDetails = (title: string, value: string) => {
-    console.log("title", title)
-
       return (
           <div className="w-full flex items-center justify-between">
             <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
