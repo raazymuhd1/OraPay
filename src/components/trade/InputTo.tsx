@@ -9,17 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { allContracts } from '@/constants'
-
-interface IState {
-   from?: {
-     address: string;
-     amount: number;
-   },
-   to?: {
-     address: string;
-     amount: number;
-   }
-}
+import { IState } from "@/types"
 interface IProps {
   selectedAsset: IState;
   setSelectedAsset: Dispatch<SetStateAction<IState>>
@@ -28,21 +18,27 @@ interface IProps {
 const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
    const selectRef = useRef<HTMLDivElement>(null)
    const [amountTo, updateAmountTo] = useState("0")
-   const [selectAsst, setSelectAsst] = useState("");
+    const [selectAsst, setSelectAsst] = useState({
+          name: "",
+          address: ""
+    });
    const { mockUsdc, principalToken, yieldToken } = allContracts
 
    const handleSelectedAsset = (asset: string) => {
         const selectedAsst = asset.toLowerCase() == "usdc" ? mockUsdc.address : asset.toLowerCase() == "ytusdc" ? yieldToken.address : asset.toLowerCase() == "ptusdc" ? principalToken.address : ""
-        setSelectAsst(selectedAsst)
+        
+          setSelectAsst({ name: asset, address: selectedAsst })
    }
 
    useEffect(() => {
       const handlingUserSelection = () => {
         setSelectedAsset({ ...selectedAsset, 
-          to: { address: selectAsst, amount: selectedAsset.from?.amount!}
+          to: { name: selectAsst.name, address: selectAsst.address, amount: Number(amountTo)}
         })
       }
       handlingUserSelection()
+
+      console.log(selectedAsset)
    }, [selectAsst, amountTo])
 
 
@@ -65,16 +61,16 @@ const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
               value={amountTo}
               onChange={(e) => handlingUserInput(e)}
               type="text" placeholder="0.00" className="w-[70%] glass-card p-[10px]" />
-            <Select>
+            <Select onValueChange={(val) => handleSelectedAsset(val)}>
                 <SelectTrigger className='w-[30%] glass-card cursor-pointer'>
                    <SelectValue placeholder="Usdc" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup className='glass-card cursor-pointer'>
                       <SelectLabel> Assets </SelectLabel>
-                      <SelectItem onClick={() => handleSelectedAsset("usdc")} ref={selectRef} value='usdc'>USDC</SelectItem>
-                      <SelectItem onClick={() => handleSelectedAsset("ptusdc")} ref={selectRef} value='ptusdc'> ptUSDC </SelectItem>
-                      <SelectItem onClick={() => handleSelectedAsset("ytusdc")} ref={selectRef} value='ytusdc'> ytUSDC </SelectItem>
+                      <SelectItem  value='usdc'>USDC</SelectItem>
+                      <SelectItem value='ptusdc'> ptUSDC </SelectItem>
+                      <SelectItem value='ytusdc'> ytUSDC </SelectItem>
                     </SelectGroup>
                 </SelectContent>
             </Select>
@@ -83,4 +79,4 @@ const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
   )
 }
 
-export default memo(InputTo)
+export default InputTo

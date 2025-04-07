@@ -12,7 +12,7 @@ export const educhain = {
     },
     rpcUrls: {
         default: {
-            http: ["https://rpc.open-campus-codex.gelato.digital"]
+            http: ["https://rpc.open-campus-codex.gelato.digital", "https://open-campus-codex-sepolia.drpc.org"]
         }
     },
     nativeCurrency: {

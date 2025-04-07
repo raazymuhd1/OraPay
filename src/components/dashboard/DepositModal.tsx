@@ -3,8 +3,7 @@ import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
-import toast from "react-hot-toast"
-import {Toaster} from "react-hot-toast"
+import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
 import { CustomConnectButton } from '@/components'
@@ -19,7 +18,7 @@ const DepositModal = () => {
         const chainId = useChainId()
         const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, depositStatus, depoData,
-        handleTokenApproval, approvalStatus, approveData, resetApproval } = useContractHooks()
+        handleTokenApproval, approvalStatus, approveData, resetApproval, resetDeposit } = useContractHooks()
 
       console.log(approvalStatus)
 
@@ -40,6 +39,7 @@ const DepositModal = () => {
                   })
                   console.log(depoData)
                   resetApproval()
+                  resetDeposit()
                   setIsApproved(false)
 
                   setTimeout(() => {
@@ -72,7 +72,7 @@ const DepositModal = () => {
       <div 
       className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
 
-        <Toaster />
+      <Toaster />
        <div 
           onClick={() => setDepositModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />

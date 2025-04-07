@@ -15,6 +15,8 @@ const YieldOverview = () => {
         args: []
      })
 
+     console.log(currentAPY)
+
   return (
     <div className="w-full lg:h-[300px] min-h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
         <aside>
@@ -27,7 +29,10 @@ const YieldOverview = () => {
           <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
                   <h2 className="font-bold resp-headerCard"> Current APY </h2>
-                  <p className="flex items-center text-[#11afb8] text-[clamp(14px,1vw,18px)] font-semibold"> <TbArrowBearRight /> { apyStatus == "pending" ? "loading.." : `${currentAPY}` }% </p>
+                  <p className="flex items-center text-[#11afb8] text-[clamp(14px,1vw,18px)] font-semibold"> 
+                      <TbArrowBearRight />
+                      { currentAPY || 0 } % 
+                  </p>
               </div>
                <div className="flex flex-col gap-[10px] mt-[10px]">
                   <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold"> Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average. </p>

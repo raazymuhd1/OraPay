@@ -1,6 +1,7 @@
 import { useReadContract, useAccount, useBalance, useWriteContract, useChainId } from "wagmi";
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
+import { ethers } from "ethers"
 
 interface IUserBal {
     data: {
@@ -15,9 +16,9 @@ export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
      const { address: userAddr } = useAccount()
      const chainId = useChainId()
-      const { writeContract: writeDeposit, data: depoData, status: depositStatus } = useWriteContract();
-      const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval } = useWriteContract();
-      const { writeContract: writeWD, data: wdData, status: wdStatus } = useWriteContract()
+      const { writeContract: writeDeposit, data: depoData, status: depositStatus, reset: resetDeposit, error: depositError } = useWriteContract();
+      const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval, error: approvalError } = useWriteContract();
+      const { writeContract: writeWD, data: wdData, status: wdStatus, reset: resetWd } = useWriteContract()
 
        const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
           abi: fundsVault.abi,
@@ -55,7 +56,7 @@ export const useContractHooks = () => {
                     
                   } catch(err) {
                        console.log(err)
-                      toast.error(err as string, {
+                      toast.error("something went wrong", {
                          position: "top-right"
                       })
                       return;
@@ -80,7 +81,7 @@ export const useContractHooks = () => {
                     })
                     } catch(err) {
                         console.log(err)
-                        toast.error(err as string, {
+                        toast.error("something went wrong", {
                             position: "top-right"
                         })
                         return;
@@ -88,7 +89,7 @@ export const useContractHooks = () => {
                 }
 
             
-          const handleAssetsWithdrawal = (userBalance: string) => {
+          const handleAssetsWithdrawal = (userBalance: string, amount: number) => {
                    if(typeof userAddr == "undefined" || userAddr.length == 0) {
                         toast.error("please kindly connect your wallet before proceeding..", {
                            position: "top-right"
@@ -108,22 +109,28 @@ export const useContractHooks = () => {
                              abi: fundsVault.abi,
                              address: fundsVault.address as `0x${string}`,
                              functionName: 'withdrawPrincipal',
-                            args: []
+                             args: [ethers.parseUnits(String(amount), 6)]
                           })
         
                     } catch (err) {
                         console.log(err)
-                        toast.error(err as string, {
+                        toast.error("something went wrong, tx failed", {
                            position: "top-right"
                         })
                         return;
                     }
               }
 
+              const getContract = async() => {
+                  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL)
+                  const signer = new ethers.Wallet(process.env.PRIVATE_KEY)
+                  const contract = new ethers.Contract('', "", signer);
+              }
+
       return { 
         holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
-        handleAssetsDeposit, depositStatus, depoData,
-        handleTokenApproval, approvalStatus, approveData, resetApproval,
-        handleAssetsWithdrawal, wdData, wdStatus
+        handleAssetsDeposit, depositStatus, depoData, resetDeposit, depositError,
+        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError,
+        handleAssetsWithdrawal, wdData, wdStatus, resetWd
     };
 }

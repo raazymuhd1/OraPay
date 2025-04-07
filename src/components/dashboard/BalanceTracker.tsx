@@ -5,18 +5,25 @@ import { ImStack } from "react-icons/im";
 import { allContracts } from '@/constants';
 import { MdArrowOutward } from "react-icons/md";
 import { useContractHooks } from "@/utils/hooks"
+import { useReadContract } from "wagmi"
 import BalancesCard from "./BalancesCard"
 
 
 const BalanceTracker = () => {
       const [userBalances, updateUserBalance] = useState(balances);
       const [depositBalances, setDepositBalances] = useState({
-          deposited: "$0",
+          deposited: "0",
           yieldBalance: "0",
           principalBalance: "0"
       })
       const { userDeposits, holdingsResult, userDepositStatus, holdingStatus, depositStatus } = useContractHooks()
       const { fundsVault } = allContracts;
+      const { data: currentAPY, status: apyStatus } = useReadContract({
+              abi: fundsVault.abi,
+              address: fundsVault.address as `0x${string}`,
+              functionName: 'getCurrentAPY',
+              args: []
+           })
 
       console.log(parseFloat(userDeposits as string))
       console.log(userDeposits)
@@ -25,10 +32,12 @@ const BalanceTracker = () => {
       useEffect(() => {
          const handleUserDepositedBalance = () => {
             //  i could pass a deposit status in the dependencies list to keep updating the balances
-            if(userDeposits && holdingsResult.length > 0) {
+            if(userDeposits && holdingsResult) {
                 setDepositBalances({
                   deposited: String(userDeposits).slice(0, -6) || "0",
+                  // @ts-ignore
                   yieldBalance: String(holdingsResult[0]).slice(0, -6) || "0",
+                  // @ts-ignore
                   principalBalance: String(holdingsResult[1]).slice(0, -6) || "0"
                 })
             }
@@ -52,7 +61,7 @@ const BalanceTracker = () => {
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap justify-center gap-[20px] mt-[10px]">
             <BalancesCard 
-              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${depositBalances.deposited}`, desc: userBalances[0].desc } } 
+              { ...{ id: userBalances[0].id, title: userBalances[0].title, TitleLogo: LuWallet, value: `$${depositBalances.deposited}`, desc: `+${currentAPY ?? 0}% this year` } } 
               />
             <BalancesCard 
               { ...{ 

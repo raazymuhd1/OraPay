@@ -5,33 +5,29 @@ import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
-import { useWriteContract, useReadContract } from 'wagmi'
-
-interface IState {
-   from?: {
-     address: string;
-     amount: number;
-   },
-   to?: {
-     address: string;
-     amount: number;
-   }
-}
-
+import { useWriteContract } from 'wagmi'
+import { IState } from "@/types"
+import { ethers } from 'ethers'
 
 const Trade = () => {
-    const { fundsVault } = allContracts
+    const { fundsVault, mockUsdc } = allContracts
     const [selectedAsset, setSelectedAsset] = useState<IState>({
         from: {
+           name: "",
            address: "",
            amount: 0
         },
         to: {
+           name: "",
            address: "",
            amount: 0
         }
     });
     const { writeContract: writeSell, data: sellData, status: sellStatus } = useWriteContract()
+
+    useEffect(() => {
+        console.log("selecting asset", selectedAsset)
+    }, [selectedAsset])
 
     const handleTradeDetails = (title: string, value: string) => {
        return (
@@ -42,14 +38,14 @@ const Trade = () => {
        )
    }
 
-   const handleTrade = () => {
+   const sellTokens = () => {
        try {
          console.log("trading")
           writeSell({
               abi: fundsVault.abi,
               address: fundsVault.address as `0x${string}`,
               functionName: "sellYieldTokensForTokens",
-              args: [selectedAsset?.from?.amount, selectedAsset?.to?.address],
+              args: [ethers.parseUnits(String(selectedAsset?.from?.amount), 6), selectedAsset?.to?.address],
               gas: BigInt("3000000")
           })
           
@@ -58,7 +54,6 @@ const Trade = () => {
        }
    }
 
-   console.log(sellData)
 
   return (
     <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
@@ -81,12 +76,12 @@ const Trade = () => {
           </div>
           
           <div className="flex flex-col gap-[10px] glass-card p-[15px]">
-            { handleTradeDetails("Rate", `1 USDC = 1 PT-USDC`) }
+            { handleTradeDetails("Rate", `1 ${selectedAsset.from?.name?.toUpperCase() || "YTUSDC"} = 1 USDC`) }
             { handleTradeDetails("Fee", "0.3%") }
           </div>
 
             <CustomButton
-              onClick={handleTrade}
+              onClick={sellTokens}
               disabled={false}
               style={`bg-gradient`}
                     >

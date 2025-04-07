@@ -1,7 +1,6 @@
 import {useRef, useState, useEffect} from 'react'
-import {Toaster} from "react-hot-toast"
+import toast, {Toaster} from "react-hot-toast"
 import { usePeyPeyContext } from "../PeyPeyContext"
-import toast from "react-hot-toast"
 import { CircleDollarSign, X } from "lucide-react"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
@@ -105,7 +104,7 @@ const WithdrawalModal = () => {
 
              <CustomButton
                 onClick={() => {
-                  handleAssetsWithdrawal(String(userBalance?.data?.value))
+                  handleAssetsWithdrawal(String(userBalance?.data?.value), Number(withdrawalAmount))
                 }} 
                 disabled={withdrawalAmount.length <= 0 || Number(withdrawalAmount) == 0 || wdStatus == "pending" ? true : false}
                 style={`bg-gradient`}

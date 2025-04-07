@@ -20,3 +20,17 @@ export interface IModalState {
   selectedProduct: IProduct;
   setSelectedProduct: Dispatch<SetStateAction<IProduct>>;
 }
+
+
+export interface IState {
+   from?: {
+     name?: string;
+     address: string;
+     amount: number;
+   },
+   to?: {
+     name?: string;
+     address: string;
+     amount: number;
+   }
+}
