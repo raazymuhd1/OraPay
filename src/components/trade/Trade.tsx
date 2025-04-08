@@ -24,7 +24,7 @@ const Trade = () => {
            amount: 0
         }
     });
-    const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling } = useWriteContract()
+    const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
     useEffect(() => {
         const handleSwapProcess = () => {
@@ -36,6 +36,7 @@ const Trade = () => {
                   resetSelling()
                 return;
             } else if(!sellData && sellStatus == "error") {
+               console.error(sellingError);
                toast.error("Failed to sell assets", {
                         position: "top-right"
                   })
@@ -61,13 +62,16 @@ const Trade = () => {
    const sellTokens = () => {
        try {
          console.log("trading")
-          writeSell({
-              abi: fundsVault.abi,
-              address: fundsVault.address as `0x${string}`,
-              functionName: "sellYieldTokensForTokens",
-              args: [ethers.parseUnits(String(selectedAsset?.from?.amount), 6), selectedAsset?.to?.address],
-              gas: BigInt("3000000")
-          })
+         if(selectedAsset?.from?.amount && selectedAsset?.to?.address) {
+           writeSell({
+               abi: fundsVault.abi,
+               address: fundsVault.address as `0x${string}`,
+               functionName: "sellYieldTokensForTokens",
+               args: [ethers.parseUnits(String(selectedAsset?.from?.amount), 6), selectedAsset?.to?.address],
+               gas: BigInt(200000),
+           })
+         }
+
           
        } catch(err) {
           console.log(err)

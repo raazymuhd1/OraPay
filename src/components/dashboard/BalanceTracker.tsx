@@ -25,8 +25,7 @@ const BalanceTracker = () => {
               args: []
            })
 
-      console.log(parseFloat(userDeposits as string))
-      console.log(userDeposits)
+      console.log("userDeposits", userDeposits)
 
 
       useEffect(() => {
@@ -36,9 +35,9 @@ const BalanceTracker = () => {
                 setDepositBalances({
                   deposited: String(userDeposits).slice(0, -6) || "0",
                   // @ts-ignore
-                  yieldBalance: String(holdingsResult[0]).slice(0, -6) || "0",
+                  yieldBalance: holdingsResult && String(holdingsResult[0]).slice(0, -6) || "0",
                   // @ts-ignore
-                  principalBalance: String(holdingsResult[1]).slice(0, -6) || "0"
+                  principalBalance: holdingsResult && String(holdingsResult['1']).slice(0, -6) || "0"
                 })
             }
          }

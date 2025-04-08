@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
-import { useAccount, useWriteContract } from 'wagmi'
+import { useAccount, useWriteContract, usePublicClient } from 'wagmi'
+import { simulateContract } from '@wagmi/core'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
+import { wagmiConfig } from "../Web3Provider"
 import {ethers} from "ethers"
 import {Toaster} from "react-hot-toast"
 import toast from 'react-hot-toast'
@@ -15,27 +17,43 @@ const PaymentModal = () => {
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
         const { fundsVault, mockUsdc } = allContracts
-        const {writeContract: payMerchant, data: payData, status: payStatus} = useWriteContract();
+        const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError} = useWriteContract();
+        const pubClient = usePublicClient()
 
         /**
          * 
          * @dev handling purchased item's payment 
          */
-        const payPurchasedItem = () => {
+        const payPurchasedItem = async() => {
              if(userAddr?.length! <= 0) {
                  toast.error("Please connect to a wallet to proceed!")
                  return
              }
+             console.log("required depo",[ethers.parseUnits(requiredDepo, 6)])
+            if (!requiredDepo || isNaN(Number(requiredDepo))) {
+              toast.error("Invalid deposit amount");
+              return;
+            }
 
            try {
+              const estGas = await simulateContract(wagmiConfig, {
+                  abi: fundsVault.abi,
+                  address: fundsVault.address as `0x${string}`,
+                  functionName: "payMerchant",
+                  args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"]
+              })
+              console.log(estGas)
+
               payMerchant({
                 abi: fundsVault.abi,
                 address: fundsVault.address as `0x${string}` ,
                 functionName: "payMerchant",
                 args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
+                gas: BigInt("250000")
               })
   
            } catch (error) {
+              console.log(error)
                 toast.error("An error occurred while withdrawing assets. Please try again!", {
                         position: "top-right"
                   })
@@ -60,6 +78,7 @@ const PaymentModal = () => {
                       setOpenPayModal(false)
                     }, 4000)
                 } else if(payStatus === "error") {
+                    console.error(paymentError);
                     toast.error("Payment failed!", { position: "top-right" })
                 }
             }
@@ -130,7 +149,7 @@ const PaymentModal = () => {
                           <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
                           {/* deposit details */}
-                          { handleDepositDetails("Required Deposit", `${requiredDepo}PT`) }
+                          { handleDepositDetails("Required Deposit", `${requiredDepo}YT`) }
                           { handleDepositDetails("Estimated Yield", `${estYield}YT / Month`) }
                         </div>
                     </div>

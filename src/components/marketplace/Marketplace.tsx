@@ -8,13 +8,13 @@ import { useContractHooks } from '@/utils/hooks'
 const Marketplace = () => {
       const { getContract } = useContractHooks()
 
-  useEffect(() => {
-     const gettingContract = async() => {
-        const contract = await getContract()
-        console.log(contract)
-     }
-     gettingContract()
-  }, [])
+//   useEffect(() => {
+//      const gettingContract = async() => {
+//         const contract = await getContract()
+//         console.log(contract)
+//      }
+//      gettingContract()
+//   }, [])
 
 
   return (

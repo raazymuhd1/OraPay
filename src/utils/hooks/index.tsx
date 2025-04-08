@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useReadContract, useAccount, useBalance, useWriteContract, useChainId } from "wagmi";
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
@@ -8,6 +9,8 @@ export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
      const { address: userAddr } = useAccount()
      const chainId = useChainId()
+     const [hasDeposited, setHasDeposited] = useState(false)
+     const [isApproved, setIsApproved] = useState(false)
 
       const { writeContract: writeDeposit, data: depoData, status: depositStatus, reset: resetDeposit, error: depositError } = useWriteContract();
       const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval, error: approvalError } = useWriteContract();
@@ -28,26 +31,32 @@ export const useContractHooks = () => {
           args: [userAddr]
       })
 
-        const handleAssetsDeposit = (depositAmount: number) => {
+        const handleAssetsDeposit = (depositAmount: string, lockPeriod: number) => {
                   if(typeof userAddr == "undefined" || userAddr.length == 0) {
                       toast.error("please kindly connect your wallet before proceeding..", {
                          position: "top-right"
                       })
                       return;
                   }
-      
+                // the first way to handle 2 transactions at once 
                   try {
-                    const lockPeriod = 10 * 86400; // 10 days
-                    const args = [depositAmount * 10**6, 0]
-      
-                     writeDeposit({
+                    writeApproval({
+                        abi: mockUsdc.abi,
+                        address: mockUsdc.address as `0x${string}`,
+                        functionName: "approve",
+                        args: [fundsVault.address, ethers.parseUnits(String(depositAmount), 6)],
+                        // gas: BigInt("250000")
+                    })
+                    
+                    writeDeposit({
                         abi: fundsVault.abi,
                         address: fundsVault.address as `0x${string}`,
                         functionName: "deposit",
-                        args,
-                        gas: BigInt("25000")
-                    })
-                    
+                        args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
+                        // gas: BigInt("250000")
+                    });
+      
+                    console.log("asset deposited")
                   } catch(err) {
                        console.log(err)
                       toast.error("something went wrong", {
@@ -146,8 +155,8 @@ export const useContractHooks = () => {
 
       return { 
         holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
-        handleAssetsDeposit, depositStatus, depoData, resetDeposit, depositError,
-        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError,
+        handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
+        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, setIsApproved,
         handleAssetsWithdrawal, wdData, wdStatus, resetWd, getContract, setFundsVault
     };
 }
