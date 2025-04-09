@@ -43,7 +43,7 @@ const WithdrawalModal = () => {
       useEffect(() => {
 
         const handlwWithdrawalState = () => {
-            if(wdStatus === "success" && wdData) {
+            if(wdStatus == "success" && wdData) {
                  toast.success("Assets withdrawn successfully!", {
                    position: "top-right"
                 })

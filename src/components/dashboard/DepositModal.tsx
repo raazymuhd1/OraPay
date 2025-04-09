@@ -2,10 +2,12 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWriteContract, useReadContract, useAccount, useBalance, useChainId } from 'wagmi'
+import { useWaitForTransactionReceipt, useAccount, useBalance, useChainId } from 'wagmi'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
+import { wagmiConfig } from '../Web3Provider'
 import { CustomConnectButton } from '@/components'
 import { ethers } from 'ethers'
 
@@ -24,47 +26,68 @@ const DepositModal = () => {
 
 
         useEffect(() => {
-          // the second way to handle 2 transactions at once 
-          // const shouldApprove = !hasDeposited && approvalStatus === "success" && approveData;
-          const shouldDeposit = depositStatus === "success" && depoData;
-          // if (shouldApprove) {
-          //   // Optional: show a toast
-          //   // toast.success("assets has been approved", { position: "top-right" });
-          //    setHasDeposited(true)
-          //     writeDeposit({
-          //       abi: fundsVault.abi,
-          //       address: fundsVault.address as `0x${string}`,
-          //       functionName: "deposit",
-          //       args: [depositAmount !== "" ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod]
-          //     });
-          //   }
-            if (shouldDeposit) {
-              toast.success("token has been deposited", {
-                position: "top-right"
-              });
-              resetDeposit()
-              resetApproval();
-              setIsApproved(false);
-              setDepositAmount("")
-              updateLockPeriod("")
-              setHasDeposited(false)
-  
-              setTimeout(() => {
-                setDepositModal(false);
-              }, 4000);
-            } else if(approvalStatus == "error" || depositStatus == "error") {
-                console.error(approvalError);
-                console.error(depositError);
-                toast.error("depositing failed", {
-                  position: "top-right"
-                })
-            }
+           const depositProcess = async() => {
+
+               try {
+                 // the second way to handle 2 transactions at once 
+                 const approvalReceipt = await waitForTransactionReceipt(wagmiConfig, {
+                   hash: approveData as `0x${string}`,
+                   confirmations: 2
+                 })
+                 console.log("approve data", approveData)
+                 const shouldApprove = approvalStatus == "success";
+
+                 if (shouldApprove) {
+                      writeDeposit({
+                        abi: fundsVault.abi,
+                        address: fundsVault.address as `0x${string}`,
+                        functionName: "deposit",
+                        args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
+                        // gas: BigInt("3000000")
+                      });
+                      resetApproval();
+                      setHasDeposited(true)
+
+                      console.log("approval tx receipt", approvalReceipt?.transactionHash)
+                      
+                    }
+                    
+                    const shouldDeposit = depositStatus === "success" || depoData;
+                    
+                    if (shouldDeposit) {
+                      toast.success("token has been deposited", {
+                        position: "top-right"
+                      });
+                      resetDeposit()
+                      setIsApproved(false);
+                      setDepositAmount("")
+                      updateLockPeriod("")
+                      setHasDeposited(false)
           
+                      setTimeout(() => {
+                        setDepositModal(false);
+                      }, 4000);
+                    } else if(depositStatus == "error") {
+                        // console.error(depositError);
+                        console.log(depositError)
+                        toast.error("depositing failed", {
+                          position: "top-right"
+                        })
+                    }
+       
+                
+               } catch (error) {
+                  console.log(error)
+               }
+
+           }
+          
+          depositProcess()
 
           return () => {
             // Only reset if needed, or move reset into a cancel handler
           };
-      }, [depositStatus, depoData]);
+      }, [approveData, approvalStatus]);
 
 
         const handleBalanceSelection = (value: number) => {

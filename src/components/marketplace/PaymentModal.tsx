@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
-import { useAccount, useWriteContract, usePublicClient } from 'wagmi'
-import { simulateContract } from '@wagmi/core'
+import { useAccount, useWriteContract, useSimulateContract, usePublicClient } from 'wagmi'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
 import { wagmiConfig } from "../Web3Provider"
@@ -18,7 +17,12 @@ const PaymentModal = () => {
         const [estYield, setEstYield] = useState("10");
         const { fundsVault, mockUsdc } = allContracts
         const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError} = useWriteContract();
-        const pubClient = usePublicClient()
+        const estGas = useSimulateContract({
+                  abi: fundsVault.abi,
+                  address: fundsVault.address as `0x${string}`,
+                  functionName: "payMerchant",
+                  args: [requiredDepo != "" && ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"]
+              })
 
         /**
          * 
@@ -29,32 +33,21 @@ const PaymentModal = () => {
                  toast.error("Please connect to a wallet to proceed!")
                  return
              }
-             console.log("required depo",[ethers.parseUnits(requiredDepo, 6)])
-            if (!requiredDepo || isNaN(Number(requiredDepo))) {
-              toast.error("Invalid deposit amount");
-              return;
-            }
-
            try {
-              const estGas = await simulateContract(wagmiConfig, {
-                  abi: fundsVault.abi,
-                  address: fundsVault.address as `0x${string}`,
-                  functionName: "payMerchant",
-                  args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"]
-              })
-              console.log(estGas)
+              
+              console.log("gas estimation", estGas.data)
 
               payMerchant({
                 abi: fundsVault.abi,
                 address: fundsVault.address as `0x${string}` ,
                 functionName: "payMerchant",
-                args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
-                gas: BigInt("250000")
+                args: [requiredDepo != "" && ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
+                // gas: BigInt("80000")
               })
   
            } catch (error) {
               console.log(error)
-                toast.error("An error occurred while withdrawing assets. Please try again!", {
+                toast.error("An error occurred while purchasing items. Please try again!", {
                         position: "top-right"
                   })
                 return;

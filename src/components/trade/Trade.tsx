@@ -68,7 +68,7 @@ const Trade = () => {
                address: fundsVault.address as `0x${string}`,
                functionName: "sellYieldTokensForTokens",
                args: [ethers.parseUnits(String(selectedAsset?.from?.amount), 6), selectedAsset?.to?.address],
-               gas: BigInt(200000),
+              //  gas: BigInt("52000"),
            })
          }
 

@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { useReadContract, useAccount, useBalance, useWriteContract, useChainId } from "wagmi";
+import { useReadContract, useAccount, useWaitForTransactionReceipt, useSimulateContract, useWriteContract, useChainId } from "wagmi";
+import { simulateContract } from '@wagmi/core'
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
-
+import { wagmiConfig } from "@/components/Web3Provider";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
@@ -48,15 +49,14 @@ export const useContractHooks = () => {
                         // gas: BigInt("250000")
                     })
                     
-                    writeDeposit({
-                        abi: fundsVault.abi,
-                        address: fundsVault.address as `0x${string}`,
-                        functionName: "deposit",
-                        args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
-                        // gas: BigInt("250000")
-                    });
+                    // writeDeposit({
+                    //     abi: fundsVault.abi,
+                    //     address: fundsVault.address as `0x${string}`,
+                    //     functionName: "deposit",
+                    //     args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
+                    //     gas: BigInt("250000")
+                    // });
       
-                    console.log("asset deposited")
                   } catch(err) {
                        console.log(err)
                       toast.error("something went wrong", {
@@ -92,7 +92,7 @@ export const useContractHooks = () => {
                 }
 
             
-          const handleAssetsWithdrawal = (userBalance: string, amount: number) => {
+          const handleAssetsWithdrawal = async(userBalance: string, amount: number) => {
                    if(typeof userAddr == "undefined" || userAddr.length == 0) {
                         toast.error("please kindly connect your wallet before proceeding..", {
                            position: "top-right"
@@ -108,11 +108,22 @@ export const useContractHooks = () => {
                     }
         
                     try {
-                          writeWD({
+                        //   const simulateTx = await simulateContract(wagmiConfig, {
+                        //      abi: fundsVault.abi,
+                        //      address: fundsVault.address as `0x${string}`,
+                        //      functionName: 'withdrawPrincipal',
+                        //      args: [ethers.parseUnits(String(amount), 6)],
+                        //      account: userAddr
+                        //   })
+
+                        // console.log(simulateTx.result)
+                          writeWD({  
                              abi: fundsVault.abi,
                              address: fundsVault.address as `0x${string}`,
                              functionName: 'withdrawPrincipal',
-                             args: [ethers.parseUnits(String(amount), 6)]
+                             args: [ethers.parseUnits(String(amount), 6)],
+                            //  gas: BigInt("120000"),
+                             account: userAddr
                           })
         
                     } catch (err) {

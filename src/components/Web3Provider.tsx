@@ -17,7 +17,7 @@ export const wagmiConfig = createConfig({
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL),
-    [educhain.id]: http(educhain.rpcUrls.default.http[0])
+    [educhain.id]: http()
   },
   ssr: true
 })
