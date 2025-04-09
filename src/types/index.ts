@@ -19,6 +19,8 @@ export interface IModalState {
   setOpenWithdrawModal: Dispatch<SetStateAction<boolean>>;
   selectedProduct: IProduct;
   setSelectedProduct: Dispatch<SetStateAction<IProduct>>;
+  setTokenToAmount:  Dispatch<SetStateAction<number>>;
+  tokenToAmount: number;
 }
 
 

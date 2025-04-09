@@ -14,7 +14,7 @@ const PaymentModal = () => {
         const { address: userAddr } = useAccount()
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
-        const { payData, payStatus, paymentError, payPurchasedItem }  = useContractHooks()
+        const { payData, payStatus, paymentError, payPurchasedItem, resetPayment }  = useContractHooks()
 
 
         useEffect(() => {
@@ -29,12 +29,13 @@ const PaymentModal = () => {
             const handlingPaymentProcess = () => {
                 if(payStatus === "success" && payData) {
                     toast.success("Payment successful!", { position: "top-right" })
-
+                    resetPayment()
                     setTimeout(() => {
                       setOpenPayModal(false)
-                    }, 4000)
+                    }, 2000)
                 } else if(payStatus === "error") {
                     console.error(paymentError);
+                    resetPayment()
                     toast.error("Payment failed!", { position: "top-right" })
                 }
             }
@@ -114,7 +115,7 @@ const PaymentModal = () => {
 
             <CustomButton
                 onClick={() => payPurchasedItem(requiredDepo)}
-                disabled={payStatus == "pending" ? true : false}
+                disabled={payStatus == "pending" || payStatus == "success" ? true : false}
                 style={`bg-gradient`}
                       >
                 <CreditCard className="" />
