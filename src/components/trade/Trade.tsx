@@ -36,7 +36,7 @@ const Trade = () => {
                   resetSelling()
                 return;
             } else if(!sellData && sellStatus == "error") {
-               console.error(sellingError);
+               console.log(sellingError);
                toast.error("Failed to sell assets", {
                         position: "top-right"
                   })

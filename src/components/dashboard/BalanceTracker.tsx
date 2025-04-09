@@ -6,6 +6,7 @@ import { allContracts } from '@/constants';
 import { MdArrowOutward } from "react-icons/md";
 import { useContractHooks } from "@/utils/hooks"
 import { useReadContract } from "wagmi"
+import { readContract } from '@wagmi/core'
 import BalancesCard from "./BalancesCard"
 
 
@@ -26,6 +27,7 @@ const BalanceTracker = () => {
            })
 
       console.log("userDeposits", userDeposits)
+      console.log("user holdings", holdingsResult)
 
 
       useEffect(() => {

@@ -50,7 +50,7 @@ const DepositModal = () => {
 
                       console.log("approval tx receipt", approvalReceipt?.transactionHash)
                       
-                    }
+                  }
                     
                     const shouldDeposit = depositStatus === "success" || depoData;
                     
@@ -58,21 +58,21 @@ const DepositModal = () => {
                       toast.success("token has been deposited", {
                         position: "top-right"
                       });
-                      resetDeposit()
-                      setIsApproved(false);
-                      setDepositAmount("")
-                      updateLockPeriod("")
-                      setHasDeposited(false)
-          
+
                       setTimeout(() => {
                         setDepositModal(false);
+                        resetDeposit()
+                        setIsApproved(false);
+                        setDepositAmount("")
+                        updateLockPeriod("")
+                        setHasDeposited(false)
                       }, 4000);
                     } else if(depositStatus == "error") {
-                        // console.error(depositError);
                         console.log(depositError)
                         toast.error("depositing failed", {
                           position: "top-right"
                         })
+                        setDepositModal(false);
                     }
        
                 
@@ -84,10 +84,7 @@ const DepositModal = () => {
           
           depositProcess()
 
-          return () => {
-            // Only reset if needed, or move reset into a cancel handler
-          };
-      }, [approveData, approvalStatus]);
+      }, [approveData, approvalStatus, depositStatus, depoData]);
 
 
         const handleBalanceSelection = (value: number) => {

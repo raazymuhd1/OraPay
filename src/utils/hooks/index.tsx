@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useReadContract, useAccount, useWaitForTransactionReceipt, useSimulateContract, useWriteContract, useChainId } from "wagmi";
-import { simulateContract } from '@wagmi/core'
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
@@ -28,7 +27,7 @@ export const useContractHooks = () => {
       const { data: userDeposits, isLoading: userDepositLoading, status: userDepositStatus } = useReadContract({
           abi: fundsVault.abi,
           address: fundsVault.address as `0x${string}`,
-          functionName: 'userDeposits',
+          functionName: 'getUserDeposits',
           args: [userAddr]
       })
 
@@ -46,7 +45,6 @@ export const useContractHooks = () => {
                         address: mockUsdc.address as `0x${string}`,
                         functionName: "approve",
                         args: [fundsVault.address, ethers.parseUnits(String(depositAmount), 6)],
-                        // gas: BigInt("250000")
                     })
                     
                     // writeDeposit({
@@ -108,15 +106,6 @@ export const useContractHooks = () => {
                     }
         
                     try {
-                        //   const simulateTx = await simulateContract(wagmiConfig, {
-                        //      abi: fundsVault.abi,
-                        //      address: fundsVault.address as `0x${string}`,
-                        //      functionName: 'withdrawPrincipal',
-                        //      args: [ethers.parseUnits(String(amount), 6)],
-                        //      account: userAddr
-                        //   })
-
-                        // console.log(simulateTx.result)
                           writeWD({  
                              abi: fundsVault.abi,
                              address: fundsVault.address as `0x${string}`,
@@ -136,38 +125,10 @@ export const useContractHooks = () => {
               }
 
 
-        const getContract = async() => {
-                const provider = new ethers.BrowserProvider(window?.ethereum)
-                const signer = await provider.getSigner()
-            const contract = new ethers.Contract(fundsVault.address, fundsVault.abi, signer); 
-            const holdings =  await contract.getHoldings()
-            console.log("holdings", holdings)
-        }
-
-        const setFundsVault = () => {
-            try {
-                writeFundsVault({
-                    abi: principalToken.abi,
-                    address: principalToken.address as `0x${string}`,
-                    functionName: "setFundsVault",
-                    args: [fundsVault.address]
-                })
-
-                writeFundsVault({
-                    abi: yieldToken.abi,
-                    address: yieldToken.address as `0x${string}`,
-                    functionName: "setFundsVault",
-                    args: [fundsVault.address]
-                })
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
       return { 
         holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
         handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, setIsApproved,
-        handleAssetsWithdrawal, wdData, wdStatus, resetWd, getContract, setFundsVault
+        handleAssetsWithdrawal, wdData, wdStatus, resetWd
     };
 }
