@@ -1,4 +1,4 @@
-import { useState, useEffect, SetStateAction } from 'react'
+import { useState, useEffect, } from 'react'
 import { balances } from "@/constants"
 import { LuWallet, LuChartNoAxesColumn  } from "react-icons/lu";
 import { ImStack } from "react-icons/im";

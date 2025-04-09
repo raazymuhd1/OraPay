@@ -5,13 +5,13 @@ import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
-import { useWriteContract } from 'wagmi'
+import { useContractHooks } from '@/utils/hooks'
 import { IState } from "@/types"
 import { ethers } from 'ethers'
 import toast, { Toaster } from "react-hot-toast"
 
 const Trade = () => {
-    const { fundsVault, mockUsdc } = allContracts
+    const { sellTokens, sellData, sellStatus, resetSelling, sellingError } = useContractHooks()
     const [selectedAsset, setSelectedAsset] = useState<IState>({
         from: {
            name: "",
@@ -24,7 +24,6 @@ const Trade = () => {
            amount: 0
         }
     });
-    const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
     useEffect(() => {
         const handleSwapProcess = () => {
@@ -59,26 +58,6 @@ const Trade = () => {
        )
    }
 
-   const sellTokens = () => {
-       try {
-         console.log("trading")
-         if(selectedAsset?.from?.amount && selectedAsset?.to?.address) {
-           writeSell({
-               abi: fundsVault.abi,
-               address: fundsVault.address as `0x${string}`,
-               functionName: "sellYieldTokensForTokens",
-               args: [ethers.parseUnits(String(selectedAsset?.from?.amount), 6), selectedAsset?.to?.address],
-              //  gas: BigInt("52000"),
-           })
-         }
-
-          
-       } catch(err) {
-          console.log(err)
-       }
-   }
-
-
   return (
     <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
@@ -107,7 +86,7 @@ const Trade = () => {
           </div>
 
             <CustomButton
-              onClick={sellTokens}
+              onClick={() => sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
               disabled={sellStatus == "pending" || selectedAsset?.from?.amount! <= 0 ? true : false}
               style={`bg-gradient`}
                     >

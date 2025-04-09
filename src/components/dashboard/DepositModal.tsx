@@ -35,7 +35,7 @@ const DepositModal = () => {
                    confirmations: 2
                  })
                  console.log("approve data", approveData)
-                 const shouldApprove = approvalStatus == "success";
+                 const shouldApprove = approvalStatus == "success" || approveData;
 
                  if (shouldApprove) {
                       writeDeposit({
@@ -55,18 +55,19 @@ const DepositModal = () => {
                     const shouldDeposit = depositStatus === "success" || depoData;
                     
                     if (shouldDeposit) {
-                      toast.success("token has been deposited", {
-                        position: "top-right"
-                      });
-
-                      setTimeout(() => {
-                        setDepositModal(false);
+                        toast.success("token has been deposited", {
+                          position: "top-right"
+                        });
+                        
                         resetDeposit()
                         setIsApproved(false);
                         setDepositAmount("")
                         updateLockPeriod("")
-                        setHasDeposited(false)
-                      }, 4000);
+
+                        setTimeout(() => {
+                          setDepositModal(false);
+                          setHasDeposited(false)
+                        }, 4000);
                     } else if(depositStatus == "error") {
                         console.log(depositError)
                         toast.error("depositing failed", {
@@ -84,7 +85,7 @@ const DepositModal = () => {
           
           depositProcess()
 
-      }, [approveData, approvalStatus, depositStatus, depoData]);
+      }, [approvalStatus, approveData, depositStatus, depoData]);
 
 
         const handleBalanceSelection = (value: number) => {

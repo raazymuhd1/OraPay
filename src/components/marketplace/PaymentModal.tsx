@@ -2,57 +2,20 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
-import { useAccount, useWriteContract, useSimulateContract, usePublicClient } from 'wagmi'
+import { useAccount } from 'wagmi'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
-import { wagmiConfig } from "../Web3Provider"
-import {ethers} from "ethers"
 import {Toaster} from "react-hot-toast"
 import toast from 'react-hot-toast'
+import { useContractHooks } from '@/utils/hooks'
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
         const { address: userAddr } = useAccount()
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
-        const { fundsVault, mockUsdc } = allContracts
-        const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError} = useWriteContract();
-        const estGas = useSimulateContract({
-                  abi: fundsVault.abi,
-                  address: fundsVault.address as `0x${string}`,
-                  functionName: "payMerchant",
-                  args: [requiredDepo != "" && ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"]
-              })
+        const { payData, payStatus, paymentError, payPurchasedItem }  = useContractHooks()
 
-        /**
-         * 
-         * @dev handling purchased item's payment 
-         */
-        const payPurchasedItem = async() => {
-             if(userAddr?.length! <= 0) {
-                 toast.error("Please connect to a wallet to proceed!")
-                 return
-             }
-           try {
-              
-              console.log("gas estimation", estGas.data)
-
-              payMerchant({
-                abi: fundsVault.abi,
-                address: fundsVault.address as `0x${string}` ,
-                functionName: "payMerchant",
-                args: [requiredDepo != "" && ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
-                // gas: BigInt("80000")
-              })
-  
-           } catch (error) {
-              console.log(error)
-                toast.error("An error occurred while purchasing items. Please try again!", {
-                        position: "top-right"
-                  })
-                return;
-           }
-        }
 
         useEffect(() => {
            const handleSelectedProduct = () => {
@@ -150,7 +113,7 @@ const PaymentModal = () => {
             </div>
 
             <CustomButton
-                onClick={payPurchasedItem}
+                onClick={() => payPurchasedItem(requiredDepo)}
                 disabled={payStatus == "pending" ? true : false}
                 style={`bg-gradient`}
                       >
