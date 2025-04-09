@@ -22,6 +22,7 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
          price: "",
          tag: ""
       });
+      const [tokenToAmount, setTokenToAmount] = useState(0)
 
   return (
     <PeyPeyContext.Provider
@@ -30,7 +31,8 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
         openCalculatorModal, setCalculatorModal,
         openPayModal, setOpenPayModal,
         openWithdrawModal, setOpenWithdrawModal,
-        selectedProduct, setSelectedProduct
+        selectedProduct, setSelectedProduct,
+        setTokenToAmount, tokenToAmount
       }}
     >
       { children }

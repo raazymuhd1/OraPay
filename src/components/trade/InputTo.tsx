@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select"
 import { allContracts } from '@/constants'
 import { IState } from "@/types"
+import { usePeyPeyContext } from '../PeyPeyContext'
+
 interface IProps {
   selectedAsset: IState;
   setSelectedAsset: Dispatch<SetStateAction<IState>>
@@ -17,6 +19,7 @@ interface IProps {
 
 const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
    const selectRef = useRef<HTMLDivElement>(null)
+   const { tokenToAmount, setTokenToAmount } = usePeyPeyContext()
    const [amountTo, updateAmountTo] = useState("0")
     const [selectAsst, setSelectAsst] = useState({
           name: "",

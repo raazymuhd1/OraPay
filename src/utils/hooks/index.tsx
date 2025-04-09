@@ -22,7 +22,7 @@ export const useContractHooks = () => {
       const { writeContract: writeDeposit, data: depoData, status: depositStatus, reset: resetDeposit, error: depositError } = useWriteContract();
       const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval, error: approvalError } = useWriteContract();
       const { writeContract: writeWD, data: wdData, status: wdStatus, reset: resetWd } = useWriteContract()
-       const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError} = useWriteContract();
+       const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError, reset: resetPayment} = useWriteContract();
        const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
     //    read actions
@@ -78,9 +78,10 @@ export const useContractHooks = () => {
                         functionName: "approve",
                         args: [fundsVault.address, ethers.parseUnits(String(depositAmount), 6)],
                     })
-                    
+                    setIsApproved(true)
       
                   } catch(err) {
+                       console.log(approvalError)
                        console.log(err)
                       toast.error("something went wrong", {
                          position: "top-right"
@@ -203,10 +204,10 @@ export const useContractHooks = () => {
       return { 
         holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
-        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, setIsApproved,
+        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, isApproved, setIsApproved,
         handleAssetsWithdrawal, wdData, wdStatus, resetWd,
         userInfos, setUserInfos,
-        payData, payStatus, paymentError, payPurchasedItem,
+        payData, payStatus, paymentError, payPurchasedItem, resetPayment,
         sellTokens, sellData, sellStatus, resetSelling, sellingError
     };
 }

@@ -17,7 +17,7 @@ const WithdrawalModal = () => {
      const { address: userAddr } = useAccount()
      const userBalance = useBalance({ chainId, address: userAddr, token: principalToken.address as `0x${string}` })
      const [ptBalance, setPtBalance] = useState("0");
-     const {handleAssetsWithdrawal, wdData, wdStatus} = useContractHooks()
+     const {handleAssetsWithdrawal, wdData, wdStatus, resetWd} = useContractHooks()
 
        const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
@@ -47,14 +47,15 @@ const WithdrawalModal = () => {
                  toast.success("Assets withdrawn successfully!", {
                    position: "top-right"
                 })
-
+                resetWd()
                 setTimeout(() => {
                    setOpenWithdrawModal(false)
                    setWithdrawalAmount("0")
-                }, 4000)
+                }, 2000)
 
                 return;
             } else if(wdStatus === "error") {
+                 resetWd()
                  toast.error("An error occurred while withdrawing assets. Please try again!", {
                    position: "top-right"
                 })
@@ -107,7 +108,7 @@ const WithdrawalModal = () => {
                 onClick={() => {
                   handleAssetsWithdrawal(String(userBalance?.data?.value), Number(withdrawalAmount))
                 }} 
-                disabled={withdrawalAmount.length <= 0 || Number(withdrawalAmount) == 0 || wdStatus == "pending" ? true : false}
+                disabled={withdrawalAmount.length <= 0 || Number(withdrawalAmount) == 0 || wdStatus == "pending" || wdStatus == "success" ? true : false}
                 style={`bg-gradient`}
                       >
                 <CircleDollarSign className="" />

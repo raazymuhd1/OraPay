@@ -87,7 +87,7 @@ const Trade = () => {
 
             <CustomButton
               onClick={() => sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
-              disabled={sellStatus == "pending" || selectedAsset?.from?.amount! <= 0 ? true : false}
+              disabled={sellStatus == "pending" || sellStatus == "success" || selectedAsset?.from?.amount! <= 0 ? true : false}
               style={`bg-gradient`}
                     >
               { sellStatus == "pending" ? "Processing..." : "Swap" }
