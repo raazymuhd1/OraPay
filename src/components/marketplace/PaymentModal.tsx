@@ -2,40 +2,28 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
-import { useAccount, useWriteContract } from 'wagmi'
+import { useAccount } from 'wagmi'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
 import { allContracts } from '@/constants'
-import {ethers} from "ethers"
 import {Toaster} from "react-hot-toast"
 import toast from 'react-hot-toast'
+import { useContractHooks } from '@/utils/hooks'
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
         const { address: userAddr } = useAccount()
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [estYield, setEstYield] = useState("10");
-        const { fundsVault, mockUsdc } = allContracts
-        const {writeContract: payMerchant, data: payData, status: payStatus} = useWriteContract();
+        const { payData, payStatus, paymentError, payPurchasedItem }  = useContractHooks()
 
-        /**
-         * 
-         * @dev handling purchased item's payment 
-         */
-        const payPurchasedItem = () => {
-             if(userAddr?.length! <= 0) {
-                 toast.error("Please connect to a wallet to proceed!")
-                 return
-             }
 
-           const result = payMerchant({
-              abi: fundsVault.abi,
-              address: fundsVault.address as `0x${string}` ,
-              functionName: "payMerchant",
-              args: [ethers.parseUnits(requiredDepo, 6) , "0x4417a09fd291D494F67aB787055C29E17DE49eDe"],
-            })
-
-            console.log(result)
-        }
+        useEffect(() => {
+           const handleSelectedProduct = () => {
+               setRequiredDepo(selectedProduct.price)
+              //  setEstYield(selectedProduct.estimatedYield)
+           }
+           handleSelectedProduct()
+        }, [selectedProduct])
 
         useEffect(() => {
             const handlingPaymentProcess = () => {
@@ -46,6 +34,7 @@ const PaymentModal = () => {
                       setOpenPayModal(false)
                     }, 4000)
                 } else if(payStatus === "error") {
+                    console.error(paymentError);
                     toast.error("Payment failed!", { position: "top-right" })
                 }
             }
@@ -64,8 +53,6 @@ const PaymentModal = () => {
    }
 
    const handleDepositDetails = (title: string, value: string) => {
-    console.log("title", title)
-
       return (
           <div className="w-full flex items-center justify-between">
             <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
@@ -118,7 +105,7 @@ const PaymentModal = () => {
                           <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
                           {/* deposit details */}
-                          { handleDepositDetails("Required Deposit", `${requiredDepo}PT`) }
+                          { handleDepositDetails("Required Deposit", `${requiredDepo}YT`) }
                           { handleDepositDetails("Estimated Yield", `${estYield}YT / Month`) }
                         </div>
                     </div>
@@ -126,7 +113,7 @@ const PaymentModal = () => {
             </div>
 
             <CustomButton
-                onClick={payPurchasedItem}
+                onClick={() => payPurchasedItem(requiredDepo)}
                 disabled={payStatus == "pending" ? true : false}
                 style={`bg-gradient`}
                       >

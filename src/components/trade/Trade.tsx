@@ -1,11 +1,53 @@
 "use client"
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { MoveDown } from 'lucide-react'
 import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
+import { allContracts } from '@/constants'
+import { useContractHooks } from '@/utils/hooks'
+import { IState } from "@/types"
+import { ethers } from 'ethers'
+import toast, { Toaster } from "react-hot-toast"
 
 const Trade = () => {
+    const { sellTokens, sellData, sellStatus, resetSelling, sellingError } = useContractHooks()
+    const [selectedAsset, setSelectedAsset] = useState<IState>({
+        from: {
+           name: "",
+           address: "",
+           amount: 0
+        },
+        to: {
+           name: "",
+           address: "",
+           amount: 0
+        }
+    });
+
+    useEffect(() => {
+        const handleSwapProcess = () => {
+           if(sellData && sellStatus == "success") {
+                  toast.success("assets has been sold", {
+                        position: "top-right"
+                  })
+                  console.log(sellData)
+                  resetSelling()
+                return;
+            } else if(!sellData && sellStatus == "error") {
+               console.log(sellingError);
+               toast.error("Failed to sell assets", {
+                        position: "top-right"
+                  })
+                  console.log(sellData)
+                  resetSelling()
+                return;
+            }
+        }
+
+        handleSwapProcess()
+
+    }, [sellData, sellStatus])
 
     const handleTradeDetails = (title: string, value: string) => {
        return (
@@ -17,7 +59,9 @@ const Trade = () => {
    }
 
   return (
-    <div className="w-full h-full p-[20px] flex flex-col items-center gap-[20px] justify-center">
+    <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
+
+        <Toaster />
 
          <div className="flex w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
             <h2 className="page-headerText font-bold"> Trade </h2>
@@ -31,22 +75,22 @@ const Trade = () => {
           </aside>
 
           <div className="w-full flex flex-col items-center">
-            <InputFrom/>
+            <InputFrom selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
             <MoveDown className="translate-y-[20px]" />
-            <InputTo />
+            <InputTo selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
           </div>
           
           <div className="flex flex-col gap-[10px] glass-card p-[15px]">
-            { handleTradeDetails("Rate", "1 USDC = 0.98 PT-USDC") }
+            { handleTradeDetails("Rate", `1 ${selectedAsset.from?.name?.toUpperCase() || "YTUSDC"} = 1 USDC`) }
             { handleTradeDetails("Fee", "0.3%") }
           </div>
 
             <CustomButton
-              onClick={() => {}}
-              disabled={false}
+              onClick={() => sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
+              disabled={sellStatus == "pending" || selectedAsset?.from?.amount! <= 0 ? true : false}
               style={`bg-gradient`}
                     >
-              Swap
+              { sellStatus == "pending" ? "Processing..." : "Swap" }
          </CustomButton>
        </div>
     </div>

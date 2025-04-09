@@ -4,6 +4,10 @@ import { ImStack } from "react-icons/im";
 import { prod1, prod2, subs1, subs2, course1, course2, deposit, pay, trade } from "@/assets"
 import Vault from "../utils/abis/vault.json"
 import MockUsdc from "../utils/abis/mockUsdc.json"
+import Principal from "../utils/abis/principalToken.json"
+import YieldToken from "../utils/abis/yieldToken.json"
+import Treasury from "../utils/abis/treasury.json"
+import MockLendingPool from "../utils/abis/mockAavePool.json"
 
 const navbarLists = [
     { id: 0, title: "Home", url: "/" },
@@ -67,12 +71,12 @@ const marketplaceDatas = {
 
 // contracts details
 const allContracts = {
-   fundsVault: { address: '0x107a23Cf1eF466365F62E62fA00C4BBE16f50D2d', abi: Vault.abi },
-   treasury: { address: '0x88D053223A5748cf9B37A50290Fe364A2683BE94', abi: "" },
-   yieldToken: { address: '0x3740076C277564D365afF4d478e448A0520b60a5', abi: "" },
-   principalToken: { address: '0xe64aA4A962CD8c04724709a1ed9CdF2E27414486', abi: "" },
-   mockUsdc: { address: '0x313911a9cF6C7b03D062cF33D747F82d98f30C26', abi: MockUsdc.abi },
-   mockAavePool: { address: '0x3e8BBbb500bDA5CB334911e54B430d61555DD128', abi: "" },
+   fundsVault: { address: '0x94E3Ae807dD4c1030AA3bF94B348e29CFf1CF0aE', abi: Vault.abi },
+   treasury: { address: '0xC6660C0952C98a9Ac14c26b35b1dB598f2139Efa', abi: Treasury.abi },
+   yieldToken: { address: '0x8A90B3FDa4fEb2Cafc875b5241227ee285be18D4', abi: YieldToken.abi },
+   principalToken: { address: '0xe89Ad517A30292Ab63A922B147B7E83727C2B3BB', abi: Principal.abi },
+   mockUsdc: { address: '0x5e47b3Ba6f9E80f1504b8cCbC83e2d7Ca69Ab22d', abi: MockUsdc.abi },
+   mockAavePool: { address: '0xab01753b6D75d550d87807a8E4a9Ddd07D15797e', abi: MockLendingPool.abi },
 }
 
 export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts}

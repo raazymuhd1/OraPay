@@ -2,104 +2,91 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
-import toast from "react-hot-toast"
-import {Toaster} from "react-hot-toast"
+import { useWaitForTransactionReceipt, useAccount, useBalance, useChainId } from 'wagmi'
+import { waitForTransactionReceipt } from '@wagmi/core'
+import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
+import { useContractHooks } from '@/utils/hooks'
+import { wagmiConfig } from '../Web3Provider'
 import { CustomConnectButton } from '@/components'
+import { ethers } from 'ethers'
 
 const DepositModal = () => {
         const { setDepositModal, openDepositModal} = usePeyPeyContext()
-        const [isApproved, setIsApproved] = useState(false)
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
+        const [lockPeriod, updateLockPeriod] = useState<string>("")
+        // const [hasDeposited, setHasDeposited] = useState(false)
         const { address: userAddr } = useAccount()
-        const { writeContract: writeDeposit, data: depoData, status: depositStatus } = useWriteContract();
-        const { writeContract: writeApproval, data: approveData, status: approvalStatus, reset: resetApproval } = useWriteContract();
-        const { fundsVault, mockUsdc } = allContracts;
+        const { mockUsdc, fundsVault } = allContracts;
         const chainId = useChainId()
         const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
+        const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
+        handleTokenApproval, approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, setIsApproved, approvalError, depositError } = useContractHooks()
 
-      console.log(approvalStatus)
 
         useEffect(() => {
-           const handlingTxState = () => {
+           const depositProcess = async() => {
 
-              if(approveData) {
-                  console.log(approveData)
-                    toast.success("assets has been approved", {
-                        position: "top-right"
-                    })
-                  setIsApproved(true)
-                } 
+               try {
+                 // the second way to handle 2 transactions at once 
+                 const approvalReceipt = await waitForTransactionReceipt(wagmiConfig, {
+                   hash: approveData as `0x${string}`,
+                   confirmations: 2
+                 })
+                 console.log("approve data", approveData)
+                 const shouldApprove = approvalStatus == "success" || approveData;
+
+                 if (shouldApprove) {
+                      writeDeposit({
+                        abi: fundsVault.abi,
+                        address: fundsVault.address as `0x${string}`,
+                        functionName: "deposit",
+                        args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
+                        // gas: BigInt("3000000")
+                      });
+                      resetApproval();
+                      setHasDeposited(true)
+
+                      console.log("approval tx receipt", approvalReceipt?.transactionHash)
+                      
+                  }
+                    
+                    const shouldDeposit = depositStatus === "success" || depoData;
+                    
+                    if (shouldDeposit) {
+                        toast.success("token has been deposited", {
+                          position: "top-right"
+                        });
+                        
+                        resetDeposit()
+                        setIsApproved(false);
+                        setDepositAmount("")
+                        updateLockPeriod("")
+
+                        setTimeout(() => {
+                          setDepositModal(false);
+                          setHasDeposited(false)
+                        }, 4000);
+                    } else if(depositStatus == "error") {
+                        console.log(depositError)
+                        toast.error("depositing failed", {
+                          position: "top-right"
+                        })
+                        setDepositModal(false);
+                    }
+       
                 
-              if(depoData && depositStatus == "success") {
-                  toast.success("assets has been deposited", {
-                        position: "top-right"
-                  })
-                  console.log(depoData)
-                  setTimeout(() => {
-                    setDepositModal(false)
-                  }, 4000)
+               } catch (error) {
+                  console.log(error)
                }
 
            }
+          
+          depositProcess()
 
-           handlingTxState()
-        }, [approveData, depoData, approvalStatus])
+      }, [approvalStatus, approveData, depositStatus, depoData]);
 
-
-        /**
-         * @dev depositing an underlying assets into a platform
-         */
-        const handleAssetsDeposit = () => {
-            if(typeof userAddr == "undefined" || userAddr.length == 0) {
-                toast.error("please kindly connect your wallet before proceeding..", {
-                   position: "top-right"
-                })
-                return;
-            }
-
-            try {
-              const lockPeriod = 10 * 86400; // 10 days
-              const args = [Number(depositAmount) * 10**6, lockPeriod]
-
-               writeDeposit({
-                  abi: fundsVault.abi,
-                  address: fundsVault.address as `0x${string}`,
-                  functionName: "deposit",
-                  args,
-                  gas: BigInt("3000000")
-              })
-              
-               resetApproval()
-            } catch(err) {
-                console.log(err)
-            }
-
-        }
-
-        /**
-         * @dev handling assets approval
-         */
-        const handleTokenApproval = (): void => {
-          if(typeof userAddr == "undefined" || userAddr.length == 0) {
-                toast.error("please kindly connect your wallet before proceeding..", {
-                   position: "top-right"
-                })
-                return;
-            }
-           try {
-             writeApproval({
-                abi: mockUsdc.abi,
-                address: mockUsdc.address as `0x${string}`,
-                functionName: "approve",
-                args: [fundsVault.address, Number(depositAmount) * 10**6],
-            })
-           } catch(err) {
-              console.log(err)
-           }
-        }
 
         const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
@@ -120,8 +107,7 @@ const DepositModal = () => {
       <div 
       className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
 
-        <Toaster />
-
+      <Toaster />
        <div 
           onClick={() => setDepositModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
@@ -141,13 +127,23 @@ const DepositModal = () => {
 
            
               {/* deposit details */}
-            <div className='w-full flex flex-col gap-[10px]'>
-                <h2 className="font-bold resp-headerCard"> Amount {`(USDC)`} </h2>
-                <input 
-                    value={depositAmount}
-                    onChange={(e) => setDepositAmount(e.target.value)}
-                    ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-noe" />
+            <div className="flex w-full flex-col gap-[25px]">
+                <div className='w-full flex flex-col gap-[10px]'>
+                    <h2 className="font-bold resp-headerCard"> Amount {`(USDC)`} </h2>
+                    <input 
+                        value={depositAmount}
+                        onChange={(e) => setDepositAmount(e.target.value)}
+                        ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-none" />
+                </div>
+                <div className='w-full flex flex-col gap-[10px]'>
+                    <h2 className="font-bold resp-headerCard"> Lock Period {`(Days)`} </h2>
+                    <input 
+                        value={lockPeriod}
+                        onChange={(e) => updateLockPeriod(e.target.value)}
+                        ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-none" />
+                </div>
             </div>
+
             <div className="flex items-start justify-between w-full p-[10px] glass-card">
               <p className="resp-paraphCard"> Available balance: </p>
               <aside>
@@ -160,9 +156,9 @@ const DepositModal = () => {
             </div>
 
             {/* action buttons */}
-            { !isApproved ?  <CustomButton
-                    onClick={handleTokenApproval}
-                    disabled={depositAmount.length <= 0 || approvalStatus == "pending" ? true : false}
+            {/* { !isApproved ?  <CustomButton
+                    onClick={() => handleTokenApproval(Number(depositAmount))}
+                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
@@ -170,26 +166,23 @@ const DepositModal = () => {
                 </CustomButton>  
                :
                  <CustomButton
-                    onClick={handleAssetsDeposit}
-                    disabled={depositAmount.length <= 0 || depositStatus == "pending" ? true : false}
+                    onClick={() => handleAssetsDeposit(Number(depositAmount), 0)}
+                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || depositStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
                      { depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
                 </CustomButton>    
-            }
-            {/* {  userAddr ?  
-                <CustomButton
-                    onClick={isApproved ? handleAssetsDeposit : handleTokenApproval}
-                    disabled={depositAmount.length <= 0 ? true : false}
+            } */}
+                 <CustomButton
+                    onClick={() => handleAssetsDeposit(depositAmount, 0)}
+                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || depositStatus == "pending" ? true : false}
                     style={`bg-gradient`}
                           >
                     <CreditCard className="" />
-                     { !isApproved ? "Approve" : "Deposit Now" }
-                </CustomButton> 
-                  :   
-                <CustomConnectButton />
-            } */}
+                     { approvalStatus == "pending" ? "approving..." : depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
+                </CustomButton>    
+            
         </div>
 
 

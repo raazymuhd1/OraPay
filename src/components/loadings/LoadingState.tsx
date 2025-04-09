@@ -2,7 +2,9 @@ import React from 'react'
 
 const LoadingState = () => {
   return (
-    <div>LoadingState</div>
+    <div className="h-full w-full rounded-[15px]">
+        Loading ....
+    </div>
   )
 }
 

@@ -1,10 +1,21 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
 import MarketTabs from './MarketTabs'
 import PaymentModal from './PaymentModal'
+import { useContractHooks } from '@/utils/hooks'
 
 const Marketplace = () => {
+      const { getContract } = useContractHooks()
+
+//   useEffect(() => {
+//      const gettingContract = async() => {
+//         const contract = await getContract()
+//         console.log(contract)
+//      }
+//      gettingContract()
+//   }, [])
+
 
   return (
     <div className="flex w-[70%] mx-auto flex-col gap-[30px]">

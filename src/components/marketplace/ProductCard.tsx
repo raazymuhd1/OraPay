@@ -17,9 +17,6 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
 
   return (
      <div 
-        onClick={() => setSelectedProduct({
-           id, title, desc, price, tag
-        })}
         className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden cursor-pointer">
         <Image src={productImg} alt={title} className="w-full h-[40%] object-cover hover:scale-[1.1] transition-all duration-500" />
 
@@ -38,7 +35,12 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
 
               {/* action button */}
               <CustomButton
-                onClick={() => setOpenPayModal(true)}
+                onClick={() => {
+                    setOpenPayModal(true)
+                    setSelectedProduct({
+                      id, title, desc, price, tag
+                      })
+                  }}
                 disabled={false}
                 style={`bg-gradient responsive-btnText`}
                       >
