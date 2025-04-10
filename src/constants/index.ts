@@ -10,10 +10,10 @@ import Treasury from "../utils/abis/treasury.json"
 import MockLendingPool from "../utils/abis/mockAavePool.json"
 
 const navbarLists = [
-    { id: 0, title: "Home", url: "/" },
     { id: 1, title: "Dashboard", url: "/dashboard" },
     { id: 2, title: "Marketplace", url: "/marketplace" },
     { id: 3, title: "Trade", url: "/trade" },
+    { id: 4, title: "Faucet", url: "/faucet" },
 ]
 
 const intros = [

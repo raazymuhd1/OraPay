@@ -13,6 +13,9 @@ export { default as Trade } from "./trade/Trade"
 export { default as PeyPeyContextProvider } from "./PeyPeyContext"
 export { default as Web3Provider } from "./Web3Provider"
 
+// faucet page
+export { default as ClaimFaucet } from "./faucet/ClaimFaucet"
+
 // global wallet connect
 export { default as ConnectWallet } from "./ConnectWallet"
 export { default as CustomConnectButton } from "./buttons/ConnectWallet"

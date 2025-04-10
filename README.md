@@ -3,8 +3,7 @@
 ## Codebase
   - [frontend](https://github.com/NoPayPay/nopeypey-frontend)
 
-## Site workflow
- - homepage
- - Dashboard
- - Marketplace
- - Trading
+### Additional Features
+- claim faucet
+- Harvest Yield UI
+- Yield Distribution by owner / claim by user
