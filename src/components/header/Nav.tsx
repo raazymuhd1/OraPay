@@ -14,8 +14,8 @@ const Nav = ({updateShowNav}: PProps) => {
   return (
     <nav className="flex items-center justify-between lg:w-[70%] w-[90%] mx-auto h-full">
         <Link href="/" className="lg:text-[1.5vmax] md:text-[2vmax] flex items-center text-[1.5rem] cursor-pointer font-bold"> 
-          <p className="text-bg-gradient"> NoPey </p> 
-          <span className="text-[#fff]">Pey</span> 
+          <p className="text-bg-gradient"> Ed </p> 
+          <span className="text-[#fff]">Zero</span> 
          </Link>
 
         <Links />
