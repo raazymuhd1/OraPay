@@ -19,7 +19,7 @@ interface IProps {
 
 const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
    const selectRef = useRef<HTMLDivElement>(null)
-   const { tokenToAmount, setTokenToAmount } = usePeyPeyContext()
+   const { tokenToAmount } = usePeyPeyContext()
    const [amountTo, updateAmountTo] = useState("0")
     const [selectAsst, setSelectAsst] = useState({
           name: "",
@@ -61,7 +61,7 @@ const InputTo = ({ selectedAsset, setSelectedAsset } : IProps) => {
 
         <div className="flex items-center gap-[10px]">
            <input
-              value={amountTo}
+              value={tokenToAmount}
               onChange={(e) => handlingUserInput(e)}
               type="text" placeholder="0.00" className="w-[70%] glass-card p-[10px]" />
             <Select onValueChange={(val) => handleSelectedAsset(val)}>

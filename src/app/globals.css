@@ -8,6 +8,10 @@
   --mark-txtcolor: #11afb8;
 }
 
+body {
+  font-family: "SourceCodePro", monospace;;
+}
+
 .bg-gradient {
   background: linear-gradient(to right, rgba(82,122,254,255) 19%, rgba(29,220,255,255) 91%);
   /* mix-blend-mode: hard-light; */
@@ -77,6 +81,40 @@
      }
    }
 }
+
+
+/* FONT SETTINGS */
+@font-face {
+    font-family: 'SourceCodePro', monospace;
+    src: url('../assets/fonts/SourceCodePro-Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'SourceCodePro', monospace;
+    src: url('../assets/fonts/SourceCodePro-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'SourceCodePro', monospace;
+    src: url('../assets/fonts/SourceCodePro-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'SourceCodePro', monospace;
+    src: url('../assets/fonts/SourceCodePro-Bold.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'SourceCodePro', monospace;
+    src: url('../assets/fonts/SourceCodePro-ExtraBold.ttf');
+    font-weight: 800;
+}
+
+
 
 /* hero styles */
 .shadowing-left {

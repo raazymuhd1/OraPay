@@ -11,6 +11,8 @@ import {
 import { allContracts } from '@/constants'
 import { useBalance, useAccount, useChainId } from "wagmi"
 import { IState } from "@/types"
+import { usePeyPeyContext } from '../PeyPeyContext'
+
 interface IProps {
   selectedAsset: IState;
   setSelectedAsset: Dispatch<SetStateAction<IState>>
@@ -26,6 +28,7 @@ const InputFrom = ({ selectedAsset, setSelectedAsset } : IProps) => {
        name: "",
        address: ""
    });
+   const { setTokenToAmount } = usePeyPeyContext()
     const tokenBal = useBalance({
               token: selectAsst.address as `0x${string}`,
               address: userAddr,
@@ -54,6 +57,7 @@ const InputFrom = ({ selectedAsset, setSelectedAsset } : IProps) => {
    const handlingUserInput = (e: ChangeEvent<HTMLInputElement>) => {
      console.log(e.target.value)
         updateAmountFrom(e.target.value)
+        setTokenToAmount(Number(e.target.value))
        
    }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {  ReactNode } from "react"
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import { Header, PeyPeyContextProvider, Web3Provider, ConnectWallet } from "@/components"
 import {Toaster} from "react-hot-toast"
@@ -10,14 +10,19 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const sourceCodePro = Source_Code_Pro({
+  variable: "--font-source-code-pro",
+  subsets: ["latin"]
+})
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "EdZero",
-  description: "EdZero Dapps",
+  title: "EduZero",
+  description: "EduZero Dapps",
 };
 
 export default function RootLayout({
@@ -26,14 +31,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  // const handleGlobalWalletModal = (): ReactNode => {
-  //     return <ConnectWallet />
-  // }
-
   return (
     <html lang="en">
             <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
+              className={`${sourceCodePro.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
               >
               <Web3Provider>
                 <PeyPeyContextProvider>

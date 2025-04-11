@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { MoveDown } from 'lucide-react'
+import { MoveDown, History } from 'lucide-react'
 import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
@@ -69,10 +69,14 @@ const Trade = () => {
        </div>
 
        <div className="bg-brown xl:w-[30%] lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
-          <aside className="flex flex-col gap-[10px]">
-              <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
-              <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
-          </aside>
+         <div className="w-full flex items-start justify-between"> 
+            <aside className="flex flex-col gap-[10px]">
+                <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
+                <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
+            </aside>
+
+            <History className="w-[20px] h-[20px] cursor-pointer" />
+         </div>
 
           <div className="w-full flex flex-col items-center">
             <InputFrom selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
