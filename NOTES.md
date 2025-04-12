@@ -8,6 +8,8 @@
 
  ++ A solutions to solve user problem who doesnt have any money to deposit into the protocol
   - incentivizes a user/investor to lend their funds/assets for another user by depositing the assets into protocol and the protocol will leverage the funds to farm a yield from any yield farming protocol
+  - A protocol could use deposited funds by user, to deposited into a lending protocol and borrow some amount from lending protocol to cover user purchasing item, that way the protocol doesnt have to have some initial funds in the contract to cover user purchasing item. but user could only purchase an item that value is not excess the borrowed or deposted balances.
+
 
 
  ## Problem with the current Lending & borrowing protocol
