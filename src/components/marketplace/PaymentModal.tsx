@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CustomButton } from "@/components"
-import { CreditCard, X } from 'lucide-react'
+import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
 import { useAccount } from 'wagmi'
 // import CustomWalletConnect from '../header/CustomWalletConnect'
@@ -72,7 +72,7 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[70%] w-[60%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[100px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[25px] p-[20px] overflow-y-scroll">
+        <div className="flex h-[60%] w-[60%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[140px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] overflow-y-scroll">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
@@ -80,7 +80,7 @@ const PaymentModal = () => {
                     <p className="font-semibold text-(--paraph-color) responsive-paraph"> Select how you'd like to pay for this purchase </p>
                 </div>
 
-                <X className="w-[20px] cursor-pointer" onClick={() => setOpenPayModal(false)} />
+                <History className="w-[30px] cursor-pointer" onClick={() => {}} />
             </div>
 
             <div className="w-full flex flex-col gap-[10px] border-b-[1px] border-[rgba(255, 255, 255, 0.125)] p-[10px]">
@@ -91,36 +91,48 @@ const PaymentModal = () => {
 
             <h2 className="font-bold responsive-headerText"> Payment Methods </h2>
             <div className="flex w-full flex-col border-[1px] border-[rgba(255, 255, 255, 0.125)] p-[20px] rounded-[15px]">
-                <div className="w-full flex items-start gap-[10px]">
-                    <input type='radio' className=""  name='buy' />
+                {/* <div className="w-full flex items-start gap-[10px]"> */}
 
-                    <div className="flex flex-col gap-[10px]">
-                        <aside className="flex w-full items-center gap-[10px] cursor-pointer justify-between">
+                    <div className="w-full flex flex-col gap-[5px]">
+                        <aside className="flex w-full items-center gap-[5px] cursor-pointer">
+                            <History className="w-[30px] text-[#11afb8]" />
                             <h3 className="font-bold"> Buy Now, Pay Never </h3>
-                            <h3 className="font-bold text-[#11afb8]"> Recommended </h3>
                         </aside>
 
-                        <div className="w-full flex flex-col gap-[15px]">
-                          <p className="text-(--paraph-color) font-semibold"> Pay using your future yield without upfront payment. We'll allocate a portion of your yield to cover this purchase over time. </p>
+                        <div className="w-full flex flex-col gap-[5px]">
+                          <p className="text-(--paraph-color) font-semibold"> This will be paid by your future yield. </p>
                           {/* separator */}
                           <div className="w-full h-[0.5px] bg-[#7f7f80]" />
 
                           {/* deposit details */}
                           { handleDepositDetails("Required Deposit", `${requiredDepo}YT`) }
-                          { handleDepositDetails("Estimated Yield", `${estYield}YT / Month`) }
+                          { handleDepositDetails("Estimated Yield", `${estYield}YT`) }
                         </div>
+
                     </div>
-                </div>
+
+                {/* </div> */}
             </div>
 
-            <CustomButton
-                onClick={() => payPurchasedItem(requiredDepo)}
-                disabled={payStatus == "pending" || payStatus == "success" ? true : false}
-                style={`bg-gradient`}
-                      >
-                <CreditCard className="" />
-                { payStatus == "pending" ? "Processing..." : "Pay Now" }
-            </CustomButton>
+            <div className="flex flex-col w-full gap-[10px]">
+                <CustomButton
+                    onClick={() => payPurchasedItem(requiredDepo)}
+                    disabled={payStatus == "pending" || payStatus == "success" ? true : false}
+                    style={`bg-gradient`}
+                        >
+                    <CreditCard className="" />
+                    { payStatus == "pending" ? "Processing..." : "Pay Now" }
+                </CustomButton>
+
+                 <CustomButton
+                    onClick={() => setOpenPayModal(false)}
+                    disabled={payStatus == "pending" ? true : false}
+                    style={`bg-[rgba(9,9,11,255)]`}
+                        >
+                    <X className="" />
+                    Cancel
+                </CustomButton> 
+            </div>
         </div>
 
 
