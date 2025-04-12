@@ -1,6 +1,7 @@
 "use client"
 import { useState, use, createContext, ReactNode } from 'react'
 import { IModalState } from "@/types"
+import { useAccount, useChainId } from 'wagmi'
 
 interface IProps {
   children: ReactNode
@@ -22,7 +23,11 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
          price: "",
          tag: ""
       });
+      const [showTxResult, setShowTxResult] = useState(false)
       const [tokenToAmount, setTokenToAmount] = useState(0)
+      const { address: userAddr } = useAccount();
+      const chainId = useChainId()
+      const network = { chainId: chainId!, userAddr: userAddr! }
 
   return (
     <PeyPeyContext.Provider
@@ -32,7 +37,9 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
         openPayModal, setOpenPayModal,
         openWithdrawModal, setOpenWithdrawModal,
         selectedProduct, setSelectedProduct,
-        setTokenToAmount, tokenToAmount
+        setTokenToAmount, tokenToAmount,
+        showTxResult, setShowTxResult,
+        network
       }}
     >
       { children }

@@ -8,6 +8,11 @@ interface IProduct {
     tag: string;
 }
 
+type Network = {
+    chainId: number;
+    userAddr: `0x${string}`
+}
+
 export interface IModalState {
   openDepositModal: boolean,
   setDepositModal: Dispatch<SetStateAction<boolean>>
@@ -21,6 +26,9 @@ export interface IModalState {
   setSelectedProduct: Dispatch<SetStateAction<IProduct>>;
   setTokenToAmount:  Dispatch<SetStateAction<number>>;
   tokenToAmount: number;
+  showTxResult: boolean;
+  setShowTxResult:  Dispatch<SetStateAction<boolean>>;
+  network: Network;
 }
 
 

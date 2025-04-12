@@ -5,17 +5,16 @@ import { CircleDollarSign, X } from "lucide-react"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
-import { useWriteContract, useAccount, useBalance, useChainId } from 'wagmi'
+import { useBalance } from 'wagmi'
 import { ethers } from 'ethers'
+import TxResult from "../transactions-result/TxResult"
 
 const WithdrawalModal = () => {
-     const { fundsVault, principalToken } = allContracts;
+     const { principalToken } = allContracts;
      const [withdrawalAmount, setWithdrawalAmount] = useState("0")
-     const { openWithdrawModal, setOpenWithdrawModal } = usePeyPeyContext()
+     const { openWithdrawModal, setOpenWithdrawModal, showTxResult, setShowTxResult, network } = usePeyPeyContext()
      const inputRef = useRef<HTMLInputElement>(null)
-     const chainId = useChainId()
-     const { address: userAddr } = useAccount()
-     const userBalance = useBalance({ chainId, address: userAddr, token: principalToken.address as `0x${string}` })
+     const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: principalToken.address as `0x${string}` })
      const [ptBalance, setPtBalance] = useState("0");
      const {handleAssetsWithdrawal, wdData, wdStatus, resetWd} = useContractHooks()
 
@@ -47,11 +46,13 @@ const WithdrawalModal = () => {
                  toast.success("Assets withdrawn successfully!", {
                    position: "top-right"
                 })
+                setWithdrawalAmount("0")
                 resetWd()
+
                 setTimeout(() => {
                    setOpenWithdrawModal(false)
-                   setWithdrawalAmount("0")
-                }, 2000)
+                   setShowTxResult(false)
+                }, 5000)
 
                 return;
             } else if(wdStatus === "error") {
@@ -59,6 +60,7 @@ const WithdrawalModal = () => {
                  toast.error("An error occurred while withdrawing assets. Please try again!", {
                    position: "top-right"
                 })
+                setWithdrawalAmount("0")
                 return;
             }
             
@@ -77,7 +79,7 @@ const WithdrawalModal = () => {
           onClick={() => setOpenWithdrawModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
 
-        <div className="w-[40%] mx-auto h-[50%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[150px] p-[15px]">
+        <div className="w-[40%] mx-auto h-[40%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[170px] p-[15px]">
             <aside className="flex items-center w-full justify-between">
                 <div>
                     <h2 className="font-bold responsive-headerTabs"> Funds Withdrawal </h2>
@@ -114,6 +116,8 @@ const WithdrawalModal = () => {
                 <CircleDollarSign className="" />
                   { wdStatus == "pending" ? "Processin..." : "Withdraw" }
             </CustomButton>    
+       
+              <TxResult { ...{ title: "Withdraw Successfull", msg: "You've successfull withdrawn your PT", showTxResult, setShowTxResult: setOpenWithdrawModal, closeTxResult: setShowTxResult } } />
         </div>
     </div>
   )
