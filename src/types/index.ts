@@ -28,6 +28,8 @@ export interface IModalState {
   tokenToAmount: number;
   showTxResult: boolean;
   setShowTxResult:  Dispatch<SetStateAction<boolean>>;
+  showTxsRecord: boolean;
+  setShowTxsRecord: Dispatch<SetStateAction<boolean>>;
   network: Network;
 }
 

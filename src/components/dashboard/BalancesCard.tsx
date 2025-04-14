@@ -15,7 +15,6 @@ const BalancesCard = ({ id, title, value, TitleLogo, desc }: IBalancesProp) => {
      <div 
         className="flex flex-col gap-[10px] lg:w-[30%] w-full h-[60%] glass-card p-[20px]"
         >
-
             <div className='w-full flex items-center justify-between'>
                 <div className="flex items-center gap-[10px]">
                 <TitleLogo />
@@ -26,7 +25,7 @@ const BalancesCard = ({ id, title, value, TitleLogo, desc }: IBalancesProp) => {
             </div>
 
             <h2 className="font-bold text-[clamp(18px,1vw,25px)]"> { value } </h2>
-            <p className={`${id == 3 ? "text-(--paraph-color)" : "text-[#11afb8]"} md:text-[1vmax] text-[1.8vmax] whitespace-nowrap`}> {desc} </p>
+            <p className={`${id == 3 ? "text-(--paraph-color)" : "text-[#11afb8]"} w-full md:text-[1vmax] text-[1.8vmax] whitespace-nowrap`}> {desc} </p>
     </div>
   )
 }

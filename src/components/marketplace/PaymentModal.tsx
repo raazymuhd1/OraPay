@@ -2,22 +2,41 @@ import { useEffect, useState } from 'react'
 import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "@/components/PeyPeyContext"
 import { useAccount } from 'wagmi'
-// import CustomWalletConnect from '../header/CustomWalletConnect'
-import { allContracts } from '@/constants'
 import {Toaster} from "react-hot-toast"
 import toast from 'react-hot-toast'
 import { useContractHooks } from '@/utils/hooks'
 // components
 import { CustomButton } from "@/components"
 import TxResult from "../transactions-result/TxResult"
+import TransactionsRecord from '../records/TransactionsRecord'
+
+interface ITxsRecord<T> {
+   id: number;
+   action: T;
+   date: Date;
+   value: T;
+}
 
 const PaymentModal = () => {
-        const { openPayModal, setOpenPayModal, selectedProduct } = usePeyPeyContext()
-        const { address: userAddr } = useAccount()
+        const { openPayModal, setOpenPayModal, selectedProduct, setShowTxsRecord } = usePeyPeyContext()
+        const { payData, payStatus, paymentError, payPurchasedItem, resetPayment }  = useContractHooks()
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [showTxResult, setShowTxResult] = useState(false)
         const [estYield, setEstYield] = useState("10");
-        const { payData, payStatus, paymentError, payPurchasedItem, resetPayment }  = useContractHooks()
+        const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
+            {
+                id: 0,
+                action: "payment",
+                date: new Date(),
+                value: requiredDepo
+            },
+            {
+                id: 1,
+                action: "payment",
+                date: new Date(),
+                value: requiredDepo
+            }
+        ])
 
 
         useEffect(() => {
@@ -52,8 +71,8 @@ const PaymentModal = () => {
    const handleItemDetails = (title: string, value: string) => {
        return (
          <div className="w-full flex items-center justify-between">
-            <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
-            <h4 className="font-bold"> {title == "price" && "$"}{value} </h4>
+            <h3 className="text-[#7f7f80] font-bold w-[40%]"> {title}: </h3>
+            <h4 className="font-bold w-[40%]"> {title == "price" && "$"}{value} </h4>
          </div>
        )
    }
@@ -77,7 +96,7 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[60%] w-[60%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[140px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] relative top-0">
+        <div className="flex md:h-[60%] h-[70%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[140px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] relative top-0">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
@@ -85,7 +104,7 @@ const PaymentModal = () => {
                     <p className="font-semibold text-(--paraph-color) responsive-paraph"> pay your purchase item using your future yield </p>
                 </div>
 
-                <History className="w-[30px] cursor-pointer" onClick={() => {}} />
+                <History className="w-[30px] cursor-pointer" onClick={() => setShowTxsRecord(true)} />
             </div>
 
             <div className="w-full flex flex-col gap-[10px] border-b-[1px] border-[rgba(255, 255, 255, 0.125)] p-[10px]">
@@ -137,7 +156,10 @@ const PaymentModal = () => {
             </div>
         
             {/* tx result modal */}
-                <TxResult { ...{ title: "Payment Successfull", msg: "You've use the future yield to pay for this", showTxResult, setShowTxResult: setOpenPayModal, closeTxResult: setShowTxResult } } />
+            <TxResult { ...{ title: "Payment Successfull", msg: "You've use the future yield to pay for this", showTxResult, setShowTxResult: setOpenPayModal, closeTxResult: setShowTxResult } } />
+
+            {/* txs record */}
+            <TransactionsRecord transactions={txsRecord} />
         </div>
 
 

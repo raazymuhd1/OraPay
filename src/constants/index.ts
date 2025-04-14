@@ -69,6 +69,14 @@ const marketplaceDatas = {
     ] 
 }
 
+
+const transactionsRecordHeaders = [
+    { id: 1, title: "Action" },
+    { id: 2, title: "Date" },
+    { id: 3, title: "Value" },
+]
+
+
 // contracts details
 const allContracts = {
    fundsVault: { address: '0x94E3Ae807dD4c1030AA3bF94B348e29CFf1CF0aE', abi: Vault.abi },
@@ -79,4 +87,4 @@ const allContracts = {
    mockAavePool: { address: '0xab01753b6D75d550d87807a8E4a9Ddd07D15797e', abi: MockLendingPool.abi },
 }
 
-export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts}
+export {navbarLists, intros, steps, balances, quickActionBtns, yields, marketplaceDatas, allContracts, transactionsRecordHeaders}
