@@ -9,6 +9,7 @@ import { useContractHooks } from '@/utils/hooks'
 import { CustomButton } from "@/components"
 import TxResult from "../transactions-result/TxResult"
 import TransactionsRecord from '../records/TransactionsRecord'
+import LoadingState from "../loadings/LoadingState"
 
 interface ITxsRecord<T> {
    id: number;
@@ -18,7 +19,7 @@ interface ITxsRecord<T> {
 }
 
 const PaymentModal = () => {
-        const { openPayModal, setOpenPayModal, selectedProduct, setShowTxsRecord } = usePeyPeyContext()
+        const { openPayModal, setOpenPayModal, selectedProduct, setShowTxsRecord, setShowLoadingState } = usePeyPeyContext()
         const { payData, payStatus, paymentError, payPurchasedItem, resetPayment }  = useContractHooks()
         const [requiredDepo, setRequiredDepo] = useState("50")
         const [showTxResult, setShowTxResult] = useState(false)
@@ -52,7 +53,9 @@ const PaymentModal = () => {
                 if(payStatus === "success" && payData) {
                     toast.success("Payment successful!", { position: "top-right" })
                     setShowTxResult(true)
+                    setShowLoadingState(false)
                     resetPayment()
+
                     setTimeout(() => {
                       setOpenPayModal(false)
                       setShowTxResult(false)
@@ -137,7 +140,10 @@ const PaymentModal = () => {
 
             <div className="flex flex-col w-full gap-[10px]">
                 <CustomButton
-                    onClick={() => payPurchasedItem(requiredDepo)}
+                    onClick={() => {
+                        payPurchasedItem(requiredDepo)
+                        setShowLoadingState(true)
+                    }} 
                     disabled={payStatus == "pending" || payStatus == "success" ? true : false}
                     style={`bg-gradient`}
                         >
@@ -160,6 +166,8 @@ const PaymentModal = () => {
 
             {/* txs record */}
             <TransactionsRecord transactions={txsRecord} />
+            {/* loading state */}
+            <LoadingState />
         </div>
 
 

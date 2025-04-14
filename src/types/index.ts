@@ -30,6 +30,8 @@ export interface IModalState {
   setShowTxResult:  Dispatch<SetStateAction<boolean>>;
   showTxsRecord: boolean;
   setShowTxsRecord: Dispatch<SetStateAction<boolean>>;
+  showLoadingState: boolean;
+  setShowLoadingState: Dispatch<SetStateAction<boolean>>;
   network: Network;
 }
 

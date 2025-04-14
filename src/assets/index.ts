@@ -8,5 +8,11 @@ import deposit from "./images/save-money.png"
 import pay from "./images/credit-card.png"
 import trade from "./images/stock-market.png"
 import checkMark from "./images/check-mark.png"
+import loading from "./images/time.png"
 
-export { prod1, prod2, subs1, subs2, course1, course2, deposit, pay, trade, checkMark } 
+export { 
+    prod1, prod2, subs1, 
+    subs2, course1, course2,
+    deposit, pay, trade, 
+    checkMark, loading 
+} 

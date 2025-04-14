@@ -22,6 +22,7 @@ const TransactionsRecord = ({transactions}: ITxsRecord<string>) => {
           <X className='w-[30px] cursor-pointer' onClick={() => setShowTxsRecord(false)} />
         </div>
 
+        {/* header */}
         <header className="flex w-full items-center p-[20px] justify-between border-b-[1px]">
             { transactionsRecordHeaders.map(txRecHeader => (
                <h3 
@@ -29,7 +30,8 @@ const TransactionsRecord = ({transactions}: ITxsRecord<string>) => {
                 key={txRecHeader.id}> { txRecHeader.title } </h3>
             )) }
         </header>
-
+        
+        {/* transactions list */}
         <article className="flex flex-col gap-[10px] p-[20px]">
                 { transactions.map(tx => (
                 <aside 

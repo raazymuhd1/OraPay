@@ -17,6 +17,7 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
       const [openPayModal, setOpenPayModal] = useState<boolean>(false)
       const [openWithdrawModal, setOpenWithdrawModal] = useState<boolean>(false);
       const [showTxsRecord, setShowTxsRecord] = useState(false)
+      const [showLoadingState, setShowLoadingState] = useState(false)
       const [selectedProduct, setSelectedProduct] = useState({
          id: 0,
          title: "",
@@ -41,7 +42,8 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
         setTokenToAmount, tokenToAmount,
         showTxResult, setShowTxResult,
         network,
-        showTxsRecord, setShowTxsRecord
+        showTxsRecord, setShowTxsRecord,
+        showLoadingState, setShowLoadingState
       }}
     >
       { children }
