@@ -41,28 +41,6 @@ export const useContractHooks = () => {
       })
 
 
-    //   useEffect(() => {
-    //         const holdResult = readContract(wagmiConfig, {
-    //                 abi: fundsVault.abi,
-    //                 address: fundsVault.address as `0x${string}`,
-    //                 functionName: 'getHoldings',
-    //                 args: [userAddr],
-    //                 account: userAddr
-    //         })
-
-    //         const depoResult = readContract(wagmiConfig, {
-    //             abi: fundsVault.abi,
-    //             address: fundsVault.address as `0x${string}`,
-    //             functionName: 'getUserDeposits',
-    //             args: [userAddr],
-    //             account: userAddr
-    //         })
-
-    //         console.log("holdResult", holdResult)
-    //         console.log("depoResult", depoResult)
-    //   }, [depoData, wdData])
-
-
         const handleAssetsDeposit = (depositAmount: string, lockPeriod: number) => {
                   if(typeof userAddr == "undefined" || userAddr.length == 0) {
                       toast.error("please kindly connect your wallet before proceeding..", {

@@ -17,7 +17,7 @@ const TransactionsRecord = ({transactions}: ITxsRecord<string>) => {
       const { showTxsRecord, setShowTxsRecord } = usePeyPeyContext()
 
   return (
-    <section className={`${showTxsRecord ? "w-full opacity-[1] h-full absolute top-0 left-0" : "opacity-[0] h-0 w-0"} glass-card transition-all duration-500 overflow-y-auto`}>
+    <section className={`${showTxsRecord ? "w-full opacity-[1] h-full absolute top-0 left-0" : "opacity-[0] h-0 w-0 translate-x-[-100px]"} translate-x-[0px] glass-card transition-all duration-500 overflow-y-auto`}>
         <div className="w-full flex justify-end p-[20px]">
           <X className='w-[30px] cursor-pointer' onClick={() => setShowTxsRecord(false)} />
         </div>

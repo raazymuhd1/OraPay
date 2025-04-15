@@ -168,6 +168,19 @@ body {
 
 }
 
+.loading-animate {
+   animation: rotating linear infinite 1s alternate-reverse running ease-in-out;
+}
+
+/* loading animations */
+@keyframes rotating {
+    from {
+       transform: rotateX(0deg);
+    }
+    to {
+       transform: rotateX(180deg);
+    }
+}
 
 
 /* libraries styles */

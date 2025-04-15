@@ -61,6 +61,10 @@ const PaymentModal = () => {
                       setShowTxResult(false)
                     }, 5000)
                 } else if(payStatus === "error") {
+                    setTimeout(() => {
+                        setOpenPayModal(false) 
+                        setShowLoadingState(false)
+                    }, 2000)
                     console.error(paymentError);
                     resetPayment()
                     toast.error("Payment failed!", { position: "top-right" })
@@ -91,15 +95,17 @@ const PaymentModal = () => {
 
   return (
     <div 
-      className={`transition-all duration-500 ${!openPayModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
+      className={`transition-all duration-500 ${!openPayModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0"} w-full`}>
 
        <Toaster />
        <div 
-          onClick={() => setOpenPayModal(false)}
+          onClick={() => {
+              if(payStatus != "pending") setOpenPayModal(false)
+          }}
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex md:h-[60%] h-[70%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto translate-y-[140px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] relative top-0">
+        <div className="flex h-[60%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] translate-y-[140px] relative overflow-y-hidden overflow-x-hidden top-0">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
