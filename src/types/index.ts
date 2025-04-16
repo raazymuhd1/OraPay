@@ -35,6 +35,12 @@ export interface IModalState {
   network: Network;
 }
 
+export interface ITxsRecord<T> {
+   id: number;
+   action: T;
+   date: Date;
+   value: T;
+}
 
 export interface IState {
    from?: {

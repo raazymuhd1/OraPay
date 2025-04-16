@@ -3,13 +3,11 @@ import { useReadContract, useAccount, useWaitForTransactionReceipt, useSimulateC
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
-import { wagmiConfig } from "@/components/Web3Provider";
-import { readContract } from '@wagmi/core'
+import { usePeyPeyContext } from "@/components/PeyPeyContext";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
-     const { address: userAddr } = useAccount()
-     const chainId = useChainId()
+     const { setShowLoadingState, network } = usePeyPeyContext()
      const [hasDeposited, setHasDeposited] = useState(false)
      const [isApproved, setIsApproved] = useState(false)
      const [userInfos, setUserInfos] = useState({
@@ -30,19 +28,19 @@ export const useContractHooks = () => {
           abi: fundsVault.abi,
           address: fundsVault.address as `0x${string}`,
           functionName: 'getHoldings',
-          args: [userAddr]
+          args: [network.userAddr]
       })
 
       const { data: userDeposits, isLoading: userDepositLoading, status: userDepositStatus } = useReadContract({
           abi: fundsVault.abi,
           address: fundsVault.address as `0x${string}`,
           functionName: 'getUserDeposits',
-          args: [userAddr]
+          args: [network.userAddr]
       })
 
 
         const handleAssetsDeposit = (depositAmount: string, lockPeriod: number) => {
-                  if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                  if(typeof network.userAddr == "undefined" || network.userAddr.length == 0) {
                       toast.error("please kindly connect your wallet before proceeding..", {
                          position: "top-right"
                       })
@@ -50,6 +48,7 @@ export const useContractHooks = () => {
                   }
                 // the first way to handle 2 transactions at once 
                   try {
+                    setShowLoadingState(true)
                     writeApproval({
                         abi: mockUsdc.abi,
                         address: mockUsdc.address as `0x${string}`,
@@ -71,7 +70,7 @@ export const useContractHooks = () => {
 
 
         const handleTokenApproval = (depositAmount: number): void => {
-                if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                if(typeof network.userAddr == "undefined" || network.userAddr.length == 0) {
                         toast.error("please kindly connect your wallet before proceeding..", {
                             position: "top-right"
                         })
@@ -100,7 +99,7 @@ export const useContractHooks = () => {
          * @returns 
          */
           const handleAssetsWithdrawal = async(userBalance: string, amount: number) => {
-                   if(typeof userAddr == "undefined" || userAddr.length == 0) {
+                   if(typeof network.userAddr == "undefined" || network.userAddr.length == 0) {
                         toast.error("please kindly connect your wallet before proceeding..", {
                            position: "top-right"
                         })
@@ -115,6 +114,7 @@ export const useContractHooks = () => {
                     }
         
                     try {
+                          setShowLoadingState(true)
                           writeWD({  
                              abi: fundsVault.abi,
                              address: fundsVault.address as `0x${string}`,
@@ -137,11 +137,12 @@ export const useContractHooks = () => {
          * @dev handling purchased item's payment 
          */
         const payPurchasedItem = async(requiredDepo: string) => {
-             if(userAddr?.length! <= 0) {
+             if(network.userAddr?.length! <= 0) {
                  toast.error("Please connect to a wallet to proceed!")
                  return
              }
            try {
+              setShowLoadingState(true)
               payMerchant({
                 abi: fundsVault.abi,
                 address: fundsVault.address as `0x${string}` ,
@@ -165,6 +166,7 @@ export const useContractHooks = () => {
                try {
                  console.log("trading")
                  if(amount && to) {
+                   setShowLoadingState(true)
                    writeSell({
                        abi: fundsVault.abi,
                        address: fundsVault.address as `0x${string}`,

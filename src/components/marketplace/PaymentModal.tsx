@@ -5,18 +5,12 @@ import { useAccount } from 'wagmi'
 import {Toaster} from "react-hot-toast"
 import toast from 'react-hot-toast'
 import { useContractHooks } from '@/utils/hooks'
+import { ITxsRecord } from "@/types"
 // components
 import { CustomButton } from "@/components"
 import TxResult from "../transactions-result/TxResult"
 import TransactionsRecord from '../records/TransactionsRecord'
 import LoadingState from "../loadings/LoadingState"
-
-interface ITxsRecord<T> {
-   id: number;
-   action: T;
-   date: Date;
-   value: T;
-}
 
 const PaymentModal = () => {
         const { openPayModal, setOpenPayModal, selectedProduct, setShowTxsRecord, setShowLoadingState } = usePeyPeyContext()

@@ -29,13 +29,15 @@ const Steps = () => {
           </div>
 
           {/* card items */}
-          <aside className="w-full flex items-center justify-center lg:flex-nowrap flex-wrap gap-[20px] mt-[10px]">
+          <aside className="w-full h-[80%] flex items-center justify-center lg:flex-nowrap flex-wrap gap-[20px] mt-[10px]">
               { steps.map(step => (
                 <div 
                     key={step.id}
-                    className="flex flex-col gap-[10px] lg:w-[30%] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
-                  <h3 className="text-[clamp(16px,1vw,18px)] font-bold"> Step {step.id}: {step.title} </h3>
-                  <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)]"> { step.desc } </p>  
+                    className="flex flex-col justify-between gap-[10px] lg:w-[30%] h-[200px] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
+                  <div className='flex flex-col gap-[5px]'>
+                      <h3 className="text-[clamp(16px,1vw,18px)] font-bold"> Step {step.id}: {step.title} </h3>
+                      <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)]"> { step.desc } </p>  
+                  </div>
 
                   { step.btnText.toLowerCase() == "browse marketplace" 
                       ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] text-[clamp(14px,1vw,16px)]" >

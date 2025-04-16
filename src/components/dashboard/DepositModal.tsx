@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWaitForTransactionReceipt, useAccount, useBalance, useChainId } from 'wagmi'
+import { useWaitForTransactionReceipt, useBalance } from 'wagmi'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
@@ -10,22 +10,39 @@ import { useContractHooks } from '@/utils/hooks'
 import { wagmiConfig } from '../Web3Provider'
 import { CustomConnectButton } from '@/components'
 import { ethers } from 'ethers'
+import { ITxsRecord } from "@/types"
+// components
+import LoadingState from '../loadings/LoadingState'
+import TransactionsRecord from '../records/TransactionsRecord'
+import TxResult from '../transactions-result/TxResult'
 
 const DepositModal = () => {
-        const { setDepositModal, openDepositModal} = usePeyPeyContext()
+        const { setDepositModal, openDepositModal, showTxResult, setShowTxResult, showLoadingState, showTxsRecord, network, setShowTxsRecord, setShowLoadingState} = usePeyPeyContext()
         const inputRef = useRef<HTMLInputElement>(null)
         const [depositAmount, setDepositAmount] = useState<string>("")
         const [lockPeriod, updateLockPeriod] = useState<string>("")
-        const { address: userAddr } = useAccount()
         const { mockUsdc, fundsVault } = allContracts;
-        const chainId = useChainId()
-        const userBalance = useBalance({ chainId, address: userAddr, token: mockUsdc.address as `0x${string}` })
+        const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
         handleTokenApproval, approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
          const { data: approvalReceipt } = useWaitForTransactionReceipt({
                    hash: approveData as `0x${string}`,
                    confirmations: 1
           })
+        const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
+                  {
+                      id: 0,
+                      action: "payment",
+                      date: new Date(),
+                      value: depositAmount
+                  },
+                  {
+                      id: 1,
+                      action: "payment",
+                      date: new Date(),
+                      value: depositAmount
+                  }
+              ])
 
 
         useEffect(() => {
@@ -70,12 +87,14 @@ const DepositModal = () => {
               setTimeout(() => {
                 setDepositModal(false);
                 setHasDeposited(false)
+                setShowLoadingState(false)
               }, 2000);
-          } else if(depositStatus == "error") {
+            } else if(depositStatus == "error" || approvalStatus == "error") {
               console.log(depositError)
               toast.error("depositing failed", {
                 position: "top-right"
               })
+              setShowLoadingState(false)
               setDepositModal(false);
           }
       }, [depoData, depositStatus])
@@ -112,11 +131,13 @@ const DepositModal = () => {
 
       <Toaster />
        <div 
-          onClick={() => setDepositModal(false)}
+          onClick={() => {
+            if(depositStatus != "pending") setDepositModal(false)}
+          } 
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[75%] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px]">
+        <div className={`flex h-[75%] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-hidden"}`}>
 
             {/* top card */}
             <div className="w-full flex justify-between">
@@ -125,7 +146,7 @@ const DepositModal = () => {
                     <p className="font-normal text-(--paraph-color) responsive-paraph"> Deposit USDC to receive Principal Tokens (PT) and start earning yield </p>
                 </div>
 
-                <History className="w-[25px] cursor-pointer" onClick={() => {}} />
+                <History className="w-[25px] cursor-pointer" onClick={() => setShowTxsRecord(true)} />
             </div>
 
            
@@ -205,6 +226,14 @@ const DepositModal = () => {
                   </CustomButton>    
                 </div>
             
+        
+                 {/* tx result modal */}
+            <TxResult { ...{ title: "Payment Successfull", msg: "You've use the future yield to pay for this", showTxResult, setShowTxResult: setDepositModal, closeTxResult: setShowTxResult } } />
+
+            {/* txs record */}
+            <TransactionsRecord transactions={txsRecord} />
+            {/* loading state */}
+            <LoadingState />
         </div>
 
 
