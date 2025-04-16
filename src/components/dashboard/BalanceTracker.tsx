@@ -4,9 +4,9 @@ import { LuWallet, LuChartNoAxesColumn  } from "react-icons/lu";
 import { ImStack } from "react-icons/im";
 import { allContracts } from '@/constants';
 import { MdArrowOutward } from "react-icons/md";
-import { useContractHooks } from "@/utils/hooks"
+import { usePeyPeyContext } from '../PeyPeyContext';
+import { useContractHooks } from '@/utils/hooks';
 import { useReadContract } from "wagmi"
-import { readContract } from '@wagmi/core'
 import BalancesCard from "./BalancesCard"
 
 
@@ -17,7 +17,8 @@ const BalanceTracker = () => {
           yieldBalance: "0",
           principalBalance: "0"
       })
-      const { userDeposits, holdingsResult, userDepositStatus, holdingStatus, depositStatus } = useContractHooks()
+      const { userDeposits, holdingsResult, userDepositStatus, holdingStatus } = usePeyPeyContext()
+      const {depositStatus} = useContractHooks()
       const { fundsVault } = allContracts;
       const { data: currentAPY, status: apyStatus } = useReadContract({
               abi: fundsVault.abi,

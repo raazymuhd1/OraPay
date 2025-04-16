@@ -14,6 +14,12 @@ type Network = {
 }
 
 export interface IModalState {
+  holdingsResult: string;
+  userDeposits: BigInt[];
+  holdingLoading: boolean;
+  userDepositLoading: boolean;
+  userDepositStatus: string;
+  holdingStatus: string;
   openDepositModal: boolean,
   setDepositModal: Dispatch<SetStateAction<boolean>>
   openCalculatorModal: boolean,

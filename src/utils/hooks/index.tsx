@@ -24,19 +24,19 @@ export const useContractHooks = () => {
        const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
     //    read actions
-       const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
-          abi: fundsVault.abi,
-          address: fundsVault.address as `0x${string}`,
-          functionName: 'getHoldings',
-          args: [network.userAddr]
-      })
+      //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
+      //     abi: fundsVault.abi,
+      //     address: fundsVault.address as `0x${string}`,
+      //     functionName: 'getHoldings',
+      //     args: [network.userAddr]
+      // })
 
-      const { data: userDeposits, isLoading: userDepositLoading, status: userDepositStatus } = useReadContract({
-          abi: fundsVault.abi,
-          address: fundsVault.address as `0x${string}`,
-          functionName: 'getUserDeposits',
-          args: [network.userAddr]
-      })
+      // const { data: userDeposits, isLoading: userDepositLoading, status: userDepositStatus } = useReadContract({
+      //     abi: fundsVault.abi,
+      //     address: fundsVault.address as `0x${string}`,
+      //     functionName: 'getUserDeposits',
+      //     args: [network.userAddr]
+      // })
 
 
         const handleAssetsDeposit = (depositAmount: string, lockPeriod: number) => {
@@ -182,7 +182,6 @@ export const useContractHooks = () => {
 
 
       return { 
-        holdingsResult, userDeposits, holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
         handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, isApproved, setIsApproved,
         handleAssetsWithdrawal, wdData, wdStatus, resetWd,
