@@ -6,7 +6,6 @@ import { useWaitForTransactionReceipt, useBalance } from 'wagmi'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
-import { CustomConnectButton } from '@/components'
 import { ITxsRecord } from "@/types"
 // components
 import LoadingState from '../loadings/LoadingState'
