@@ -13,7 +13,7 @@ import LoadingState from '../loadings/LoadingState'
 
 const Trade = () => {
     const { sellTokens, sellData, sellStatus, resetSelling, sellingError } = useContractHooks()
-    const { setShowTxsRecord } = usePeyPeyContext()
+    const { setShowTxsRecord, setShowLoadingState } = usePeyPeyContext()
     const [selectedAsset, setSelectedAsset] = useState<IState>({
         from: {
            name: "",
@@ -51,6 +51,7 @@ const Trade = () => {
                   })
                   console.log(sellData)
                   resetSelling()
+                  setShowLoadingState(false)
                 return;
             } else if(!sellData && sellStatus == "error") {
                console.log(sellingError);
