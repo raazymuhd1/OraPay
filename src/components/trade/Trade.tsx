@@ -4,14 +4,16 @@ import { MoveDown, History } from 'lucide-react'
 import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
 import { CustomButton } from "@/components"
-import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
-import { IState } from "@/types"
-import { ethers } from 'ethers'
+import { usePeyPeyContext } from '../PeyPeyContext'
+import { IState, ITxsRecord } from "@/types"
 import toast, { Toaster } from "react-hot-toast"
+import TransactionsRecord from '../records/TransactionsRecord'
+import LoadingState from '../loadings/LoadingState'
 
 const Trade = () => {
     const { sellTokens, sellData, sellStatus, resetSelling, sellingError } = useContractHooks()
+    const { setShowTxsRecord } = usePeyPeyContext()
     const [selectedAsset, setSelectedAsset] = useState<IState>({
         from: {
            name: "",
@@ -24,6 +26,22 @@ const Trade = () => {
            amount: 0
         }
     });
+
+    const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
+                    {
+                        id: 0,
+                        action: "payment",
+                        date: new Date(),
+                        value: String(selectedAsset?.from?.amount)
+                    },
+                    {
+                        id: 1,
+                        action: "payment",
+                        date: new Date(),
+                        value: String(selectedAsset?.from?.amount)
+                    }
+                ])
+
 
     useEffect(() => {
         const handleSwapProcess = () => {
@@ -68,14 +86,14 @@ const Trade = () => {
             <p className="page-paraphText font-semibold text-[#7f7f80]"> Swap between PT, YT tokens and stablecoins </p>
        </div>
 
-       <div className="bg-brown xl:w-[30%] lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px]">
+       <div className="bg-brown xl:w-[30%] lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px] relative overflow-hidden">
          <div className="w-full flex items-start justify-between"> 
             <aside className="flex flex-col gap-[10px]">
                 <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
                 <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
             </aside>
 
-            <History className="w-[20px] h-[20px] cursor-pointer" />
+            <History onClick={() => setShowTxsRecord(true)} className="w-[20px] h-[20px] cursor-pointer" />
          </div>
 
           <div className="w-full flex flex-col items-center">
@@ -96,6 +114,11 @@ const Trade = () => {
                     >
               { sellStatus == "pending" ? "Processing..." : "Swap" }
          </CustomButton>
+       
+            {/* txs record */}
+            <TransactionsRecord transactions={txsRecord} />
+            {/* loading state */}
+            <LoadingState />
        </div>
     </div>
   )

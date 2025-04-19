@@ -6,17 +6,35 @@ import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
 import { useBalance } from 'wagmi'
+import { ITxsRecord } from "@/types"
 import { ethers } from 'ethers'
 import TxResult from "../transactions-result/TxResult"
+import LoadingState from '../loadings/LoadingState'
+import TransactionsRecord from '../records/TransactionsRecord'
 
 const WithdrawalModal = () => {
      const { principalToken } = allContracts;
      const [withdrawalAmount, setWithdrawalAmount] = useState("0")
-     const { openWithdrawModal, setOpenWithdrawModal, showTxResult, setShowTxResult, network } = usePeyPeyContext()
+     const { openWithdrawModal, setOpenWithdrawModal, showTxResult, setShowTxResult, network, setShowLoadingState } = usePeyPeyContext()
      const inputRef = useRef<HTMLInputElement>(null)
      const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: principalToken.address as `0x${string}` })
      const [ptBalance, setPtBalance] = useState("0");
      const {handleAssetsWithdrawal, wdData, wdStatus, resetWd} = useContractHooks()
+    const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
+                    {
+                        id: 0,
+                        action: "payment",
+                        date: new Date(),
+                        value: withdrawalAmount
+                    },
+                    {
+                        id: 1,
+                        action: "payment",
+                        date: new Date(),
+                        value: withdrawalAmount
+                    }
+                ])
+
 
        const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
@@ -43,25 +61,29 @@ const WithdrawalModal = () => {
 
         const handlwWithdrawalState = () => {
             if(wdStatus == "success" && wdData) {
-                 toast.success("Assets withdrawn successfully!", {
-                   position: "top-right"
-                })
-                setWithdrawalAmount("0")
-                resetWd()
-
-                setTimeout(() => {
-                   setOpenWithdrawModal(false)
-                   setShowTxResult(false)
-                }, 5000)
-
-                return;
-            } else if(wdStatus === "error") {
-                 resetWd()
-                 toast.error("An error occurred while withdrawing assets. Please try again!", {
-                   position: "top-right"
-                })
-                setWithdrawalAmount("0")
-                return;
+                  toast.success("Assets withdrawn successfully!", {
+                    position: "top-right"
+                  })
+                  setWithdrawalAmount("0")
+                  resetWd()
+                  setShowTxResult(true)
+                  
+                  setTimeout(() => {
+                    setOpenWithdrawModal(false)
+                    setShowLoadingState(false)
+                    setShowTxResult(false)
+                    }, 5000)
+                    
+                    return;
+                } else if(wdStatus === "error") {
+                    resetWd()
+                    toast.error("An error occurred while withdrawing assets. Please try again!", {
+                      position: "top-right"
+                    })
+                    setOpenWithdrawModal(false)
+                    setShowLoadingState(false)
+                    setWithdrawalAmount("0")
+                    return;
             }
             
         }
@@ -79,7 +101,7 @@ const WithdrawalModal = () => {
           onClick={() => setOpenWithdrawModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
 
-        <div className="w-[40%] mx-auto h-[40%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[170px] p-[15px]">
+        <div className="w-[40%] mx-auto h-[40%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[220px] p-[15px] overflow-hidden">
             <aside className="flex items-center w-full justify-between">
                 <div>
                     <h2 className="font-bold responsive-headerTabs"> Funds Withdrawal </h2>
@@ -104,6 +126,7 @@ const WithdrawalModal = () => {
                     | 
                     <span onClick={() => handleBalanceSelection(100)} className="cursor-pointer"> 100% </span> </p>
               </aside>
+
             </div>
 
              <CustomButton
@@ -118,6 +141,11 @@ const WithdrawalModal = () => {
             </CustomButton>    
        
               <TxResult { ...{ title: "Withdraw Successfull", msg: "You've successfull withdrawn your PT", showTxResult, setShowTxResult: setOpenWithdrawModal, closeTxResult: setShowTxResult } } />
+
+                {/* txs record */}
+              <TransactionsRecord transactions={txsRecord} />
+              {/* loading state */}
+              <LoadingState />
         </div>
     </div>
   )

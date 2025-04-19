@@ -52,7 +52,7 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
         // @ts-ignore
           holdingsResult, 
           // @ts-ignore
-          userDeposits!, 
+          userDeposits, 
           holdingLoading, userDepositLoading, userDepositStatus, holdingStatus,
           openDepositModal, setDepositModal,
           openCalculatorModal, setCalculatorModal,

@@ -3,13 +3,10 @@ import { CustomButton } from "@/components"
 import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
 import { useWaitForTransactionReceipt, useBalance } from 'wagmi'
-import { waitForTransactionReceipt } from '@wagmi/core'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
-import { wagmiConfig } from '../Web3Provider'
 import { CustomConnectButton } from '@/components'
-import { ethers } from 'ethers'
 import { ITxsRecord } from "@/types"
 // components
 import LoadingState from '../loadings/LoadingState'
