@@ -99,7 +99,7 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[60%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] translate-y-[140px] relative overflow-y-hidden overflow-x-hidden top-0">
+        <div className="flex h-[60%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] translate-y-[140px] relative overflow-y-scroll overflow-x-hidden top-0">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">

@@ -7,6 +7,7 @@ import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
 import { ITxsRecord } from "@/types"
+import { ethers } from 'ethers'
 // components
 import LoadingState from '../loadings/LoadingState'
 import TransactionsRecord from '../records/TransactionsRecord'
@@ -20,7 +21,7 @@ const DepositModal = () => {
         const { mockUsdc, fundsVault } = allContracts;
         const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
-        handleTokenApproval, approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
+        approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
          const { data: approvalReceipt } = useWaitForTransactionReceipt({
                    hash: approveData as `0x${string}`,
                    confirmations: 1

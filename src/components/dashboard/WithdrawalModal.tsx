@@ -101,7 +101,7 @@ const WithdrawalModal = () => {
           onClick={() => setOpenWithdrawModal(false)}
           className="absolute top-0 w-full h-full glass-modal" />
 
-        <div className="w-[40%] mx-auto h-[40%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[220px] p-[15px] overflow-hidden">
+        <div className="w-[40%] mx-auto h-[50%] glass-card flex flex-col gap-[20px] rounded-[10px] translate-y-[220px] p-[15px] overflow-hidden">
             <aside className="flex items-center w-full justify-between">
                 <div>
                     <h2 className="font-bold responsive-headerTabs"> Funds Withdrawal </h2>
