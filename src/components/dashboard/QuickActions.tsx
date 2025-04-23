@@ -9,7 +9,7 @@ const QuickActions = () => {
     const { setDepositModal, setCalculatorModal, setOpenWithdrawModal} = usePeyPeyContext()
 
     const buttonClickHandler = (stepId: number) => {
-       stepId == 1 ? setDepositModal(true) : stepId == 3 ? setCalculatorModal(true) : stepId == 4 ? setOpenWithdrawModal(true) : null;
+       stepId == 1 ? setDepositModal(true) : stepId == 2 ? setCalculatorModal(true) : stepId == 3 ? setOpenWithdrawModal(true) : null;
     }
 
   return (
@@ -22,14 +22,13 @@ const QuickActions = () => {
         {/* action buttons */}
         <div className="w-full flex flex-col gap-[15px]">
           { quickActionBtns.map(action => (
-
-            action.title.toLowerCase() == "browse marketplace" 
-            ? 
-              <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
-               <LuChartNoAxesColumn className='' />
-               {action.title} 
-               </Link> 
-            : 
+            // action.title.toLowerCase() == "browse marketplace" 
+            // ? 
+            //   <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
+            //    <LuChartNoAxesColumn className='' />
+            //    {action.title} 
+            //    </Link> 
+            // : 
             <CustomButton
                   key={action.id} 
                   onClick={() => buttonClickHandler(action.id)}

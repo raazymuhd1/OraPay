@@ -124,17 +124,18 @@ const DepositModal = () => {
 
   return (
       <div 
-      className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-screen fixed left-0 flex top-0 w-full"} `}>
+      className={`transition-all duration-500 ${!openDepositModal ? "hidden h-0 w-0" : "h-full fixed left-0 flex top-0 w-full"} `}>
 
       <Toaster />
        <div 
           onClick={() => {
+            setShowLoadingState(false)
             if(depositStatus != "pending") setDepositModal(false)}
           } 
           className="absolute top-0 w-full h-full glass-modal" />
        
-       {/* payment card */}
-        <div className={`flex h-[75%] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-hidden"}`}>
+       {/* deposit card */}
+        <div className={`flex h-[75%] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-y-hidden"}`}>
 
             {/* top card */}
             <div className="w-full flex justify-between">
@@ -185,47 +186,28 @@ const DepositModal = () => {
                 { depositDetails("Expiry Date", `10 May 2025`) }
             </div>
 
-            {/* action buttons */}
-            {/* { !isApproved ?  <CustomButton
-                    onClick={() => handleTokenApproval(Number(depositAmount))}
-                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" ? true : false}
-                    style={`bg-gradient`}
-                          >
-                    <CreditCard className="" />
-                     { approvalStatus == "pending" ? "Approving..." : "Approve" }
-                </CustomButton>  
-               :
-                 <CustomButton
-                    onClick={() => handleAssetsDeposit(Number(depositAmount), 0)}
-                    disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || depositStatus == "pending" ? true : false}
-                    style={`bg-gradient`}
-                          >
-                    <CreditCard className="" />
-                     { depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
-                </CustomButton>    
-            } */}
-                <div className="flex w-full flex-col gap-[10px]">
-                  <CustomButton
-                      onClick={() => handleAssetsDeposit(depositAmount, 0)}
-                      disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
-                      style={`bg-gradient`}
-                            >
-                      <CreditCard className="" />
-                      { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
-                  </CustomButton>    
-                  <CustomButton
-                      onClick={() => setDepositModal(false)}
-                      disabled={approvalStatus == "pending" || depositStatus == "pending" ? true : false}
-                      style={`bg-[rgba(9,9,11,255)]`}
-                            >
-                      <X className="" />
-                        Cancel
-                  </CustomButton>    
-                </div>
+            <div className="flex w-full flex-col gap-[10px]">
+              <CustomButton
+                  onClick={() => handleAssetsDeposit(depositAmount, 0)}
+                  disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
+                  style={`bg-gradient`}
+                        >
+                  <CreditCard className="" />
+                  { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
+              </CustomButton>    
+              <CustomButton
+                  onClick={() => setDepositModal(false)}
+                  disabled={approvalStatus == "pending" || depositStatus == "pending" ? true : false}
+                  style={`bg-[rgba(9,9,11,255)]`}
+                        >
+                  <X className="" />
+                    Cancel
+              </CustomButton>    
+            </div>
             
         
                  {/* tx result modal */}
-            <TxResult { ...{ title: "Payment Successfull", msg: "You've use the future yield to pay for this", showTxResult, setShowTxResult: setDepositModal, closeTxResult: setShowTxResult } } />
+            <TxResult { ...{ title: "Deposit Successfull", msg: "Deposit went successfully", showTxResult, setShowTxResult: setDepositModal, closeTxResult: setShowTxResult } } />
 
             {/* txs record */}
             <TransactionsRecord transactions={txsRecord} />

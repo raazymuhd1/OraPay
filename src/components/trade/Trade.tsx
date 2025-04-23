@@ -78,7 +78,7 @@ const Trade = () => {
    }
 
   return (
-    <div className="w-full h-screen p-[20px] flex flex-col items-center gap-[20px] justify-center">
+    <div className="w-full h-full p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
         <Toaster />
 

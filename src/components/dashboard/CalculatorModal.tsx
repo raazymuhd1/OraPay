@@ -27,7 +27,7 @@ const DepositModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[60%] lg:w-[30%] w-[80%] mx-auto translate-y-[150px] flex-col gap-[15px] glass-card border-[1px] border-[#202021] rounded-[15px] p-[20px] overflow-y-scroll">
+        <div className="flex h-[70%] lg:w-[30%] w-[80%] mx-auto translate-y-[150px] flex-col gap-[15px] glass-card border-[1px] border-[#202021] rounded-[15px] p-[20px]">
 
             {/* top card */}
             <div className="w-full flex justify-between">

@@ -37,9 +37,8 @@ const balances = [
 
 const quickActionBtns = [
     { id: 1, title: "Deposit Funds", btnLogo: LuWallet },
-    { id: 2, title: "Browse Marketplace", btnLogo: LuChartNoAxesColumn },
-    { id: 3, title: "Calculate YT Earnings", btnLogo: Calculator },
-    { id: 4, title: "Withdrawal", btnLogo: CircleDollarSign },
+    { id: 2, title: "Calculate YT Earnings", btnLogo: Calculator },
+    { id: 3, title: "Withdrawal", btnLogo: CircleDollarSign },
 ]
 
 const yields = [

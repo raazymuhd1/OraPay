@@ -41,14 +41,14 @@ const ClaimFaucet = () => {
     }
 
   return (
-    <div className="w-[40%] glass-card rounded-[15px] translate-y-[100px] p-[20px] mx-auto flex flex-col items-center gap-[20px]">
+    <div className="w-[40%] min-h-[300px] glass-card rounded-[15px] translate-y-[200px] p-[20px] mx-auto flex flex-col items-center justify-center gap-[20px]">
 
-       <div className="flex w-[80%] mx-auto flex-col gap-[10px] items-center">
+       <div className="flex w-full mx-auto flex-col gap-[10px] items-center">
          <h2 className="text-[clamp(20px,2vw,30px)] font-bold"> Faucet </h2>
-         <p className="text-[clamp(16px,2vw,18px)] font-semibold text-[#7f7f80]"> Claim USDC faucet by placing your wallet address </p>
+         <p className="text-[clamp(16px,2vw,18px)] text-center  font-semibold text-[#7f7f80]"> Claim USDC faucet by placing your wallet address </p>
        </div>
 
-        <div className='flex w-[70%] mx-auto flex-col gap-[20px]'>
+        <div className='flex w-[90%] mx-auto flex-col gap-[20px]'>
             <input 
                 value={faucetReceiver}
                 onChange={(e) => {
