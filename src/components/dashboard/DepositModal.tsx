@@ -26,6 +26,7 @@ const DepositModal = () => {
                    hash: approveData as `0x${string}`,
                    confirmations: 1
           })
+
         const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
                   {
                       id: 0,
@@ -40,6 +41,21 @@ const DepositModal = () => {
                       value: depositAmount
                   }
               ])
+
+        
+       const postTxRecord = async() => {
+            const data = { action: "deposit", date: new Date(), value: depositAmount };
+            const res = await fetch("http://localhost:3000/api/tx-records", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+            })
+            const resData = await res.json();
+
+            console.log(`response, ${resData}`);
+       }
 
 
         useEffect(() => {
@@ -57,7 +73,7 @@ const DepositModal = () => {
                       setHasDeposited(true)
 
                       console.log("approval tx receipt", approvalReceipt?.transactionHash)
-                      console.log("executed")
+                      console.log("deposit is executed")
                       
                   }
                 
@@ -94,7 +110,7 @@ const DepositModal = () => {
               setShowLoadingState(false)
               setDepositModal(false);
           }
-      }, [depoData, depositStatus])
+      }, [depoData, depositStatus, approvalStatus])
 
 
         const handleBalanceSelection = (value: number) => {
@@ -188,7 +204,10 @@ const DepositModal = () => {
 
             <div className="flex w-full flex-col gap-[10px]">
               <CustomButton
-                  onClick={() => handleAssetsDeposit(depositAmount, 0)}
+                  onClick={async() => {
+                    handleAssetsDeposit(depositAmount, 0)
+                    await postTxRecord()
+                  }}
                   disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
                   style={`bg-gradient`}
                         >
