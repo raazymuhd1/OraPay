@@ -13,9 +13,8 @@ interface IProps {
 }
 
 export const wagmiConfig = createConfig({
-  chains: [mainnet, sepolia, educhain],
+  chains: [sepolia, educhain],
   transports: {
-    [mainnet.id]: http(),
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL),
     [educhain.id]: http()
   },
