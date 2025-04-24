@@ -24,22 +24,24 @@ export const educhain = {
 
 // created a custom chain for pharos network
 export const pharos = {
-    id: 656476,
-    name: "Educhain",
+    id: 50002,
+    name: "Pharos Network",
     blockExplorers: {
         default: {
-            name: "Educhain Testnet",
-            url: "https://edu-chain-testnet.blockscout.com/"
+            name: "Pharos Devnet",
+            url: "https://pharosscan.xyz/"
         }
     },
     rpcUrls: {
         default: {
-            http: ["https://rpc.open-campus-codex.gelato.digital"]
+            http: ["https://devnet.dplabs-internal.com"]
         }
     },
     nativeCurrency: {
-        name: "Edu",
-        symbol: "EDU",
+        name: "ETH",
+        symbol: "ETH",
         decimals: 18
-    }
+    },
+    sourceId: 1,
+    testnet: true
 } as const satisfies Chain

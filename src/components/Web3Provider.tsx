@@ -2,21 +2,22 @@
 import '@rainbow-me/rainbowkit/styles.css';
 import { ReactNode } from "react";
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
+import { sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 // custom chain
-import { educhain } from "@/chain-configs/customChain"
+import { educhain, pharos } from "@/chain-configs/customChain"
 
 interface IProps {
     children: ReactNode;
 }
 
 export const wagmiConfig = createConfig({
-  chains: [sepolia, educhain],
+  chains: [sepolia, educhain, pharos],
   transports: {
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL),
-    [educhain.id]: http()
+    [educhain.id]: http(),
+    [pharos.id]: http()
   },
   ssr: true
 })
