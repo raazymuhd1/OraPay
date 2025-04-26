@@ -13,7 +13,7 @@ interface IBalancesProp {
 const BalancesCard = ({ id, title, value, TitleLogo, desc }: IBalancesProp) => {
   return (
      <div 
-        className="flex flex-col gap-[10px] lg:w-[35%] w-full h-[60%] glass-card p-[20px]"
+        className="flex flex-col gap-[10px] lg:w-[35%] w-full md:h-[60%] h-[fit-content] glass-card p-[20px]"
         >
             <div className='w-full flex items-center justify-between'>
                 <div className="flex items-center gap-[10px]">

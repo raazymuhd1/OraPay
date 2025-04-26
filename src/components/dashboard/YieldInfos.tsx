@@ -11,7 +11,7 @@ import YieldExpReturns from "./YieldExpReturns"
 
 const YieldInfos = () => {
   return (
-    <aside className="w-[70%] mx-auto rounded-[10px] ">
+    <aside className="xl:w-[70%] md:w-[90%] w-full mx-auto rounded-[10px] ">
        
        <Tabs defaultValue='overview' className=''>
           <TabsList className="grid lg:w-[40%] bg-brown w-full grid-cols-[repeat(3,minmax(100px,1fr))] items-center gap-[5px]">

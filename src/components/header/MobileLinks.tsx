@@ -17,7 +17,7 @@ const MobileLinks = ({showNav, updateShowNav}: IProps) => {
      console.log("showing mobile nav", showNav)
 
   return (
-    <ul className={`bg-[rgba(9,9,11,255)] z-[22] w-full gap-[40px] ${showNav ? "opacity-[1] flex flex-col fixed top-[0] h-[35vh] right-0 translate-y-0" : "translate-y-[-350px] h-0 w-0"} p-[20px] transition-all duration-500`}>
+    <ul className={`bg-[rgba(9,9,11,255)] z-[22] w-full gap-[40px] ${showNav ? "opacity-[1] flex flex-col fixed top-[0] h-[55vh] right-0 translate-y-0" : "translate-y-[-350px] h-0 w-0"} p-[20px] transition-all duration-500`}>
                 <div className="w-full flex justify-between">
                   <div className="flex flex-col gap-[20px]">
                     { navbarLists.map(list => (

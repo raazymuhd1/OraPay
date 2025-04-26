@@ -16,16 +16,16 @@ const Steps = () => {
     }
 
   return (
-      <aside className="w-[70%] min-h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
+      <aside className="xl:w-[70%] md:w-[90%] w-full min-h-[300px] mx-auto rounded-[10px] md:p-[30px] p-[20px] border-[1px] border-[#202021] bg-brown">
         {/* card header */}
           <div className="w-full flex items-center justify-between">
               <aside>
-                <h3 className="font-bold responsive-headerText"> Welcome to NoPeyPey </h3>
+                <h3 className="font-bold responsive-headerText"> Welcome to EduZero </h3>
                 <p className="text-(--paraph-color) font-semibold responsive-paraph"> The Buy Now, Pay Never protocol </p>
               </aside>
 
               <h4 
-                className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] transition-[background] duration-500 cursor-pointer text-[clamp(12px,1.5vw,16px)]"> <CircleHelp className="w-[18px]" /> How it works </h4>
+                className="flex items-center gap-[10px] bg-[rgba(9,9,11,255)] p-[6px] rounded-[10px] hover:bg-[rgba(29,220,255,255)] transition-[background] duration-500 whitespace-nowrap cursor-pointer text-[clamp(12px,1.5vw,16px)]"> <CircleHelp className="md:w-[18px] w-[10px]" /> How it works </h4>
           </div>
 
           {/* card items */}
@@ -36,7 +36,7 @@ const Steps = () => {
                     className="flex flex-col justify-between gap-[10px] lg:w-[30%] h-[200px] w-full py-[25px] px-[15px] rounded-[15px] glass-card">
                   <div className='flex flex-col gap-[5px]'>
                       <h3 className="text-[clamp(16px,1vw,18px)] font-bold"> Step {step.id}: {step.title} </h3>
-                      <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)]"> { step.desc } </p>  
+                      <p className="text-(--paraph-color) font-medium text-[clamp(16px,1vw,20px)] text-[inter-word]"> { step.desc } </p>  
                   </div>
 
                   { step.btnText.toLowerCase() == "browse marketplace" 

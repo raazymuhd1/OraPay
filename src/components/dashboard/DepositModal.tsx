@@ -151,7 +151,7 @@ const DepositModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* deposit card */}
-        <div className={`flex h-[75%] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-y-hidden"}`}>
+        <div className={`flex h-[75%] lg:w-[40%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-y-hidden"}`}>
 
             {/* top card */}
             <div className="w-full flex justify-between">

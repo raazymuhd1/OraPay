@@ -24,7 +24,7 @@ const YieldOverview = () => {
 
      function yieldOverviewDetails(title: string, value: string, desc: string, ...rest: string[]) {
         return (
-            <div className="w-full lg:w-[50%] h-[150px] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
+            <div className="w-full lg:w-[50%] h-[180px] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
                   <h2 className="font-bold resp-headerCard"> {title} </h2>
                   <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { value || 0 } </p>
@@ -56,38 +56,6 @@ const YieldOverview = () => {
 
           { yieldOverviewDetails("Current APY", `${String(currentAPY)}`, `Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average.`, `APY is variable and changes based on market conditions`, ``) }
           { yieldOverviewDetails("YT Generation", `+${dailyYield?.toString()} YT/day`, `At the current rate, you are generating approximately +${dailyYield?.toString()} YT tokens per day from your deposits.`, ``, `View detailed analytics`) }
-
-          {/* <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
-              <div className='flex items-center justify-between'>
-                  <h2 className="font-bold resp-headerCard"> Current APY </h2>
-                  <p className="flex items-center text-[#11afb8] text-[clamp(14px,1vw,18px)] font-semibold"> 
-                      <TbArrowBearRight />
-                      {  String(currentAPY) || 0 } % 
-                  </p>
-              </div>
-               <div className="flex flex-col gap-[10px] mt-[10px]">
-                  <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold"> Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average. </p>
-                  <p className="text-(--paraph-color) text-[1.5vmax] md:text-[.8vmax]">APY is variable and changes based on market conditions</p>
-               </div>
-          </div>
-
-          <div className="w-full lg:w-[50%] h-[60%] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
-              <div className='flex items-center justify-between'>
-                  <h2 className="font-bold resp-headerCard"> YT Generation </h2>
-                  <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { `+${dailyYield?.toString()}` || 0 } YT/day </p>
-              </div>
-              <div className="flex flex-col gap-[10px] mt-[10px]">
-                    <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold">At the current rate, you are generating approximately { `+${dailyYield?.toString()}` } YT tokens per day from your deposits.</p>
-                    <CustomButton
-                      onClick={() => {}}
-                      disabled={false}
-                      style={`glass-card responsive-btnText`}
-                            >
-                      View detailed analytics
-                    <MoveRight className="w-[15px]" />
-                  </CustomButton>
-              </div> 
-          </div> */}
 
         </aside>
     </div>

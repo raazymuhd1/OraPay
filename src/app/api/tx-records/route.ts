@@ -17,31 +17,29 @@ const dbConnect = async() => {
 
     try {
         if (!cached.promise) {
-            cached.promise = mongoose.connect(dbUrl, {
+            cached.promise = await mongoose.connect(dbUrl, {
               bufferCommands: false,
             });
           }
         
           cached.conn = await cached.promise;
-          console.log("database is connected", cached.conn);
+          console.log("database is connected");
     } catch(err) {
         console.log(err)
     }
 }
 
+dbConnect()
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const txRecordsData = await req.json();
     let txRecords;
 
-    dbConnect()
-
+    console.log(txRecordsData)
     if(txRecordsData) {
-        txRecords = new TxRecords({ action: txRecords?.action!, date: txRecords?.date!, value: txRecords?.value! })
-        txRecords.save();
-
+        txRecords = await TxRecords.create(txRecordsData)
         console.log("Data saved")
     }
     
-    return Response.json({ msg: "data", data: txRecordsData })
+    return Response.json({ msg: "data", data: txRecords })
 }

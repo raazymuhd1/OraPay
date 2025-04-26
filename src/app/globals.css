@@ -118,11 +118,11 @@ body {
 
 /* hero styles */
 .shadowing-left {
-   box-shadow: 2px 2px 390px 56px rgba(82,122,254,255), -2px -2px 390px 56px rgba(82,122,254,255); 
+   box-shadow: 2px 2px 390px 76px rgba(82,122,254,255); 
 }
 
 .shadowing-right {
-   box-shadow: 2px 2px 390px 56px rgba(29,220,255,255), -2px -2px 390px 6px rgba(29,220,255,255); 
+   box-shadow: 2px 2px 390px 76px rgba(29,220,255,255); 
 }
 
 .btn-shadow {
