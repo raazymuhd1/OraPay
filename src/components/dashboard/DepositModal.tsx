@@ -131,8 +131,8 @@ const DepositModal = () => {
         const depositDetails = (title: string, value: string) => {
           return (
             <div className="w-full flex items-center justify-between">
-                <h3 className="text-[#7f7f80] font-bold"> {title}: </h3>
-                <h4 className={`font-bold ${title.toLowerCase() == "initial yt allocation" && "text-[#2caec5]"}`}> {value} </h4>
+                <h3 className="text-[#7f7f80] resp-headerCard"> {title}: </h3>
+                <h4 className={`font-bold responsive-paraph ${title.toLowerCase() == "initial yt allocation" && "text-[#2caec5]"}`}> {value} </h4>
             </div>
           )
         }
@@ -157,7 +157,7 @@ const DepositModal = () => {
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
                     <h2 className="font-bold responsive-headerTabs "> Deposit USDC </h2>
-                    <p className="font-normal text-(--paraph-color) responsive-paraph"> Deposit USDC to receive Principal Tokens (PT) and start earning yield </p>
+                    <p className="font-semibold text-(--paraph-color) responsive-paraph"> Deposit USDC to receive Principal Tokens (PT) and start earning yield </p>
                 </div>
 
                 <History className="w-[25px] cursor-pointer" onClick={() => setShowTxsRecord(true)} />

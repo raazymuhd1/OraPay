@@ -2,7 +2,7 @@ import React from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useAccount, useWriteContract, useReadContract } from "wagmi"
+import { useAccount } from "wagmi"
 import { CustomConnectButton } from '@/components'
 
 const DepositModal = () => {
@@ -27,7 +27,7 @@ const DepositModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[70%] lg:w-[30%] w-[80%] mx-auto translate-y-[150px] flex-col gap-[15px] glass-card border-[1px] border-[#202021] rounded-[15px] p-[20px]">
+        <div className="flex h-[fit-content] lg:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col gap-[15px] glass-card border-[1px] border-[#202021] rounded-[15px] p-[20px]">
 
             {/* top card */}
             <div className="w-full flex justify-between">

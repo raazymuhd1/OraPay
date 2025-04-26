@@ -23,7 +23,10 @@ const MobileLinks = ({showNav, updateShowNav}: IProps) => {
                     { navbarLists.map(list => (
                         <Link
                           className={`cursor-pointer  font-bold ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"} hover:bg-[#2caec5] py-[6px] px-[10px] rounded-[10px] `}
-                          key={list.id} href={list.url || "/"}> 
+                          key={list.id} 
+                          href={list.url || "/"}
+                          onClick={() => updateShowNav(false)}
+                          > 
                           { list.title } 
                         </Link>
                     )) }

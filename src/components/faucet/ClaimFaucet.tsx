@@ -41,7 +41,7 @@ const ClaimFaucet = () => {
     }
 
   return (
-    <div className="w-[40%] min-h-[300px] glass-card rounded-[15px] translate-y-[200px] p-[20px] mx-auto flex flex-col items-center justify-center gap-[20px]">
+    <div className="w-[40%] min-h-[200px] glass-card rounded-[15px] translate-y-[200px] p-[20px] mx-auto flex flex-col items-center justify-center gap-[20px]">
 
        <div className="flex w-full mx-auto flex-col gap-[10px] items-center">
          <h2 className="text-[clamp(20px,2vw,30px)] font-bold"> Faucet </h2>
@@ -54,7 +54,7 @@ const ClaimFaucet = () => {
                 onChange={(e) => {
                     setFaucetReceiver(e.target.value)
                 }}
-                type="text" className='px-[15px] py-[8px] w-full border-[1px] rounded-[15px]' placeholder='place your address here' />
+                type="text" className='px-[15px] py-[8px] w-full border-[1px] placeholder:text-center rounded-[15px]' placeholder='place your address here' />
             <CustomButton
                 onClick={claimingFaucet}
                 disabled={faucetReceiver.length <= 0 || faucetStatus == "pending" ? true : false}

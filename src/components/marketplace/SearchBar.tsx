@@ -3,7 +3,7 @@ import { Search, Filter, ShoppingBag } from 'lucide-react'
 
 const SearchBar = () => {
   return (
-    <div className="w-full mx-auto flex md:flex-nowrap flex-wrap items-center gap-[20px]">
+    <div className="w-full mx-auto flex md:flex-nowrap flex-wrap p-[10px] items-center gap-[20px]">
         <aside className='flex md:w-[75%] w-full items-center gap-[15px] py-[5px] px-[10px] border-[1px] border-[#202021] bg-brown rounded-[15px]'>
             <Search className="w-[20px]" />
             <input type='text' className="bg-transparent border-none outline-none h-full w-[90%] " placeholder='Search Marketplace' /> 

@@ -3,7 +3,7 @@ import {Trade } from "@/components"
 
 const TradePage = () => {
   return (
-    <div>
+    <div className="w-full">
       <Trade />
     </div>
   )

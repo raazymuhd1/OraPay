@@ -29,7 +29,7 @@ const InputFrom = ({ selectedAsset, setSelectedAsset } : IProps) => {
        address: ""
    });
    const { setTokenToAmount } = usePeyPeyContext()
-    const tokenBal = useBalance({
+   const tokenBal = useBalance({
               token: selectAsst.address as `0x${string}`,
               address: userAddr,
               chainId
@@ -66,7 +66,7 @@ const InputFrom = ({ selectedAsset, setSelectedAsset } : IProps) => {
     <div className='flex w-full flex-col gap-[10px]'>
         <div className="w-full flex items-center justify-between">
            <h3> From </h3>
-           <aside className="flex items-center gap-[10px]">
+           <aside className="flex flex-col items-end lg:items-center lg:flex-row gap-[10px]">
               <p className="text-[#7f7f80]"> Balance: { tokenBal?.data?.formatted || 0 } </p>
               <strong> Max </strong>
            </aside>

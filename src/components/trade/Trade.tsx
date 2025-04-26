@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { MoveDown, History } from 'lucide-react'
 import InputFrom from './InputFrom'
 import InputTo from "./InputTo"
+import { useBalance } from "wagmi"
 import { CustomButton } from "@/components"
 import { useContractHooks } from '@/utils/hooks'
 import { usePeyPeyContext } from '../PeyPeyContext'
@@ -13,7 +14,7 @@ import LoadingState from '../loadings/LoadingState'
 
 const Trade = () => {
     const { sellTokens, sellData, sellStatus, resetSelling, sellingError } = useContractHooks()
-    const { setShowTxsRecord, setShowLoadingState } = usePeyPeyContext()
+    const { setShowTxsRecord, setShowLoadingState, network } = usePeyPeyContext()
     const [selectedAsset, setSelectedAsset] = useState<IState>({
         from: {
            name: "",
@@ -26,7 +27,11 @@ const Trade = () => {
            amount: 0
         }
     });
-
+    const { data: userBal } = useBalance({
+      token: selectedAsset?.from?.address as `0x${string}`,
+      address: network.userAddr,
+      chainId: network.chainId
+    })
     const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
                     {
                         id: 0,
@@ -77,24 +82,33 @@ const Trade = () => {
        )
    }
 
+   function handleInsufficientBalance(){
+       if(userBal?.formatted  == "0" || Number(userBal?.value) == 0 || Number(userBal?.value) < selectedAsset?.from?.amount!) {
+          toast.error("Insufficient Balance", {
+            position: "top-right"
+          })
+          return;
+       }
+   }
+
   return (
-    <div className="w-full h-full p-[40px] flex flex-col items-center gap-[20px] justify-center">
+    <div className="w-full h-full p-[20px] flex flex-col items-center gap-[20px] justify-center">
 
         <Toaster />
 
-         <div className="flex w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
+         <div className="flex w-[100%] md:w-[80%] mx-auto flex-col gap-[20px] items-center mt-[10px]">
             <h2 className="page-headerText font-bold"> Trade </h2>
-            <p className="page-paraphText font-semibold text-[#7f7f80]"> Swap between PT, YT tokens and stablecoins </p>
+            <p className="page-paraphText font-semibold text-center text-[#7f7f80]"> Swap between PT, YT tokens and stablecoins </p>
        </div>
 
-       <div className="bg-brown xl:w-[30%] lg:w-[40%] w-[80%] min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px] relative overflow-hidden">
+       <div className="bg-brown xl:w-[30%] md:w-[60%] w-full min-h-[400px] mx-auto p-[30px] flex flex-col gap-[15px] rounded-[10px] relative overflow-hidden">
          <div className="w-full flex items-start justify-between"> 
             <aside className="flex flex-col gap-[10px]">
-                <h3 className="font-bold lg:text-[1.3vmax] text-[2vmax]"> Swap </h3>
+                <h3 className="font-bold lg:text-[1.3vmax] text-[2.4vmax]"> Swap </h3>
                 <p className="text-[#7f7f80]"> Trade tokens with minimal slippage </p>
             </aside>
 
-            <History onClick={() => setShowTxsRecord(true)} className="w-[20px] h-[20px] cursor-pointer" />
+            <History onClick={() => setShowTxsRecord(true)} className="w-25px] h-25px] cursor-pointer" />
          </div>
 
           <div className="w-full flex flex-col items-center">
@@ -109,12 +123,15 @@ const Trade = () => {
           </div>
 
             <CustomButton
-              onClick={() => sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
-              disabled={sellStatus == "pending" || sellStatus == "success" || selectedAsset?.from?.amount! <= 0 ? true : false}
-              style={`bg-gradient`}
-                    >
-              { sellStatus == "pending" ? "Processing..." : "Swap" }
-         </CustomButton>
+                onClick={() => {
+                  handleInsufficientBalance();
+                  sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
+                } 
+                disabled={sellStatus == "pending" || sellStatus == "success" || selectedAsset?.from?.amount! <= 0 ? true : false}
+                style={`bg-gradient`}
+                      >
+                { sellStatus == "pending" ? "Processing..." : "Swap" }
+            </CustomButton>
        
             {/* txs record */}
             <TransactionsRecord transactions={txsRecord} />
