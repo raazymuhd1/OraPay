@@ -24,12 +24,12 @@ const Hero = () => {
 
         <div className="w-[90%] md:w-[80%] h-full items-center justify-center flex flex-col gap-[10px] mx-auto">
             <h4 className="rounded-[30px] w-[fit-content] whitespace-nowrap lg:text-[.7vmax] md:text-[1.8vmax] text-[1.4vmax] text-[#11afb8] bg-[rgba(22,22,23,255)] border-[1px] border-[#7f7f80] py-[3px] px-[8px]"> Introducing: The Future of Payments </h4>
-            <h2 className="text-[#0ff0fc] w-full text-center font-extrabold text-[clamp(2rem,4.5vw,2.7rem)]">
+            <h2 className="text-[#0ff0fc] w-full text-center font-extrabold text-[clamp(2rem,4.5vw,5rem)]">
                 Buy
-                <span className="text-bg-gradient"> Now, </span>
+                <span className="text-bg-gradient"> Now, </span> 
                 <span className="text-[#fff]"> Pay Never </span>
             </h2>
-            <p className="text-[#7f7f80] font-medium text-[clamp(1rem,2vw,1.2rem)] w-full text-center"> A revolutionary DeFi protocol that lets you pay merchants 
+            <p className="text-[#7f7f80] font-medium text-[clamp(1rem,2vw,1.2rem)] w-full text-center break-all"> A revolutionary DeFi protocol that lets you pay merchants 
                 <br className="hidden md:inline" /> using future yield—not the principal. Generate income, 
                 <br className="hidden md:inline" /> maintain your capital, and spend only what you earn.
              </p>
