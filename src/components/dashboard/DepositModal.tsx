@@ -131,7 +131,7 @@ const DepositModal = () => {
         const depositDetails = (title: string, value: string) => {
           return (
             <div className="w-full flex items-center justify-between">
-                <h3 className="text-[#7f7f80] resp-headerCard"> {title}: </h3>
+                <h3 className="text-[#7f7f80] resp-paraphCard"> {title}: </h3>
                 <h4 className={`font-bold responsive-paraph ${title.toLowerCase() == "initial yt allocation" && "text-[#2caec5]"}`}> {value} </h4>
             </div>
           )
@@ -151,7 +151,7 @@ const DepositModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* deposit card */}
-        <div className={`flex h-[75%] lg:w-[40%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-y-hidden"}`}>
+        <div className={`flex h-[75%] lg:w-[40%] xl:w-[30%] w-[80%] mx-auto translate-y-[120px] flex-col glass-card border-[1px] border-[#202021] relative rounded-[15px] gap-[15px] p-[20px] ${!showLoadingState || !showTxResult || !showTxsRecord ? "overflow-y-scroll" : "overflow-y-hidden"}`}>
 
             {/* top card */}
             <div className="w-full flex justify-between">

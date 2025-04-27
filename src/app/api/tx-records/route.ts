@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import mongoose from "mongoose"
 import { TxRecords } from "@/models/txRecord.model";
 
 // to revalidate the cache data (ISR)
 export const revalidate = 60;
 
-let cached = (global as any).mongoose;
-
-if(!cached) {
-    cached = (global as any).mongoose = { conn: null, promise: null };
-}
 
 // db connection
 const dbConnect = async() => {
-    const dbUrl = `mongodb+srv://muhdraazy:muhdraazy@badger.fuq7k33.mongodb.net/?retryWrites=true&w=majority&appName=badger`
+    const dbUrl = process.env.DB_URL as string;
+    let cached = (global as any).mongoose;
+    
+    if(!cached) {
+        cached = (global as any).mongoose = { conn: null, promise: null };
+    }
 
     try {
         if (!cached.promise) {
@@ -31,7 +31,7 @@ const dbConnect = async() => {
 
 dbConnect()
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: Request) {
     const txRecordsData = await req.json();
     let txRecords;
 
