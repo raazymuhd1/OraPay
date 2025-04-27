@@ -20,7 +20,7 @@ const Nav = ({updateShowNav}: PProps) => {
 
         <Links />
         {/* @ts-ignore */}
-        <CgMenuOreos onClick={() => updateShowNav(true)} className="text-[20px] cursor-pointer md:hidden" />
+        <CgMenuOreos onClick={() => updateShowNav(true)} className="text-[20px] cursor-pointer lg:hidden" />
     </nav>
   )
 }

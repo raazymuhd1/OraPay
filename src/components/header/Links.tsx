@@ -11,7 +11,7 @@ const Links = () => {
     console.log(path.split('/')[1])
 
   return (
-    <ul className="md:flex items-center gap-[40px] hidden ">
+    <ul className="lg:flex items-center gap-[40px] hidden ">
             { navbarLists.map(list => (
                 <Link
                   className={`cursor-pointer ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"} hover:bg-[#2caec5] py-[6px] px-[10px] font-semibold rounded-[10px] transition-all duration-500`}
