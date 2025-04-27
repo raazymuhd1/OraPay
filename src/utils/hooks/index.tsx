@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { useReadContract, useAccount, useWaitForTransactionReceipt, useSimulateContract, useWriteContract, useChainId } from "wagmi";
+import {  useWriteContract, useChainId } from "wagmi";
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
 import { usePeyPeyContext } from "@/components/PeyPeyContext";
+import { educhain } from "@/chain-configs/customChain";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
@@ -46,6 +47,14 @@ export const useContractHooks = () => {
                       })
                       return;
                   }
+
+                  if(network.chainId != educhain.id) {
+                    toast.error("Wrong Network, Please kindly switch to the correct network..", {
+                      position: "top-right"
+                   })
+                   return;
+                  }
+
                 // the first way to handle 2 transactions at once 
                   try {
                     setShowLoadingState(true)
@@ -105,6 +114,13 @@ export const useContractHooks = () => {
                         })
                         return;
                     }
+
+                    if(network.chainId != educhain.id) {
+                      toast.error("Wrong Network, Please kindly switch to the correct network..", {
+                        position: "top-right"
+                     })
+                     return;
+                    }
         
                     if(userBalance === "0") {
                         toast.error("Insufficient funds to withdraw!", {
@@ -141,6 +157,14 @@ export const useContractHooks = () => {
                  toast.error("Please connect to a wallet to proceed!")
                  return
              }
+
+             if(network.chainId != educhain.id) {
+              toast.error("Wrong Network, Please kindly switch to the correct network..", {
+                position: "top-right"
+             })
+             return;
+            }
+
            try {
               setShowLoadingState(true)
               payMerchant({
@@ -162,23 +186,36 @@ export const useContractHooks = () => {
          /**
           * @dev function for selling tokens
           */
-          const sellTokens = (amount: number, to: string) => {
-               try {
-                 console.log("trading")
-                 if(amount && to) {
-                   setShowLoadingState(true)
-                   writeSell({
-                       abi: fundsVault.abi,
-                       address: fundsVault.address as `0x${string}`,
-                       functionName: "sellYieldTokensForTokens",
-                       args: [ethers.parseUnits(String(amount), 6), to],
-                      //  gas: BigInt("52000"),
-                   })
-                 }
-               } catch(err) {
-                  console.log(err)
-               }
-           }
+        const sellTokens = (amount: number, to: string) => {
+          
+          if(network.userAddr?.length! <= 0) {
+            toast.error("Please connect to a wallet to proceed!")
+            return
+        }
+
+          if(network.chainId != educhain.id) {
+            toast.error("Wrong Network, Please kindly switch to the correct network..", {
+              position: "top-right"
+           })
+           return;
+          }
+
+              try {
+                console.log("trading")
+                if(amount && to) {
+                  setShowLoadingState(true)
+                  writeSell({
+                      abi: fundsVault.abi,
+                      address: fundsVault.address as `0x${string}`,
+                      functionName: "sellYieldTokensForTokens",
+                      args: [ethers.parseUnits(String(amount), 6), to],
+                    //  gas: BigInt("52000"),
+                  })
+                }
+              } catch(err) {
+                console.log(err)
+              }
+          }
 
 
       return { 
