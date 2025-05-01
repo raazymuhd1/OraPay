@@ -21,8 +21,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EduZero",
-  description: "EduZero Dapps",
+  title: "OraPay",
+  description: "OraPay Dapps",
 };
 
 export default function RootLayout({

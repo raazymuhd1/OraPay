@@ -4,7 +4,7 @@ import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
 import { usePeyPeyContext } from "@/components/PeyPeyContext";
-import { educhain } from "@/chain-configs/customChain";
+import { pharos } from "@/chain-configs/customChain";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
@@ -48,7 +48,8 @@ export const useContractHooks = () => {
                       return;
                   }
 
-                  if(network.chainId != educhain.id) {
+                  console.log(`pharos chainId`, network.chainId)
+                  if(network.chainId != pharos.id) {
                     toast.error("Wrong Network, Please kindly switch to the correct network..", {
                       position: "top-right"
                    })
@@ -115,7 +116,7 @@ export const useContractHooks = () => {
                         return;
                     }
 
-                    if(network.chainId != educhain.id) {
+                    if(network.chainId != pharos.id) {
                       toast.error("Wrong Network, Please kindly switch to the correct network..", {
                         position: "top-right"
                      })
@@ -158,7 +159,7 @@ export const useContractHooks = () => {
                  return
              }
 
-             if(network.chainId != educhain.id) {
+             if(network.chainId != pharos.id) {
               toast.error("Wrong Network, Please kindly switch to the correct network..", {
                 position: "top-right"
              })
@@ -193,7 +194,7 @@ export const useContractHooks = () => {
             return
         }
 
-          if(network.chainId != educhain.id) {
+          if(network.chainId != pharos.id) {
             toast.error("Wrong Network, Please kindly switch to the correct network..", {
               position: "top-right"
            })

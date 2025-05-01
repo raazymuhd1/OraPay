@@ -54,7 +54,8 @@ const ClaimFaucet = () => {
                 onChange={(e) => {
                     setFaucetReceiver(e.target.value)
                 }}
-                type="text" className='px-[15px] py-[8px] w-full border-[1px] placeholder:text-center rounded-[15px]' placeholder='place your address here' />
+                type="text" 
+                className='px-[15px] py-[8px] w-full border-[1px] placeholder:text-center text-center rounded-[15px]' placeholder='place your address here' />
             <CustomButton
                 onClick={claimingFaucet}
                 disabled={faucetReceiver.length <= 0 || faucetStatus == "pending" ? true : false}

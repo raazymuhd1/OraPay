@@ -52,7 +52,7 @@ const DepositModal = () => {
                   "Content-Type": "application/json"
                 }
             })
-            const resData = await res.json();
+            const resData = await res?.json()
 
             console.log(`response, ${resData}`);
        }
@@ -197,8 +197,8 @@ const DepositModal = () => {
             <p className='text-(--paraph-color) responsive-paraph'> You will receive PT token representing your deposit, which will generate YT over time. </p>
 
             <div className="flex flex-col w-full p-[10px] glass-card">
-                { depositDetails("You will receive", `500PT`) }
-                { depositDetails("Initial YT allocation", `50YT`) }
+                { depositDetails("You will receive", `${depositAmount || 0}PT`) }
+                { depositDetails("Initial YT allocation", `${(Number(depositAmount) * 10) / 100 || 0}YT`) }
                 { depositDetails("Expiry Date", `10 May 2025`) }
             </div>
 
@@ -206,7 +206,7 @@ const DepositModal = () => {
               <CustomButton
                   onClick={async() => {
                     handleAssetsDeposit(depositAmount, 0)
-                    await postTxRecord()
+                    // await postTxRecord()
                   }}
                   disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
                   style={`bg-gradient`}
