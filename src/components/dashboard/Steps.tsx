@@ -20,7 +20,7 @@ const Steps = () => {
         {/* card header */}
           <div className="w-full flex items-center justify-between">
               <aside>
-                <h3 className="font-bold responsive-headerText"> Welcome to EduZero </h3>
+                <h3 className="font-bold responsive-headerText"> Welcome to OraPay </h3>
                 <p className="text-(--paraph-color) font-semibold responsive-paraph"> The Buy Now, Pay Never protocol </p>
               </aside>
 

@@ -27,7 +27,7 @@ const YieldOverview = () => {
             <div className="w-full lg:w-[50%] h-[180px] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
               <div className='flex items-center justify-between'>
                   <h2 className="font-bold resp-headerCard"> {title} </h2>
-                  <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { value || 0 } </p>
+                  <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { value ?? 0 } </p>
               </div>
               <div className="flex flex-col gap-[10px] mt-[10px]">
                     <p className="text-(--paraph-color) text-[clamp(12px,1.3vw,14px)] font-semibold">{desc}</p>
@@ -53,9 +53,8 @@ const YieldOverview = () => {
         </aside>
 
         <aside className="w-full flex items-center lg:flex-nowrap flex-wrap gap-[20px] mt-[20px]">
-
-          { yieldOverviewDetails("Current APY", `${String(currentAPY)}`, `Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average.`, `APY is variable and changes based on market conditions`, ``) }
-          { yieldOverviewDetails("YT Generation", `+${dailyYield?.toString()} YT/day`, `At the current rate, you are generating approximately +${dailyYield?.toString()} YT tokens per day from your deposits.`, ``, `View detailed analytics`) }
+          { yieldOverviewDetails("Current APY", `${String(currentAPY) || 0}`, `Your deposits are currently earning at an annual rate of 8.2%, which is 2.1% higher than market average.`, `APY is variable and changes based on market conditions`, ``) }
+          { yieldOverviewDetails("YT Generation", `+${dailyYield?.toString() || 0} YT/day`, `At the current rate, you are generating approximately +${dailyYield?.toString()} YT tokens per day from your deposits.`, ``, `View detailed analytics`) }
 
         </aside>
     </div>

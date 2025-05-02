@@ -199,7 +199,7 @@ const DepositModal = () => {
             <div className="flex flex-col w-full p-[10px] glass-card">
                 { depositDetails("You will receive", `${depositAmount || 0}PT`) }
                 { depositDetails("Initial YT allocation", `${(Number(depositAmount) * 10) / 100 || 0}YT`) }
-                { depositDetails("Expiry Date", `10 May 2025`) }
+                { depositDetails("Expiry Date", `${new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString()}`) }
             </div>
 
             <div className="flex w-full flex-col gap-[10px]">
@@ -210,7 +210,7 @@ const DepositModal = () => {
                   }}
                   disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
                   style={`bg-gradient`}
-                        >
+                    >
                   <CreditCard className="" />
                   { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
               </CustomButton>    
