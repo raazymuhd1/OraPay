@@ -1,3 +1,4 @@
+"use client"
 import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X, History } from 'lucide-react'
