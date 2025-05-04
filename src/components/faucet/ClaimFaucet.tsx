@@ -1,15 +1,18 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { useWriteContract, useAccount } from 'wagmi'
+import { useWriteContract, useAccount, useEstimateGas } from 'wagmi'
+import { estimateGas } from "@wagmi/core"
+import { ethers } from 'ethers'
 import { allContracts } from '@/constants'
 import toast, { Toaster } from 'react-hot-toast'
+import { wagmiConfig } from '../Web3Provider'
 import { CustomButton } from "@/components"
 import { CreditCard } from 'lucide-react'
 
 const ClaimFaucet = () => {
      const { writeContract: claimFaucet, data: faucetData, status: faucetStatus, reset: resetFaucet } = useWriteContract()
      const { address: userAddr } = useAccount()
-     const { mockUsdc } = allContracts
+     const { mockUsdc, fundsVault } = allContracts
      const [faucetReceiver, setFaucetReceiver] = useState("")
 
     useEffect(() => {
@@ -27,11 +30,24 @@ const ClaimFaucet = () => {
         }
     }, [faucetStatus, faucetData])
 
-    function claimingFaucet() {
+    async function claimingFaucet() {
+        const iFace = new ethers.Interface([
+            "function getFaucet(address)"
+        ])
+        const encodedFunction = iFace.encodeFunctionData("getFaucet", userAddr as any)
+
+        // const estimatingGas = await estimateGas(wagmiConfig, {
+        //     account: userAddr,
+        //     data: encodedFunction as `0x${string}`,
+        //     to: mockUsdc.address as `0x${string}`,
+        // })
+
+        // console.log("estimated gas", estimatingGas)
+
         try {
             claimFaucet({
-                abi: mockUsdc.abi,
-                address: mockUsdc.address as `0x${string}`,
+                abi: fundsVault.abi,
+                address: fundsVault.address as `0x${string}`,
                 functionName: "getFaucet",
                 args: [faucetReceiver || userAddr]
             })
@@ -57,7 +73,7 @@ const ClaimFaucet = () => {
                 type="text" 
                 className='px-[15px] py-[8px] w-full border-[1px] placeholder:text-center text-center rounded-[15px]' placeholder='place your address here' />
             <CustomButton
-                onClick={claimingFaucet}
+                onClick={async() => await claimingFaucet()}
                 disabled={faucetReceiver.length <= 0 || faucetStatus == "pending" ? true : false}
                 style={`bg-gradient w-full`}
                         >

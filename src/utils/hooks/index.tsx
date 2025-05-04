@@ -137,7 +137,7 @@ export const useContractHooks = () => {
                              address: fundsVault.address as `0x${string}`,
                              functionName: 'withdrawPrincipal',
                              args: [ethers.parseUnits(String(amount), 6)],
-                            //  gas: BigInt("3000000"),
+                             gas: BigInt("3000000"),
                           })
         
                     } catch (err) {

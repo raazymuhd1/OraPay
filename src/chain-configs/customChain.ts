@@ -34,8 +34,8 @@ export const pharos = {
     },
     rpcUrls: {
         default: {
-            http: ["http://localhost:3002/api/custom-rpc"],
-            webSocket: ["https://grafana.dplabs-internal.com/"]
+            http: ["https://devnet.dplabs-internal.com/"],
+            webSocket: ["wss://devnet.dplabs-internal.com/"]
         }
     },
     nativeCurrency: {

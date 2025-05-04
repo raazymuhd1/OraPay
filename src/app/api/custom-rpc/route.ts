@@ -16,9 +16,9 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
     const res = await req.json();
-    let rpcRes, reqTime;
+    let rpcRes, reqTime: number;
 
-    if(reqTime != 6) {
+    try {
         rpcRes = await fetch(`https://devnet.dplabs-internal.com/`, {
             method: `POST`,
             headers: {
@@ -26,7 +26,11 @@ export async function POST(req: Request) {
             },
             body: JSON.stringify(res)
         })
+        console.log(`post status ${rpcRes?.statusText!}`)
+        return Response.json({ result: rpcRes })
+
+    } catch(err) {
+        console.log(err)
+        return err
     }
-    console.log(`post status ${rpcRes?.statusText!}`)
-    return Response.json({ result: rpcRes })
 }
