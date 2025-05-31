@@ -1,10 +1,14 @@
 "use client"
 import {useEffect, useState} from 'react'
+import { useUser } from '@civic/auth-web3/react';
 import MobileLinks from './MobileLinks';
 import Nav from './Nav'
 
 const Header = () => {
     const [showNav, updateShowNav] = useState<boolean>(false)
+    const user = useUser()
+
+    console.log(user)
 
   useEffect(() => {
      if(typeof window != "undefined") {

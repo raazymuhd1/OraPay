@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import {  usePathname  } from 'next/navigation'
 import { CustomConnectButton } from "@/components"
+import { UserButton } from "@civic/auth-web3/react"
 
 const Links = () => {
     const path = usePathname()
@@ -21,6 +22,7 @@ const Links = () => {
             )) }
             
           <CustomConnectButton />
+          <UserButton />
     </ul>
   )
 }

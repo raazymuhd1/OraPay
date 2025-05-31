@@ -5,6 +5,8 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
+import { embeddedWallet } from "@civic/auth-web3/wagmi"
 // custom chain
 import { educhain, pharos } from "@/chain-configs/customChain"
 
@@ -19,6 +21,7 @@ export const wagmiConfig = createConfig({
     [educhain.id]: http(),
     [pharos.id]: http()
   },
+  connectors: [ embeddedWallet() ],
   ssr: true
 })
 
@@ -30,7 +33,9 @@ const Web3Provider = ({ children }: IProps) => {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
+          <CivicAuthProvider>
             {children}
+          </CivicAuthProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
