@@ -3,6 +3,7 @@ import {  ReactNode } from "react"
 import { Geist, Geist_Mono, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import { Header, PeyPeyContextProvider, Web3Provider, ConnectWallet } from "@/components"
+import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
 import {Toaster} from "react-hot-toast"
 
 const geistSans = Geist({
@@ -36,14 +37,16 @@ export default function RootLayout({
             <body
               className={`${sourceCodePro.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
               >
-              <Web3Provider>
-                <PeyPeyContextProvider>
-                  <Header />
-                  {children}
-                  {/* <ConnectWallet /> */}
-                  <Toaster />
-                </PeyPeyContextProvider>
-            </Web3Provider>
+              <CivicAuthProvider>
+                  <Web3Provider>
+                    <PeyPeyContextProvider>
+                      <Header />
+                      {children}
+                      {/* <ConnectWallet /> */}
+                      <Toaster />
+                    </PeyPeyContextProvider>
+                </Web3Provider>
+              </CivicAuthProvider>
             </body>
     </html>
   );

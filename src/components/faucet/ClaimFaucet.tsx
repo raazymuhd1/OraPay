@@ -31,10 +31,10 @@ const ClaimFaucet = () => {
     }, [faucetStatus, faucetData])
 
     async function claimingFaucet() {
-        const iFace = new ethers.Interface([
-            "function getFaucet(address)"
-        ])
-        const encodedFunction = iFace.encodeFunctionData("getFaucet", userAddr as any)
+        // const iFace = new ethers.Interface([
+        //     "function getFaucet(address)"
+        // ])
+        // const encodedFunction = iFace.encodeFunctionData("getFaucet", userAddr as any)
 
         // const estimatingGas = await estimateGas(wagmiConfig, {
         //     account: userAddr,
@@ -42,14 +42,14 @@ const ClaimFaucet = () => {
         //     to: mockUsdc.address as `0x${string}`,
         // })
 
-        // console.log("estimated gas", estimatingGas)
+        // console.log("encoded function", encodedFunction)
 
         try {
             claimFaucet({
                 abi: fundsVault.abi,
                 address: fundsVault.address as `0x${string}`,
                 functionName: "getFaucet",
-                args: [faucetReceiver || userAddr]
+                args: [faucetReceiver || userAddr],
             })
         } catch (error) {
             console.log(error)
