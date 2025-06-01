@@ -4,12 +4,15 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import {  usePathname  } from 'next/navigation'
 import { CustomConnectButton } from "@/components"
-import { UserButton } from "@civic/auth-web3/react"
+import { UserButton, useUser } from "@civic/auth-web3/react"
+
 
 const Links = () => {
     const path = usePathname()
+    const user = useUser()
+    
 
-    console.log(path.split('/')[1])
+    console.log(`user ${user}`)
 
   return (
     <ul className="lg:flex items-center gap-[40px] hidden ">
@@ -22,7 +25,7 @@ const Links = () => {
             )) }
             
           <CustomConnectButton />
-          <UserButton />
+        <UserButton />
     </ul>
   )
 }

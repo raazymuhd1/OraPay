@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
 };
 // civic auth config
 const withCivicAuth = createCivicAuthPlugin({
-  clientId: "f3465579-401a-4d88-825d-225446db439e" // Civic's client ID
+  clientId: "f3465579-401a-4d88-825d-225446db439e", // Civic's client ID,
+  basePath: "/"
 });
 
 export default withCivicAuth(nextConfig)

@@ -8,17 +8,16 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
 import { embeddedWallet } from "@civic/auth-web3/wagmi"
 // custom chain
-import { educhain, pharos } from "@/chain-configs/customChain"
+import { pharos } from "@/chain-configs/customChain"
 
 interface IProps {
     children: ReactNode;
 }
 
 export const wagmiConfig = createConfig({
-  chains: [sepolia, educhain, pharos],
+  chains: [sepolia, pharos],
   transports: {
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL),
-    [educhain.id]: http(),
     [pharos.id]: http()
   },
   connectors: [ embeddedWallet() ],
@@ -33,7 +32,7 @@ const Web3Provider = ({ children }: IProps) => {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <CivicAuthProvider>
+          <CivicAuthProvider initialChain={sepolia} >
             {children}
           </CivicAuthProvider>
         </RainbowKitProvider>

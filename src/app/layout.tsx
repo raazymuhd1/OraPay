@@ -38,10 +38,10 @@ export default function RootLayout({
               >
                   <Web3Provider>
                     <PeyPeyContextProvider>
-                      <Header />
-                      {children}
-                      {/* <ConnectWallet /> */}
-                      <Toaster />
+                          <Header />
+                          {children}
+                          {/* <ConnectWallet /> */}
+                          <Toaster />
                     </PeyPeyContextProvider>
                 </Web3Provider>
             </body>
