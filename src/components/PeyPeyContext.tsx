@@ -3,6 +3,7 @@ import { useState, use, createContext, ReactNode } from 'react'
 import { IModalState } from "@/types"
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { allContracts } from "@/constants"
+import { useAutoConnect } from '@civic/auth-web3/wagmi'
 
 interface IProps {
   children: ReactNode
@@ -31,6 +32,8 @@ const PeyPeyContextProvider = ({ children }: IProps) => {
       const chainId = useChainId()
       const network = { chainId: chainId!, userAddr: userAddr! }
       const { fundsVault } = allContracts;
+
+        useAutoConnect()
 
          const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
                 abi: fundsVault.abi,

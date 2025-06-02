@@ -9,16 +9,16 @@ import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
 import { embeddedWallet } from "@civic/auth-web3/wagmi"
 // custom chain
 import { pharos } from "@/chain-configs/customChain"
+import useCreateWallet from "@/utils/hooks/useCreateWallet"
 
 interface IProps {
     children: ReactNode;
 }
 
 export const wagmiConfig = createConfig({
-  chains: [sepolia, pharos],
+  chains: [sepolia],
   transports: {
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL),
-    [pharos.id]: http()
   },
   connectors: [ embeddedWallet() ],
   ssr: true
@@ -28,6 +28,9 @@ export const wagmiConfig = createConfig({
 const queryClient = new QueryClient();
 
 const Web3Provider = ({ children }: IProps) => {
+
+  useCreateWallet()
+
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>

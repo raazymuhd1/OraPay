@@ -1,18 +1,19 @@
 import React from 'react'
 import { navbarLists } from '@/constants'
 import Link from 'next/link'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 import {  usePathname  } from 'next/navigation'
 import { CustomConnectButton } from "@/components"
-import { UserButton, useUser } from "@civic/auth-web3/react"
+import { UserButton } from "@civic/auth-web3/react"
 
 
 const Links = () => {
     const path = usePathname()
-    const user = useUser()
+    const user = useAccount()
+    const userBal = useBalance()
     
-
-    console.log(`user ${user}`)
+    console.log(`user ${user.address}`)
+    console.log(`user Bal ${userBal.data?.value}`)
 
   return (
     <ul className="lg:flex items-center gap-[40px] hidden ">
@@ -24,7 +25,7 @@ const Links = () => {
                 </Link>
             )) }
             
-          <CustomConnectButton />
+          {/* <CustomConnectButton /> */}
         <UserButton />
     </ul>
   )

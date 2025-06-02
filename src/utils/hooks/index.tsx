@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
-import {  useWriteContract, useChainId } from "wagmi";
+import { useState,  } from "react"
+import {  useWriteContract, useSendTransaction } from "wagmi";
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
 import { usePeyPeyContext } from "@/components/PeyPeyContext";
 import { pharos } from "@/chain-configs/customChain";
+import { Vault } from "lucide-react";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
@@ -23,6 +24,8 @@ export const useContractHooks = () => {
       const { writeContract: writeWD, data: wdData, status: wdStatus, reset: resetWd } = useWriteContract()
        const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError, reset: resetPayment} = useWriteContract();
        const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
+
+       const { sendTransaction } = useSendTransaction()
 
     //    read actions
       //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
@@ -116,12 +119,12 @@ export const useContractHooks = () => {
                         return;
                     }
 
-                    if(network.chainId != pharos.id) {
-                      toast.error("Wrong Network, Please kindly switch to the correct network..", {
-                        position: "top-right"
-                     })
-                     return;
-                    }
+                    // if(network.chainId != pharos.id) {
+                    //   toast.error("Wrong Network, Please kindly switch to the correct network..", {
+                    //     position: "top-right"
+                    //  })
+                    //  return;
+                    // }
         
                     if(userBalance === "0") {
                         toast.error("Insufficient funds to withdraw!", {
@@ -131,13 +134,22 @@ export const useContractHooks = () => {
                     }
         
                     try {
-                          setShowLoadingState(true)
-                          writeWD({  
-                             abi: fundsVault.abi,
-                             address: fundsVault.address as `0x${string}`,
-                             functionName: 'withdrawPrincipal',
-                             args: [ethers.parseUnits(String(amount), 6)],
-                             gas: BigInt("3000000"),
+                          const iFace = new ethers.Interface([
+                            "function withdrawPrincipal(uint256 wdAmount) external"
+                          ])
+                          const encodedData = iFace.encodeFunctionData("withdrawPrincipal", [ethers.parseUnits(String(amount), 6)])
+                          // setShowLoadingState(true)
+                          // writeWD({  
+                          //    abi: fundsVault.abi,
+                          //    address: fundsVault.address as `0x${string}`,
+                          //    functionName: 'withdrawPrincipal',
+                          //    args: [ethers.parseUnits(String(amount), 6)],
+                          //    gas: BigInt("3000000"),
+                          // })
+
+                          sendTransaction({
+                             to: fundsVault.address as `0x${string}`,
+                             data: encodedData as `0x${string}`
                           })
         
                     } catch (err) {

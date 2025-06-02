@@ -1,11 +1,17 @@
 "use client"
 import {useRef} from 'react'
+import { useAccount } from 'wagmi'
 import { MoveRight } from "lucide-react"
 import { CustomButton } from "@/components"
 import Link from 'next/link'
+import { useAutoConnect } from '@civic/auth-web3/wagmi'
 
 const Hero = () => {
+        useAutoConnect()
         const btnRef = useRef<HTMLButtonElement>(null)
+        const account = useAccount()
+
+        console.log(`user account ${account.address}`)
 
         const handleOnMouseEnter = () => {
             console.log(btnRef.current)
