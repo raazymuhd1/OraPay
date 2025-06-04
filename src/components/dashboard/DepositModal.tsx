@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWaitForTransactionReceipt, useBalance } from 'wagmi'
+import { useWaitForTransactionReceipt, useBalance, useSendTransaction } from 'wagmi'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
@@ -61,6 +61,11 @@ const DepositModal = () => {
 
         useEffect(() => {
                try {
+                 const iFace = new ethers.Interface([
+                    "function deposit(uint256 amount, uint256 lockPeriod) external"
+                 ])
+                 const encodedData = iFace.encodeFunctionData("deposit", [ethers.parseUnits(depositAmount, 6), 0])
+                 
                  const shouldApprove = approvalReceipt?.transactionHash;
                  console.log("approval tx receipt", approvalReceipt?.transactionHash)
 

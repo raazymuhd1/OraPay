@@ -1,11 +1,12 @@
 import { useState,  } from "react"
-import {  useWriteContract, useSendTransaction } from "wagmi";
+import {  useWriteContract, useSendTransaction, useWalletClient } from "wagmi";
 import { allContracts } from '@/constants';
 import toast from "react-hot-toast"
 import { ethers } from "ethers"
 import { usePeyPeyContext } from "@/components/PeyPeyContext";
 import { pharos } from "@/chain-configs/customChain";
 import { Vault } from "lucide-react";
+import { sepolia } from "viem/chains";
 
 export const useContractHooks = () => {
      const { fundsVault, mockUsdc, principalToken, yieldToken } = allContracts;
@@ -25,7 +26,8 @@ export const useContractHooks = () => {
        const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError, reset: resetPayment} = useWriteContract();
        const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
-       const { sendTransaction } = useSendTransaction()
+       const { data: wdDataTx, sendTransaction } = useSendTransaction()
+       const { data: walletClient } = useWalletClient()
 
     //    read actions
       //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
@@ -52,7 +54,7 @@ export const useContractHooks = () => {
                   }
 
                   console.log(`pharos chainId`, network.chainId)
-                  if(network.chainId != pharos.id) {
+                  if(network.chainId != sepolia.id) {
                     toast.error("Wrong Network, Please kindly switch to the correct network..", {
                       position: "top-right"
                    })
@@ -119,12 +121,12 @@ export const useContractHooks = () => {
                         return;
                     }
 
-                    // if(network.chainId != pharos.id) {
-                    //   toast.error("Wrong Network, Please kindly switch to the correct network..", {
-                    //     position: "top-right"
-                    //  })
-                    //  return;
-                    // }
+                    if(network.chainId != sepolia.id) {
+                      toast.error("Wrong Network, Please kindly switch to the correct network..", {
+                        position: "top-right"
+                     })
+                     return;
+                    }
         
                     if(userBalance === "0") {
                         toast.error("Insufficient funds to withdraw!", {
@@ -147,11 +149,21 @@ export const useContractHooks = () => {
                           //    gas: BigInt("3000000"),
                           // })
 
-                          sendTransaction({
-                             to: fundsVault.address as `0x${string}`,
-                             data: encodedData as `0x${string}`
+                          const hash = await walletClient?.writeContract({
+                            abi: fundsVault.abi,
+                            address: fundsVault.address as `0x${string}`,
+                            functionName: 'withdrawPrincipal',
+                            args: [ethers.parseUnits(String(amount), 6)],
+                            gas: BigInt("3000000"),
                           })
-        
+      
+                          // sendTransaction({
+                          //    to: fundsVault.address as `0x${string}`,
+                          //    data: encodedData as `0x${string}`,
+                          //    chainId: network?.chainId
+
+                          console.log(`wd tx hash ${hash}`)
+                         
                     } catch (err) {
                         console.log(err)
                         toast.error("something went wrong, tx failed", {
@@ -234,7 +246,7 @@ export const useContractHooks = () => {
       return { 
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
         handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, isApproved, setIsApproved,
-        handleAssetsWithdrawal, wdData, wdStatus, resetWd,
+        handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd,
         userInfos, setUserInfos,
         payData, payStatus, paymentError, payPurchasedItem, resetPayment,
         sellTokens, sellData, sellStatus, resetSelling, sellingError

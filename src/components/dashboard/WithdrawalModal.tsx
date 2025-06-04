@@ -5,7 +5,7 @@ import { CircleDollarSign, X } from "lucide-react"
 import { CustomButton } from "@/components"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
-import { useBalance } from 'wagmi'
+import { useBalance, useAccount } from 'wagmi'
 import { ITxsRecord } from "@/types"
 import { ethers } from 'ethers'
 import TxResult from "../transactions-result/TxResult"
@@ -19,7 +19,7 @@ const WithdrawalModal = () => {
      const inputRef = useRef<HTMLInputElement>(null)
      const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: principalToken.address as `0x${string}` })
      const [ptBalance, setPtBalance] = useState("0");
-     const {handleAssetsWithdrawal, wdData, wdStatus, resetWd} = useContractHooks()
+     const {handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd} = useContractHooks()
     const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
                     {
                         id: 0,
@@ -34,8 +34,11 @@ const WithdrawalModal = () => {
                         value: withdrawalAmount
                     }
                 ])
+      const { chainId, isConnected } = useAccount()
 
+      console.log(`chainId ${chainId}, connection ${isConnected}`)
 
+      
        const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
             const bal = userBalance.data;
@@ -58,9 +61,10 @@ const WithdrawalModal = () => {
       }, [userBalance?.data])
 
       useEffect(() => {
+          console.log("tx data", wdDataTx)
 
         const handlwWithdrawalState = () => {
-            if(wdStatus == "success" && wdData) {
+            if(wdDataTx) {
                   toast.success("Assets withdrawn successfully!", {
                     position: "top-right"
                   })
@@ -90,7 +94,7 @@ const WithdrawalModal = () => {
 
         handlwWithdrawalState()
 
-      }, [wdStatus, wdData])
+      }, [wdData])
 
   return (
     <div

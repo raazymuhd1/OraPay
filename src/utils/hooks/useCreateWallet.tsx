@@ -3,16 +3,17 @@ import { userHasWallet } from "@civic/auth-web3"
 import { useUser } from '@civic/auth-web3/react'
 import { useConnect } from 'wagmi'
 
+
 const useCreateWallet = async() => {
     const user = await useUser()
-    const { connect, connectors } = useConnect()
+    // const { connect, connectors } = useConnect()
 
-    const connectWallet = () => connect({
-        connector: connectors[0]
-    })
+    // const connectWallet = () => connect({
+    //     connector: connectors[0]
+    // })
 
     if(user.user && !userHasWallet(user)) {
-        await user?.createWallet().then(connectWallet)
+        await user?.createWallet()
     }
 
     return ""
