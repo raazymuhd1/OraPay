@@ -22,7 +22,7 @@ const DepositModal = () => {
         const { mockUsdc, fundsVault } = allContracts;
         const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
-        approvalStatus, approveData, clientApprStatus, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
+        approvalStatus, approveData, clientApprStatus, apprHash, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
          const { data: approvalReceipt } = useWaitForTransactionReceipt({
                    hash: approveData as `0x${string}`,
                    confirmations: 1
@@ -60,36 +60,35 @@ const DepositModal = () => {
 
 
         useEffect(() => {
-               try {
-                //  const iFace = new ethers.Interface([
-                //     "function deposit(uint256 amount, uint256 lockPeriod) external"
-                //  ])
-                //  const encodedData = iFace.encodeFunctionData("deposit", [ethers.parseUnits(depositAmount, 6), 0])
-                 
-                //  const shouldApprove = approvalReceipt?.transactionHash;
-                 const shouldApprove = clientApprStatus == "success" ;
-                 console.log("approval status", shouldApprove)
-
-                 if (shouldApprove) {
-                 const depoHash = walletClientDepo?.writeContract({
-                        abi: fundsVault.abi,
-                        address: fundsVault.address as `0x${string}`,
-                        functionName: "deposit",
-                        args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
-                      });
-                      setHasDeposited(true)
-
-                      console.log("approval tx receipt", approvalReceipt?.transactionHash)
-                      console.log("deposit is executed")
-                      console.log(`deposit hash ${depoHash}`)
-                      
+              const handleDeposits = async()  => {
+                  try {
+                  //  const shouldApprove = approvalReceipt?.transactionHash;
+                    const shouldApprove = clientApprStatus == "success" || apprHash ;
+                    console.log("approval status", shouldApprove)
+  
+                    if (shouldApprove) {
+                    const depoHash = await walletClientDepo?.writeContract({
+                          abi: fundsVault.abi,
+                          address: fundsVault.address as `0x${string}`,
+                          functionName: "deposit",
+                          args: [depositAmount ? ethers.parseUnits(depositAmount, 6) : 0, lockPeriod],
+                        });
+                        setHasDeposited(true)
+  
+                        console.log("approval tx receipt", approvalReceipt?.transactionHash)
+                        console.log("deposit is executed")
+                        console.log(`deposit hash ${depoHash}`)
+                        
+                    }
+                  
+                  } catch (error) {
+                    console.log(error)
                   }
-                
-               } catch (error) {
-                  console.log(error)
-               }
+              }
 
-      }, [clientApprStatus]);
+              handleDeposits()
+
+      }, [clientApprStatus, apprHash]);
 
 
       useEffect(() => {

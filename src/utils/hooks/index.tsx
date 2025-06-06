@@ -29,7 +29,7 @@ export const useContractHooks = () => {
        const { data: wdDataTx, sendTransaction } = useSendTransaction()
        const { data: walletClient } = useWalletClient()
        const { data: walletClientAppr, status: clientApprStatus } = useWalletClient()
-
+       const [apprHash, setApprHash] = useState('0x')
     //    read actions
       //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
       //     abi: fundsVault.abi,
@@ -46,7 +46,7 @@ export const useContractHooks = () => {
       // })
 
 
-        const handleAssetsDeposit = (depositAmount: string, lockPeriod: number) => {
+        const handleAssetsDeposit = async (depositAmount: string, lockPeriod: number) => {
                   if(typeof network.userAddr == "undefined" || network.userAddr.length == 0) {
                       toast.error("please kindly connect your wallet before proceeding..", {
                          position: "top-right"
@@ -65,14 +65,15 @@ export const useContractHooks = () => {
                 // the first way to handle 2 transactions at once 
                   try {
                     setShowLoadingState(true)
-                    const apprHash = walletClientAppr?.writeContract({
+                    const apprHash_ = await walletClientAppr?.writeContract({
                         abi: mockUsdc.abi,
                         address: mockUsdc.address as `0x${string}`,
                         functionName: "approve",
                         args: [fundsVault.address, ethers.parseUnits(String(depositAmount), 6)],
                     })
                     setIsApproved(true)
-
+                    // @ts-ignore
+                    setApprHash(apprHash_)
                     console.log(`approval hash ${apprHash}`)
       
                   } catch(err) {
@@ -248,7 +249,7 @@ export const useContractHooks = () => {
 
       return { 
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
-        handleTokenApproval, approvalStatus, approveData, clientApprStatus, resetApproval, approvalError, isApproved, setIsApproved,
+        handleTokenApproval, approvalStatus, approveData, clientApprStatus, resetApproval, approvalError, isApproved, setIsApproved, apprHash,
         handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd,
         userInfos, setUserInfos,
         payData, payStatus, paymentError, payPurchasedItem, resetPayment,
