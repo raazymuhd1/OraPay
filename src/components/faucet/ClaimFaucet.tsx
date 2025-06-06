@@ -8,6 +8,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import { wagmiConfig } from '../Web3Provider'
 import { CustomButton } from "@/components"
 import { CreditCard } from 'lucide-react'
+import Instructions from './Instructions'
+import FaucetNetwork from './FaucetNetwork'
 
 const ClaimFaucet = () => {
      const { writeContract: claimFaucet, data: faucetData, status: faucetStatus, reset: resetFaucet } = useWriteContract()
@@ -31,11 +33,6 @@ const ClaimFaucet = () => {
     }, [faucetStatus, faucetData])
 
     async function claimingFaucet() {
-        // const iFace = new ethers.Interface([
-        //     "function getFaucet(address)"
-        // ])
-        // const encodedFunction = iFace.encodeFunctionData("getFaucet", userAddr as any)
-
         // const estimatingGas = await estimateGas(wagmiConfig, {
         //     account: userAddr,
         //     data: encodedFunction as `0x${string}`,
@@ -57,14 +54,17 @@ const ClaimFaucet = () => {
     }
 
   return (
-    <div className="w-[40%] min-h-[200px] glass-card rounded-[15px] translate-y-[200px] p-[20px] mx-auto flex flex-col items-center justify-center gap-[20px]">
+    <div className="lg:w-[40%] md:w-[60%] w-[90%] min-h-[200px] rounded-[15px] translate-y-[60px] p-[20px] mx-auto flex flex-col items-center glass-card  gap-[20px]">
 
-       <div className="flex w-full mx-auto flex-col gap-[10px] items-center">
-         <h2 className="text-[clamp(20px,2vw,30px)] font-bold"> Faucet </h2>
-         <p className="text-[clamp(16px,2vw,18px)] text-center  font-semibold text-[#7f7f80]"> Claim USDC faucet by placing your wallet address </p>
-       </div>
+        <div className='flex w-full items-center  flex-col gap-[10px]'>
+            <h2 className='font-extrabold text-[clamp(1vw,2vw,2.4vw)]'> Testnet Faucet </h2>
+            <p className=''> Claim free testnet tokens for development and testing </p>
+        </div>
 
-        <div className='flex w-[90%] mx-auto flex-col gap-[20px]'>
+        <Instructions />
+        <FaucetNetwork />
+
+        <div className='flex w-full mx-auto flex-col gap-[20px] p-[20px] glass-card'>
             <input 
                 value={faucetReceiver}
                 onChange={(e) => {
