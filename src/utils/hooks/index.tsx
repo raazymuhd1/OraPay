@@ -28,6 +28,7 @@ export const useContractHooks = () => {
 
        const { data: wdDataTx, sendTransaction } = useSendTransaction()
        const { data: walletClient } = useWalletClient()
+       const { data: walletClientAppr, status: clientApprStatus } = useWalletClient()
 
     //    read actions
       //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
@@ -53,7 +54,7 @@ export const useContractHooks = () => {
                       return;
                   }
 
-                  console.log(`pharos chainId`, network.chainId)
+                  console.log(`sepolia chainId`, network.chainId)
                   if(network.chainId != sepolia.id) {
                     toast.error("Wrong Network, Please kindly switch to the correct network..", {
                       position: "top-right"
@@ -64,13 +65,15 @@ export const useContractHooks = () => {
                 // the first way to handle 2 transactions at once 
                   try {
                     setShowLoadingState(true)
-                    writeApproval({
+                    const apprHash = walletClientAppr?.writeContract({
                         abi: mockUsdc.abi,
                         address: mockUsdc.address as `0x${string}`,
                         functionName: "approve",
                         args: [fundsVault.address, ethers.parseUnits(String(depositAmount), 6)],
                     })
                     setIsApproved(true)
+
+                    console.log(`approval hash ${apprHash}`)
       
                   } catch(err) {
                        console.log(approvalError)
@@ -154,7 +157,7 @@ export const useContractHooks = () => {
                             address: fundsVault.address as `0x${string}`,
                             functionName: 'withdrawPrincipal',
                             args: [ethers.parseUnits(String(amount), 6)],
-                            gas: BigInt("3000000"),
+                            // gas: BigInt("3000000"),
                           })
       
                           // sendTransaction({
@@ -245,7 +248,7 @@ export const useContractHooks = () => {
 
       return { 
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
-        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, isApproved, setIsApproved,
+        handleTokenApproval, approvalStatus, approveData, clientApprStatus, resetApproval, approvalError, isApproved, setIsApproved,
         handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd,
         userInfos, setUserInfos,
         payData, payStatus, paymentError, payPurchasedItem, resetPayment,

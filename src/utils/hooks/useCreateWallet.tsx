@@ -6,11 +6,6 @@ import { useConnect } from 'wagmi'
 
 const useCreateWallet = async() => {
     const user = await useUser()
-    // const { connect, connectors } = useConnect()
-
-    // const connectWallet = () => connect({
-    //     connector: connectors[0]
-    // })
 
     if(user.user && !userHasWallet(user)) {
         await user?.createWallet()

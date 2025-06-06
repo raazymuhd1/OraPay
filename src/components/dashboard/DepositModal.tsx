@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react'
 import { CustomButton } from "@/components"
 import { CreditCard, X, History } from 'lucide-react'
 import { usePeyPeyContext } from "../PeyPeyContext"
-import { useWaitForTransactionReceipt, useBalance, useSendTransaction } from 'wagmi'
+import { useWaitForTransactionReceipt, useBalance, useWalletClient } from 'wagmi'
 import toast, {Toaster} from "react-hot-toast"
 import { allContracts } from '@/constants'
 import { useContractHooks } from '@/utils/hooks'
@@ -22,12 +22,12 @@ const DepositModal = () => {
         const { mockUsdc, fundsVault } = allContracts;
         const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
-        approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
+        approvalStatus, approveData, clientApprStatus, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
          const { data: approvalReceipt } = useWaitForTransactionReceipt({
                    hash: approveData as `0x${string}`,
                    confirmations: 1
           })
-
+        const { data: walletClientDepo, status: clientDepoStatus } = useWalletClient()
         const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
                   {
                       id: 0,
@@ -61,16 +61,17 @@ const DepositModal = () => {
 
         useEffect(() => {
                try {
-                 const iFace = new ethers.Interface([
-                    "function deposit(uint256 amount, uint256 lockPeriod) external"
-                 ])
-                 const encodedData = iFace.encodeFunctionData("deposit", [ethers.parseUnits(depositAmount, 6), 0])
+                //  const iFace = new ethers.Interface([
+                //     "function deposit(uint256 amount, uint256 lockPeriod) external"
+                //  ])
+                //  const encodedData = iFace.encodeFunctionData("deposit", [ethers.parseUnits(depositAmount, 6), 0])
                  
-                 const shouldApprove = approvalReceipt?.transactionHash;
-                 console.log("approval tx receipt", approvalReceipt?.transactionHash)
+                //  const shouldApprove = approvalReceipt?.transactionHash;
+                 const shouldApprove = clientApprStatus == "success" ;
+                 console.log("approval status", shouldApprove)
 
                  if (shouldApprove) {
-                      writeDeposit({
+                 const depoHash = walletClientDepo?.writeContract({
                         abi: fundsVault.abi,
                         address: fundsVault.address as `0x${string}`,
                         functionName: "deposit",
@@ -80,6 +81,7 @@ const DepositModal = () => {
 
                       console.log("approval tx receipt", approvalReceipt?.transactionHash)
                       console.log("deposit is executed")
+                      console.log(`deposit hash ${depoHash}`)
                       
                   }
                 
@@ -87,7 +89,7 @@ const DepositModal = () => {
                   console.log(error)
                }
 
-      }, [approvalReceipt]);
+      }, [clientApprStatus]);
 
 
       useEffect(() => {
@@ -214,15 +216,15 @@ const DepositModal = () => {
                     handleAssetsDeposit(depositAmount, 0)
                     // await postTxRecord()
                   }}
-                  disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
+                  disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || clientApprStatus == "pending" || clientDepoStatus == "pending" ? true : false}
                   style={`bg-gradient`}
                     >
                   <CreditCard className="" />
-                  { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
+                  { clientApprStatus == "pending" ? "approving..." : clientApprStatus == "success" || clientDepoStatus == "pending" ? "Depositing..." : "Deposit Now" }
               </CustomButton>    
               <CustomButton
                   onClick={() => setDepositModal(false)}
-                  disabled={approvalStatus == "pending" || depositStatus == "pending" ? true : false}
+                  disabled={clientApprStatus == "pending" || clientDepoStatus == "pending" ? true : false}
                   style={`bg-[rgba(9,9,11,255)]`}
                         >
                   <X className="" />
