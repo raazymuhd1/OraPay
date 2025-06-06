@@ -1,7 +1,7 @@
-# EduZero Frontend
+# OraPay Frontend
 
 **Learn and Buy Now, Pay Never.**  
-EduZero is a decentralized platform that lets students fund their education using DeFi yield — without ever touching their principal.
+OraPay is a decentralized platform that lets students fund their education using DeFi yield — without ever touching their principal token.
 
 This is the frontend repo for the EduZero MVP.  
 Built with NextJS, TypeScript, TailwindCSS, and Web3 integrations.
@@ -10,7 +10,7 @@ Built with NextJS, TypeScript, TailwindCSS, and Web3 integrations.
 
 ## 🚀 Features
 
-- 🔐 Connect wallet (RainbowKit)
+- 🔐 Connect wallet (Civic's Web3 Auth)
 - 📤 Deposit stablecoins to receive PT (Principal Token) & YT (Yield Token)
 - 💸 Pay for education/tools using yield (YT)
 - 📊 View balances
@@ -22,7 +22,6 @@ Built with NextJS, TypeScript, TailwindCSS, and Web3 integrations.
 
 - [React](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Wagmi](https://wagmi.sh/) + [RainbowKit](https://www.rainbowkit.com/) for wallet connection
 
