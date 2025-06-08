@@ -19,7 +19,7 @@ const WithdrawalModal = () => {
      const inputRef = useRef<HTMLInputElement>(null)
      const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: principalToken.address as `0x${string}` })
      const [ptBalance, setPtBalance] = useState("0");
-     const {handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd} = useContractHooks()
+     const {handleAssetsWithdrawal, wdData, wdStatus, resetWd} = useContractHooks()
     const [txsRecord, setTxsRecord] = useState<ITxsRecord<string>[]>([
                     {
                         id: 0,
@@ -34,11 +34,7 @@ const WithdrawalModal = () => {
                         value: withdrawalAmount
                     }
                 ])
-      const { chainId, isConnected } = useAccount()
 
-      console.log(`chainId ${chainId}, connection ${isConnected}`)
-
-      
        const handleBalanceSelection = (value: number) => {
             // (userBalance / value) * 100;
             const bal = userBalance.data;
@@ -61,10 +57,9 @@ const WithdrawalModal = () => {
       }, [userBalance?.data])
 
       useEffect(() => {
-          console.log("tx data", wdDataTx)
 
         const handlwWithdrawalState = () => {
-            if(wdDataTx) {
+            if(wdData || wdStatus == 'success') {
                   toast.success("Assets withdrawn successfully!", {
                     position: "top-right"
                   })
@@ -78,6 +73,7 @@ const WithdrawalModal = () => {
                     setShowTxResult(false)
                     }, 5000)
                     
+                    resetWd()
                     return;
                 } else if(wdStatus === "error") {
                     resetWd()
@@ -94,7 +90,7 @@ const WithdrawalModal = () => {
 
         handlwWithdrawalState()
 
-      }, [wdData])
+      }, [wdData, wdStatus])
 
   return (
     <div

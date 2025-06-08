@@ -26,25 +26,6 @@ export const useContractHooks = () => {
        const {writeContract: payMerchant, data: payData, status: payStatus, error: paymentError, reset: resetPayment} = useWriteContract();
        const { writeContract: writeSell, data: sellData, status: sellStatus, reset: resetSelling, error: sellingError } = useWriteContract()
 
-       const { data: wdDataTx, sendTransaction } = useSendTransaction()
-       const { data: walletClient } = useWalletClient()
-       const { data: walletClientAppr, status: clientApprStatus } = useWalletClient()
-       const [apprHash, setApprHash] = useState('0x')
-    //    read actions
-      //  const { data: holdingsResult, isLoading: holdingLoading, status: holdingStatus } = useReadContract({
-      //     abi: fundsVault.abi,
-      //     address: fundsVault.address as `0x${string}`,
-      //     functionName: 'getHoldings',
-      //     args: [network.userAddr]
-      // })
-
-      // const { data: userDeposits, isLoading: userDepositLoading, status: userDepositStatus } = useReadContract({
-      //     abi: fundsVault.abi,
-      //     address: fundsVault.address as `0x${string}`,
-      //     functionName: 'getUserDeposits',
-      //     args: [network.userAddr]
-      // })
-
 
         const handleAssetsDeposit = async (depositAmount: string, lockPeriod: number) => {
                   if(typeof network.userAddr == "undefined" || network.userAddr.length == 0) {
@@ -65,7 +46,7 @@ export const useContractHooks = () => {
                 // the first way to handle 2 transactions at once 
                   try {
                     setShowLoadingState(true)
-                    const apprHash_ = await walletClientAppr?.writeContract({
+                    writeDeposit({
                         abi: mockUsdc.abi,
                         address: mockUsdc.address as `0x${string}`,
                         functionName: "approve",
@@ -73,8 +54,6 @@ export const useContractHooks = () => {
                     })
                     setIsApproved(true)
                     // @ts-ignore
-                    setApprHash(apprHash_)
-                    console.log(`approval hash ${apprHash}`)
       
                   } catch(err) {
                        console.log(approvalError)
@@ -140,33 +119,30 @@ export const useContractHooks = () => {
                     }
         
                     try {
-                          const iFace = new ethers.Interface([
-                            "function withdrawPrincipal(uint256 wdAmount) external"
-                          ])
-                          const encodedData = iFace.encodeFunctionData("withdrawPrincipal", [ethers.parseUnits(String(amount), 6)])
-                          // setShowLoadingState(true)
-                          // writeWD({  
-                          //    abi: fundsVault.abi,
-                          //    address: fundsVault.address as `0x${string}`,
-                          //    functionName: 'withdrawPrincipal',
-                          //    args: [ethers.parseUnits(String(amount), 6)],
-                          //    gas: BigInt("3000000"),
-                          // })
 
-                          const hash = await walletClient?.writeContract({
-                            abi: fundsVault.abi,
-                            address: fundsVault.address as `0x${string}`,
-                            functionName: 'withdrawPrincipal',
-                            args: [ethers.parseUnits(String(amount), 6)],
-                            // gas: BigInt("3000000"),
+                          setShowLoadingState(true)
+                          writeWD({  
+                             abi: fundsVault.abi,
+                             address: fundsVault.address as `0x${string}`,
+                             functionName: 'withdrawPrincipal',
+                             args: [ethers.parseUnits(String(amount), 6)],
+                             gas: BigInt("3000000"),
                           })
+
+                          // const hash = await walletClient?.writeContract({
+                          //   abi: fundsVault.abi,
+                          //   address: fundsVault.address as `0x${string}`,
+                          //   functionName: 'withdrawPrincipal',
+                          //   args: [ethers.parseUnits(String(amount), 6)],
+                          //   // gas: BigInt("3000000"),
+                          // })
       
                           // sendTransaction({
                           //    to: fundsVault.address as `0x${string}`,
                           //    data: encodedData as `0x${string}`,
                           //    chainId: network?.chainId
 
-                          console.log(`wd tx hash ${hash}`)
+                          // console.log(`wd tx hash ${hash}`)
                          
                     } catch (err) {
                         console.log(err)
@@ -249,8 +225,8 @@ export const useContractHooks = () => {
 
       return { 
         handleAssetsDeposit, writeDeposit, setHasDeposited, hasDeposited, depositStatus, depoData, resetDeposit, depositError,
-        handleTokenApproval, approvalStatus, approveData, clientApprStatus, resetApproval, approvalError, isApproved, setIsApproved, apprHash,
-        handleAssetsWithdrawal, wdData, wdDataTx, wdStatus, resetWd,
+        handleTokenApproval, approvalStatus, approveData, resetApproval, approvalError, isApproved, setIsApproved,
+        handleAssetsWithdrawal, wdData, wdStatus, resetWd,
         userInfos, setUserInfos,
         payData, payStatus, paymentError, payPurchasedItem, resetPayment,
         sellTokens, sellData, sellStatus, resetSelling, sellingError
