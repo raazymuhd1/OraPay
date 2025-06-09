@@ -136,7 +136,7 @@ body {
 
 /* intro styles */
 .intro-card {
-   box-shadow: 2px 2px 22px -1px #5d5858, -2px -2px 0px -1px #5d5858;
+   box-shadow: 2px 2px 22px -1px #5d5858;
 }
 
 /* dashboard styles */

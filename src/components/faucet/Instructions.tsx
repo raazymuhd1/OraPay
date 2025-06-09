@@ -1,6 +1,6 @@
 import React from 'react'
 
-const instructions = ["Enter your wallet address to receive testnet tokens", "Each token can be claimed once every 24 hours", "These tokens have no real value and are for testing only", "Make sure you're connected to the correct testnet"]
+const instructions = ["Enter your wallet address to receive testnet token", "token can be claimed once every 24 hours", "This token have no real value and are for testing only", "Make sure you're connected to the correct testnet"]
 
 const Instructions = () => {
   return (
