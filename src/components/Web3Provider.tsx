@@ -35,7 +35,7 @@ const Web3Provider = ({ children }: IProps) => {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <CivicAuthProvider initialChain={sepolia} >
+          <CivicAuthProvider displayMode="redirect" initialChain={sepolia} >
             {children}
           </CivicAuthProvider>
         </RainbowKitProvider>

@@ -46,7 +46,7 @@ export const useContractHooks = () => {
                 // the first way to handle 2 transactions at once 
                   try {
                     setShowLoadingState(true)
-                    writeDeposit({
+                    writeApproval({
                         abi: mockUsdc.abi,
                         address: mockUsdc.address as `0x${string}`,
                         functionName: "approve",
@@ -163,7 +163,7 @@ export const useContractHooks = () => {
                  return
              }
 
-             if(network.chainId != pharos.id) {
+             if(network.chainId != sepolia.id) {
               toast.error("Wrong Network, Please kindly switch to the correct network..", {
                 position: "top-right"
              })
@@ -198,7 +198,7 @@ export const useContractHooks = () => {
             return
         }
 
-          if(network.chainId != pharos.id) {
+          if(network.chainId != sepolia.id) {
             toast.error("Wrong Network, Please kindly switch to the correct network..", {
               position: "top-right"
            })

@@ -22,7 +22,7 @@ const DepositModal = () => {
         const { mockUsdc, fundsVault } = allContracts;
         const userBalance = useBalance({ chainId: network.chainId, address: network.userAddr, token: mockUsdc.address as `0x${string}` })
         const { handleAssetsDeposit, writeDeposit, depositStatus, depoData,
-        approvalStatus, approveData, clientApprStatus, apprHash, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
+        approvalStatus, approveData, resetApproval, resetDeposit, hasDeposited, setHasDeposited, depositError } = useContractHooks()
          const { data: approvalReceipt } = useWaitForTransactionReceipt({
                    hash: approveData as `0x${string}`,
                    confirmations: 1
@@ -62,12 +62,11 @@ const DepositModal = () => {
         useEffect(() => {
               const handleDeposits = async()  => {
                   try {
-                  //  const shouldApprove = approvalReceipt?.transactionHash;
-                    const shouldApprove = clientApprStatus == "success" || apprHash ;
+                   const shouldApprove = approvalReceipt?.transactionHash;
                     console.log("approval status", shouldApprove)
   
                     if (shouldApprove) {
-                    const depoHash = await walletClientDepo?.writeContract({
+                    writeDeposit({
                           abi: fundsVault.abi,
                           address: fundsVault.address as `0x${string}`,
                           functionName: "deposit",
@@ -77,8 +76,6 @@ const DepositModal = () => {
   
                         console.log("approval tx receipt", approvalReceipt?.transactionHash)
                         console.log("deposit is executed")
-                        console.log(`deposit hash ${depoHash}`)
-                        
                     }
                   
                   } catch (error) {
@@ -88,7 +85,7 @@ const DepositModal = () => {
 
               handleDeposits()
 
-      }, [clientApprStatus, apprHash]);
+      }, [approvalReceipt]);
 
 
       useEffect(() => {
@@ -215,15 +212,15 @@ const DepositModal = () => {
                     handleAssetsDeposit(depositAmount, 0)
                     // await postTxRecord()
                   }}
-                  disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || clientApprStatus == "pending" || clientDepoStatus == "pending" ? true : false}
+                  disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
                   style={`bg-gradient`}
                     >
                   <CreditCard className="" />
-                  { clientApprStatus == "pending" ? "approving..." : clientApprStatus == "success" || clientDepoStatus == "pending" ? "Depositing..." : "Deposit Now" }
+                  { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }
               </CustomButton>    
               <CustomButton
                   onClick={() => setDepositModal(false)}
-                  disabled={clientApprStatus == "pending" || clientDepoStatus == "pending" ? true : false}
+                  disabled={approvalStatus == "pending" || depositStatus == "pending" ? true : false}
                   style={`bg-[rgba(9,9,11,255)]`}
                         >
                   <X className="" />

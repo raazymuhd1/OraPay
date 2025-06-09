@@ -8,12 +8,14 @@ import Principal from "../utils/abis/principalToken.json"
 import YieldToken from "../utils/abis/yieldToken.json"
 import Treasury from "../utils/abis/treasury.json"
 import MockLendingPool from "../utils/abis/mockAavePool.json"
+import { MdHome, MdShoppingCart, MdSwapVerticalCircle   } from "react-icons/md";
+import { FaFaucet } from "react-icons/fa";
 
 const navbarLists = [
-    { id: 1, title: "Dashboard", url: "/dashboard" },
-    { id: 2, title: "Marketplace", url: "/marketplace" },
-    { id: 3, title: "Trade", url: "/trade" },
-    { id: 4, title: "Faucet", url: "/faucet" },
+    { id: 1, title: "Dashboard", Icon: MdHome, url: "/dashboard" },
+    { id: 2, title: "Marketplace", Icon: MdShoppingCart, url: "/marketplace" },
+    { id: 3, title: "Trade", Icon: MdSwapVerticalCircle, url: "/trade" },
+    { id: 4, title: "Faucet", Icon: FaFaucet, url: "/faucet" },
 ]
 
 const intros = [
