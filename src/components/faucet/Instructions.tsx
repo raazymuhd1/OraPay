@@ -4,12 +4,12 @@ const instructions = ["Enter your wallet address to receive testnet tokens", "Ea
 
 const Instructions = () => {
   return (
-    <section className='w-full flex flex-col gap-[25px] glass-card p-[20px]'>
-        <h2 className='font-bold text-[clamp(1vw,1.6vw,2vw)]'> Instructions </h2>
+    <section className='w-full flex flex-col gap-[10px] glass-card p-[20px]'>
+        <h2 className='font-bold text-[clamp(16px,1vw,25px]'> 🚧 Instructions </h2>
 
-        <ul className='flex flex-col gap-[10px]'>
+        <ul className='flex w-full list-container flex-col gap-[10px] p-[20px]'>
             { instructions.map((instruct, idx) => (
-                <li key={idx} className=''> {instruct} </li>
+                <li key={idx} className='w-full text-[clamp(14px,.7vw,16px)]'> {instruct} </li>
             )) }
         </ul>
     </section>

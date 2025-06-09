@@ -28,6 +28,11 @@ body {
   text-shadow: 2px 2px #fff;
 }
 
+/* faucet instruction lists */
+.list-container li::marker {
+   content: "💧"
+}
+
 /* custom scrollbar */
 ::-webkit-scrollbar {
    width: 5px;

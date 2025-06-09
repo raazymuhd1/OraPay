@@ -33,14 +33,6 @@ const ClaimFaucet = () => {
     }, [faucetStatus, faucetData])
 
     async function claimingFaucet() {
-        // const estimatingGas = await estimateGas(wagmiConfig, {
-        //     account: userAddr,
-        //     data: encodedFunction as `0x${string}`,
-        //     to: mockUsdc.address as `0x${string}`,
-        // })
-
-        // console.log("encoded function", encodedFunction)
-
         try {
             claimFaucet({
                 abi: fundsVault.abi,
@@ -54,11 +46,11 @@ const ClaimFaucet = () => {
     }
 
   return (
-    <div className="lg:w-[40%] md:w-[60%] w-[90%] min-h-[200px] rounded-[15px] translate-y-[60px] p-[20px] mx-auto flex flex-col items-center glass-card  gap-[20px]">
+    <div className="lg:w-[40%] md:w-[60%] w-[90%] min-h-[200px] rounded-[15px] translate-y-[60px] p-[20px] mx-auto flex flex-col items-center glass-card  gap-[20px] drop-shadow-[0,0,10px,#fff] ">
 
         <div className='flex w-full items-center  flex-col gap-[10px]'>
-            <h2 className='font-extrabold text-[clamp(1vw,2vw,2.4vw)]'> Testnet Faucet </h2>
-            <p className=''> Claim free testnet tokens for development and testing </p>
+            <h2 className='font-extrabold text-[clamp(20px,1vw,30px)]'> Testnet Faucet </h2>
+            <p className='text-[var(--paraph-color)] text-center text-[clamp(14px,1vw,16px)] '> Claim free testnet tokens for development and testing </p>
         </div>
 
         <Instructions />
