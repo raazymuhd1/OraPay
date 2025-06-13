@@ -1,3 +1,4 @@
+"use client"
 import {useState, useEffect} from 'react'
 import { useUser } from "@civic/auth-web3/react"
 import { useAccount } from 'wagmi'
@@ -54,7 +55,11 @@ const CivicWallet = () => {
             text={account?.address?.toString()!}>
             <aside className={`flex items-center gap-[10px] ${!account.address && "hidden"} w-[fit-content] rounded-[15px] p-[10px] border-[1px] cursor-pointer`}>
                 <h4> { `${account.address?.slice(0,5)}...${account.address?.slice(36,account.address.length-1)}` } </h4>
-                <Copy className='w-[15px] h-[15px]' />
+
+                {   !copied ? 
+                    <Copy className='w-[15px] h-[15px]' /> 
+                    : <Check className='w-[15px] h-[15px]' />
+                }
             </aside>
         </CopyToClipboard>
     </aside>
