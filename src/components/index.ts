@@ -18,4 +18,5 @@ export { default as ClaimFaucet } from "./faucet/ClaimFaucet"
 
 // global wallet connect
 export { default as ConnectWallet } from "./ConnectWallet"
+export { default as CivicWallet } from "./buttons/CivicWallet"
 export { default as CustomConnectButton } from "./buttons/ConnectWallet"

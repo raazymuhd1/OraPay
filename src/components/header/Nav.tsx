@@ -3,7 +3,7 @@ import {Dispatch, SetStateAction, useState} from 'react'
 import Link from 'next/link'
 import { CgMenuOreos } from "react-icons/cg";
 import Links from './Links'
-import MobileLinks from './MobileLinks';
+import { CivicWallet } from "@/components"
 
 type PProps = {
   updateShowNav: Dispatch<SetStateAction<boolean>>

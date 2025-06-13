@@ -3,12 +3,10 @@ import { navbarLists } from '@/constants'
 import Link from 'next/link'
 import {  usePathname  } from 'next/navigation'
 import { CustomConnectButton } from "@/components"
-import { UserButton } from "@civic/auth-web3/react"
-
 
 const Links = () => {
     const path = usePathname()
-    
+
   return (
     <ul className="lg:flex items-center gap-[40px] hidden ">
             { navbarLists.map(list => (
@@ -23,7 +21,7 @@ const Links = () => {
             )) }
             
           {/* <CustomConnectButton /> */}
-        <UserButton />
+        {/* <UserButton /> */}
     </ul>
   )
 }
