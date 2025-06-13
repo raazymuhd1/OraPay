@@ -1,11 +1,13 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import { useUser } from "@civic/auth-web3/react"
 import { useAccount } from 'wagmi'
 import { Copy, Check } from 'lucide-react'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const CivicWallet = () => {
     const user = useUser();
     const account = useAccount()
+    const [copied, setCopied] = useState(false)
 
     const handleSignin = async() => {
         try {
@@ -27,6 +29,12 @@ const CivicWallet = () => {
         }
      }
 
+     useEffect(() => {
+        setTimeout(() => {
+            setCopied(false)
+        }, 2000)
+     }, [copied])
+
   return (
     <aside className='flex items-center gap-[20px]'>
         <button 
@@ -41,10 +49,14 @@ const CivicWallet = () => {
             { user.isLoading ? "loading.." : account?.address?.length! > 0 ? "Sign Out" : "Sign In" }
         </button>
 
-        <aside className={`flex items-center gap-[10px] ${!account.address && "hidden"} w-[fit-content]`}>
-            <h4> { `${account.address?.slice(0,10)}...${account.address?.slice(30,account.address.length-1)}` } </h4>
-            <Copy className='w-[15px] h-[15px]' />
-        </aside>
+        <CopyToClipboard 
+            onCopy={() => setCopied(true)}
+            text={account?.address?.toString()!}>
+            <aside className={`flex items-center gap-[10px] ${!account.address && "hidden"} w-[fit-content] rounded-[15px] p-[10px] border-[1px] cursor-pointer`}>
+                <h4> { `${account.address?.slice(0,5)}...${account.address?.slice(36,account.address.length-1)}` } </h4>
+                <Copy className='w-[15px] h-[15px]' />
+            </aside>
+        </CopyToClipboard>
     </aside>
   )
 }
