@@ -61,6 +61,7 @@ export const useContractHooks = () => {
                       toast.error("something went wrong", {
                          position: "top-right"
                       })
+                      resetApproval()
                       return;
                   }
       
@@ -149,6 +150,7 @@ export const useContractHooks = () => {
                         toast.error("something went wrong, tx failed", {
                            position: "top-right"
                         })
+                        resetWd()
                         return;
                     }
               }
@@ -184,6 +186,7 @@ export const useContractHooks = () => {
                 toast.error("An error occurred while purchasing items. Please try again!", {
                         position: "top-right"
                   })
+                resetPayment()
                 return;
            }
         }
@@ -217,8 +220,10 @@ export const useContractHooks = () => {
                     //  gas: BigInt("52000"),
                   })
                 }
+
               } catch(err) {
                 console.log(err)
+                resetSelling()
               }
           }
 
