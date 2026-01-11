@@ -23,7 +23,7 @@ const MobileLinks = ({showNav, updateShowNav}: IProps) => {
                   <div className="flex flex-col gap-[20px]">
                     { navbarLists.map(list => (
                         <Link
-                          className={`cursor-pointer  font-bold ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"} hover:bg-[#2caec5] py-[6px] px-[10px] rounded-[10px] `}
+                          className={`cursor-pointer  font-bold ${(path.split('/')[1].length == 0 ? "home" : path.split('/')[1]) == list.title.toLowerCase() && "border-b-[2px] border-[#2caec5]"} hover:bg-[var(--dark)] py-[6px] px-[10px] rounded-[10px] `}
                           key={list.id} 
                           href={list.url || "/"}
                           onClick={() => updateShowNav(false)}

@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
             <body
-              className={`${sourceCodePro.variable} antialiased w-full bg-[rgba(9,9,11,255)] text-white`}
+              className={`${sourceCodePro.variable} antialiased w-full bg-[var(--dark-bg)] text-white`}
               >
                   <Web3Provider>
                     <PeyPeyContextProvider>

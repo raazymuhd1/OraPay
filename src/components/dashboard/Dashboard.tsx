@@ -11,7 +11,7 @@ import WithdrawalModal from "./WithdrawalModal"
 const Dashboard = () => {
 
   return (
-    <section className="flex flex-col w-full gap-[40px] pb-[40px]">
+    <section className="flex flex-col w-full gap-[40px] bg-[var(--extra-light-yellow)] pb-[40px]">
        <div className="flex w-[80%] flex-col gap-[20px] mx-auto items-center mt-[40px]">
          <h2 className="page-headerText font-bold"> Your Portfolio </h2>
          <p className="page-paraphText text-center font-semibold text-(--paraph-color)"> Track your deposits, yields, and token holdings in one place </p>

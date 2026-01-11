@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const Intro = () => {
   return (
-    <section className="min-h-[600px] flex flex-col items-center justify-center w-[vw] gap-[10px] bg-brown p-[40px]">
+    <section className="min-h-[600px] flex flex-col items-center justify-center w-[vw] gap-[10px] bg-[var(--dark)] p-[40px]">
         <div className="flex w-full md:w-[60%] flex-col items-center gap-[10px]">
             <h2 className="text-bg-gradient w-full break-all text-[clamp(1.7rem,2vw,2.5rem)] text-center font-bold "> The Future of Financial Freedom </h2>
             <p className="text-[#7f7f80] w-full break-all text-[clamp(1rem,2vw,1.2rem)] text-center font-medium"> OraPay offers a comprehensive DeFi solution that lets you <br className="lg:inline hidden" /> maintain your capital while spending only the yield you generate. </p>

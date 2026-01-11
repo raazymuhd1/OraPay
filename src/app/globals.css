@@ -6,6 +6,11 @@
 :root {
   --paraph-color: #7f7f80;
   --mark-txtcolor: #11afb8;
+  --light-green: #4ca20d;
+  --extra-light-yellow: #f1ede2;
+  --light-yellow: #f3dec3;
+  --bright-yellow: #f6d4a3;
+  --dark: #000301;
 }
 
 body {
@@ -14,18 +19,21 @@ body {
 
 .bg-gradient {
   background: linear-gradient(to right, rgba(82,122,254,255) 19%, rgba(29,220,255,255) 91%);
-  /* mix-blend-mode: hard-light; */
 }
 
 .text-bg-gradient {
-   background: linear-gradient(to right, rgba(29,220,255,255) 19%, rgba(82,122,254,255) 71%);
+   background: linear-gradient(to right, var(--dark) 19%, var(--bright-yellow) 71%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.shadow {
+.text_shadow {
   text-shadow: 2px 2px #fff;
+}
+
+.card_shadow {
+  box-shadow: 2px 2px 8px 6px var(--bright-yellow), -2px -2px 8px 6px var(--bright-yellow);
 }
 
 /* faucet instruction lists */
@@ -131,7 +139,7 @@ body {
 }
 
 .btn-shadow {
-  box-shadow: 2px 2px 90px 2px rgba(29,220,255,255),  -2px -2px 90px 2px rgba(29,220,255,255);
+  box-shadow: 2px 2px 90px 2px var(--bright-yellow),  -2px -2px 90px 2px var(--bright-yellow);
 }
 
 /* intro styles */
@@ -149,7 +157,7 @@ body {
 .glass-card {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(56, 58, 63, 0.75);
+    background-color: rgba(35, 36, 37, 0.75);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
 

@@ -50,7 +50,7 @@ const BalanceTracker = () => {
 
 
   return (
-    <aside className="xl:w-[70%] md:w-[90%] w-full lg:h-[300px] min-h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
+    <aside className="xl:w-[70%] md:w-[90%] w-full lg:h-[300px] min-h-[300px] mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] card_shadow bg-[var(--bright-yellow)]">
         {/* top  */}
         <div className="w-full flex items-center justify-between">
             <aside>

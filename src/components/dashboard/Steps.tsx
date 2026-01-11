@@ -16,7 +16,7 @@ const Steps = () => {
     }
 
   return (
-      <aside className="xl:w-[70%] md:w-[90%] w-full min-h-[300px] mx-auto rounded-[10px] md:p-[30px] p-[20px] border-[1px] border-[#202021] bg-brown">
+      <aside className="xl:w-[70%] md:w-[90%] w-full min-h-[300px] mx-auto rounded-[10px] md:p-[30px] p-[20px] border-[1px] card_shadow border-[#202021] bg-[var(--bright-yellow)]">
         {/* card header */}
           <div className="w-full flex items-center justify-between">
               <aside>
