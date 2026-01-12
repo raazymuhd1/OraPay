@@ -14,10 +14,10 @@ const MarketTabs = () => {
   return (
     <Tabs defaultValue='all-items' className=" w-full p-[15px] ">
         <TabsList className="md:w-[60%] w-full  bg-brown">
-           <TabsTrigger value="all-items" className="cursor-pointer"> All Items </TabsTrigger>
-           <TabsTrigger value="subscriptions" className="cursor-pointer"> Subscriptions </TabsTrigger>
-           <TabsTrigger value="products" className="cursor-pointer"> Products </TabsTrigger>
-           <TabsTrigger value="courses" className="cursor-pointer"> Courses </TabsTrigger>
+           <TabsTrigger value="all-items" className="cursor-pointer bg-[var(--bright-yellow)]"> All Items </TabsTrigger>
+           <TabsTrigger value="subscriptions" className="cursor-pointer bg-[var(--bright-yellow)]"> Subscriptions </TabsTrigger>
+           <TabsTrigger value="products" className="cursor-pointer bg-[var(--bright-yellow)]"> Products </TabsTrigger>
+           <TabsTrigger value="courses" className="cursor-pointer bg-[var(--bright-yellow)]"> Courses </TabsTrigger>
         </TabsList>
 
         <TabsContent value="all-items" className="tabs-content">

@@ -17,7 +17,7 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
 
   return (
      <div 
-        className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden cursor-pointer">
+        className="flex flex-col gap-[15px] rounded-[15px] w-[300px] h-[400px] border-[1px] border-[#202021] overflow-hidden card_shadow bg-[var(--bright-yellow)] cursor-pointer">
         <Image src={productImg} alt={title} className="w-full h-[40%] object-cover hover:scale-[1.1] transition-all duration-500" />
 
         <div className="flex flex-col h-[50%] justify-between p-[10px]">
@@ -42,7 +42,7 @@ const ProductCard = ({ id, title, desc, price, tag, productImg  }: IProps) => {
                       })
                   }}
                 disabled={false}
-                style={`bg-gradient responsive-btnText`}
+                style={`bg-[var(--dark)] responsive-btnText`}
                       >
                 <ShoppingBag className="w-[15px]" />
                 Buy Now

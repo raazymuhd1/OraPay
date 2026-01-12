@@ -18,7 +18,7 @@ body {
 }
 
 .bg-gradient {
-  background: linear-gradient(to right, rgba(82,122,254,255) 19%, rgba(29,220,255,255) 91%);
+  background: linear-gradient(to right, var(--dark) 19%, var(--bright-yellow) 91%);
 }
 
 .text-bg-gradient {
@@ -157,10 +157,8 @@ body {
 .glass-card {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(35, 36, 37, 0.75);
+    background-color: #1b1818;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-
 }
 
 .glass-modal {

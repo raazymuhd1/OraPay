@@ -99,7 +99,8 @@ const PaymentModal = () => {
           className="absolute top-0 w-full h-full glass-modal" />
        
        {/* payment card */}
-        <div className="flex h-[75%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] translate-y-[140px] relative overflow-y-scroll overflow-x-hidden top-0">
+        <div 
+            className="flex h-[60%] w-[80%] xl:w-[30%] lg:w-[40%] mx-auto flex-col glass-card border-[1px] border-[#202021] rounded-[15px] gap-[15px] p-[20px] translate-y-[140px] relative overflow-y-scroll overflow-x-hidden top-0">
 
             <div className="w-full flex justify-between">
                 <div className="flex flex-col gap-[10px]">
@@ -117,7 +118,7 @@ const PaymentModal = () => {
             </div>
 
             <h2 className="font-bold responsive-headerText"> Payment Method </h2>
-            <div className="flex w-full flex-col border-[1px] border-[rgba(255, 255, 255, 0.125)] p-[20px] rounded-[15px]">
+            <div className="flex w-full flex-col border-[1px] bg-[var(--bright-yellow)] border-[rgba(255, 255, 255, 0.125)] p-[20px] rounded-[15px]">
 
                     <div className="w-full flex flex-col gap-[5px]">
                         <aside className="flex w-full items-center gap-[5px] cursor-pointer">
@@ -145,7 +146,7 @@ const PaymentModal = () => {
                         setShowLoadingState(true)
                     }} 
                     disabled={payStatus == "pending" || payStatus == "success" ? true : false}
-                    style={`bg-gradient`}
+                    style={`bg-[var(--dark)]`}
                         >
                     <CreditCard className="" />
                     { payStatus == "pending" ? "Processing..." : "Pay Now" }
@@ -154,7 +155,7 @@ const PaymentModal = () => {
                  <CustomButton
                     onClick={() => setOpenPayModal(false)}
                     disabled={payStatus == "pending" ? true : false}
-                    style={`bg-[rgba(9,9,11,255)]`}
+                    style={`bg-[var(--bright-yellow)]`}
                         >
                     <X className="" />
                     Cancel
