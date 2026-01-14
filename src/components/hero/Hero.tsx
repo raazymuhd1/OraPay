@@ -28,7 +28,7 @@ const Hero = () => {
         
         {/* <div className=" h-[200px] rounded-[50%] translate-x-[100px] bg-[var(--light-yellow)]" /> */}
 
-        <div className="w-full h-full items-center justify-center flex flex-col gap-[10px] mx-auto bg-[var(--extra-light-yellow)]">
+        <div className="w-full h-full items-center justify-center flex flex-col gap-[10px] mx-auto">
             <h4 className="rounded-[30px] w-[fit-content] whitespace-nowrap lg:text-[.7vmax] md:text-[1.8vmax] text-[1.4vmax] text-[var(--bright-yellow)] bg-[rgba(22,22,23,255)] border-[1px] border-[#7f7f80] py-[3px] px-[8px]"> Introducing: The Future of Payments </h4>
             <h2 className="w-full text-center font-extrabold text-[clamp(2rem,4.5vw,5rem)]">
                 <span className="text-bg-gradient"> Buy Now, </span> 

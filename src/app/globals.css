@@ -8,13 +8,16 @@
   --mark-txtcolor: #11afb8;
   --light-green: #4ca20d;
   --extra-light-yellow: #f1ede2;
-  --light-yellow: #f3dec3;
-  --bright-yellow: #f6d4a3;
-  --dark: #000301;
+  --light-dark: #101110;
+  --bright-yellow: rgba(209, 230, 136);
+  --dark: #282928;
+  --dark-border: #202021;
+  --light-white: #f9f8f8;
 }
 
 body {
-  font-family: "SourceCodePro", monospace;;
+  font-family: "SourceCodePro", monospace;
+  background-color: var(--light-dark);
 }
 
 .bg-gradient {
@@ -28,12 +31,14 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* shadows */
+
 .text_shadow {
   text-shadow: 2px 2px #fff;
 }
 
 .card_shadow {
-  box-shadow: 2px 2px 8px 6px var(--bright-yellow), -2px -2px 8px 6px var(--bright-yellow);
+  box-shadow: 2px 2px 8px 6px var(--dark), -2px -2px 8px 6px var(--dark);
 }
 
 /* faucet instruction lists */
@@ -157,7 +162,7 @@ body {
 .glass-card {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: #1b1818;
+    background-color: var(--dark);
     border-radius: 12px;
 }
 

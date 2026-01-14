@@ -13,7 +13,7 @@ const Nav = ({updateShowNav}: PProps) => {
 
   return (
     <nav className="flex items-center justify-between xl:w-[80%] lg:w-[90%] w-[90%] mx-auto h-full">
-        <Link href="/" className="text-[clamp(2.5rem,4.5vw,2.7rem)] flex items-center cursor-pointer text-[var(--dark)] font-extrabold"> 
+        <Link href="/" className="text-[clamp(2.5rem,4.5vw,2.7rem)] flex items-center cursor-pointer text-[var(--bright-yellow)] font-extrabold"> 
            OraPay
          </Link>
 

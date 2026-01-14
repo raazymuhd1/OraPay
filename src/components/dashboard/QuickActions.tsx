@@ -13,7 +13,7 @@ const QuickActions = () => {
     }
 
   return (
-    <aside className="lg:w-[30%] w-full h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[20px] card_shadow bg-[var(--bright-yellow)]">
+    <aside className="lg:w-[30%] w-full h-[300px] rounded-[15px] border-[1px] border-[#202021] p-[20px] flex flex-col gap-[20px] card_shadow bg-[var(--dark)]">
         <div>
             <h3 className="font-bold responsive-headerText"> Quick Actions </h3>
             <p className="text-(--paraph-color) responsive-paraph"> Common operations you can perform </p>

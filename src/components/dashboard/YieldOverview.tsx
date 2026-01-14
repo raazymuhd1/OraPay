@@ -24,7 +24,7 @@ const YieldOverview = () => {
 
      function yieldOverviewDetails(title: string, value: string, desc: string, ...rest: string[]) {
         return (
-            <div className="w-full lg:w-[50%] h-[180px] rounded-[10px] border-[1px] border-[#202021] p-[20px] glass-card">
+            <div className="w-full lg:w-[50%] h-[180px] rounded-[10px] border-[1px] border-[#202021] p-[20px] bg-[var(--dark)]">
               <div className='flex items-center justify-between'>
                   <h2 className="font-bold resp-headerCard"> {title} </h2>
                   <p className="flex items-center gap-[10px] text-[clamp(14px,1vw,18px)] text-[#11afb8] font-semibold"> { value ?? 0 } </p>
@@ -46,7 +46,7 @@ const YieldOverview = () => {
      }
 
   return (
-    <div className="w-full lg:h-[300px] min-h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] bg-brown">
+    <div className="w-full lg:h-[300px] min-h-[300px]  mx-auto rounded-[10px] p-[30px] border-[1px] border-[#202021] card_shadow bg-brown">
         <aside>
            <h3 className="font-bold responsive-headerTabs"> Yield Overview </h3>
            <p className="text-(--paraph-color) responsive-paraph"> This overview shows your current yield generation and performance metrics. Use this to track how efficiently your deposits are working for you. </p>

@@ -117,7 +117,7 @@ const Trade = () => {
             <InputTo selectedAsset={selectedAsset} setSelectedAsset={setSelectedAsset} />
           </div>
           
-          <div className="flex flex-col gap-[10px] glass-card p-[15px]">
+          <div className="flex flex-col gap-[10px] bg-[var(--bright-yellow)] rounded-[10px] p-[15px]">
             { handleTradeDetails("Rate", `1 ${selectedAsset.from?.name?.toUpperCase() || "YTUSDC"} = 1 USDC`) }
             { handleTradeDetails("Fee", "0.3%") }
           </div>
@@ -128,7 +128,7 @@ const Trade = () => {
                   sellTokens(selectedAsset?.from?.amount as number, selectedAsset?.to?.address as string)}
                 } 
                 disabled={sellStatus == "pending" || sellStatus == "success" || selectedAsset?.from?.amount! <= 0 ? true : false}
-                style={`bg-gradient`}
+                style={`bg-[var(--bright-yellow)]`}
                       >
                 { sellStatus == "pending" ? "Processing..." : "Swap" }
             </CustomButton>

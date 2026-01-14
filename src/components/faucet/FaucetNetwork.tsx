@@ -2,7 +2,7 @@ import React from 'react'
 
 const FaucetNetwork = () => {
   return (
-    <section className='p-[20px] flex flex-col gap-[10px] w-full glass-card'>
+    <section className='p-[20px] flex flex-col gap-[10px] w-full bg-[var(--bright-network]'>
         <aside className='flex items-center gap-[10px]'>
             <p className='font-bold text-[clamp(14px,.7vw,18px)] text-[var(--paraph-color)]'> <strong> Network: </strong> </p>
             <h4 className='font-extrabold'> Sepolia </h4>
