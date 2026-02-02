@@ -46,7 +46,7 @@ const ClaimFaucet = () => {
     }
 
   return (
-    <div className="lg:w-[40%] md:w-[60%] w-[90%] min-h-[200px] rounded-[15px] translate-y-[60px] p-[20px] mx-auto flex flex-col items-center glass-card  gap-[20px] drop-shadow-[0,0,10px,#fff] ">
+    <div className="lg:w-[30%] md:w-[50%] w-[90%] h-max rounded-[3rem] translate-y-[60px] p-[20px] mx-auto flex flex-col items-center glass-card gap-[20px] drop-shadow-[0,0,10px,#fff] ">
 
         <div className='flex w-full items-center  flex-col gap-[10px]'>
             <h2 className='font-extrabold text-[clamp(20px,1vw,30px)]'> Testnet Faucet </h2>
@@ -67,7 +67,7 @@ const ClaimFaucet = () => {
             <CustomButton
                 onClick={async() => await claimingFaucet()}
                 disabled={faucetReceiver.length <= 0 || faucetStatus == "pending" ? true : false}
-                style={`bg-gradient w-full`}
+                style={`bg-(--bright-yellow) w-full`}
                         >
                 <CreditCard className="" />
                 { faucetStatus == "pending" ? "Claiming..." : "Claim Faucet" }
