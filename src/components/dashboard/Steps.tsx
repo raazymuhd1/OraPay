@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { steps } from '@/constants'
 import { CustomButton } from "@/components"
 import { LuChartNoAxesColumn  } from "react-icons/lu"
@@ -40,7 +39,7 @@ const Steps = () => {
                   </div>
 
                   { step.btnText.toLowerCase() == "browse marketplace" 
-                      ? <Link href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] text-[clamp(14px,1vw,16px)]" >
+                      ? <Link href="/marketplace" className="bg-(--extra-light-yellow) flex items-center gap-[10px] text-(--dark) font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px] text-[clamp(14px,1vw,16px)]" >
                         <LuChartNoAxesColumn className='' />
                         {step.btnText} 
                         </Link> 
@@ -48,7 +47,7 @@ const Steps = () => {
                             key={step.id} 
                             onClick={() => buttonClickHandler(step.id)}
                             disabled={false}
-                            style={` ${step.id == 1 ? "bg-gradient " : step.id == 2 ? "bg-[rgba(9,9,11,255)]" : "glass-card"} justify-start border-[1px] text-[clamp(14px,1vw,16px)] border-[#7f7f80]`}
+                            style={` bg-(--extra-light-yellow) text-(--dark) justify-start text-[clamp(14px,1vw,16px)] `}
                               >
                               <step.BtnLogo className="w-[15px]" />
                               { step.title }

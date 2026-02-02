@@ -146,7 +146,7 @@ const PaymentModal = () => {
                         setShowLoadingState(true)
                     }} 
                     disabled={payStatus == "pending" || payStatus == "success" ? true : false}
-                    style={`bg-[var(--dark)]`}
+                    style={`bg-(--dark)`}
                         >
                     <CreditCard className="" />
                     { payStatus == "pending" ? "Processing..." : "Pay Now" }

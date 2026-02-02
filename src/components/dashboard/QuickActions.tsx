@@ -22,18 +22,18 @@ const QuickActions = () => {
         {/* action buttons */}
         <div className="w-full flex flex-col gap-[15px]">
           { quickActionBtns.map(action => (
-            // action.title.toLowerCase() == "browse marketplace" 
-            // ? 
-            //   <Link key={action.id} href="/marketplace" className="glass-card flex items-center gap-[10px] text-white font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
-            //    <LuChartNoAxesColumn className='' />
-            //    {action.title} 
-            //    </Link> 
-            // : 
+            action.title.toLowerCase() == "browse marketplace" 
+            ? 
+              <Link key={action.id} href="/marketplace" className="bg-(--extra-light-yellow) text-(--dark) flex items-center gap-[10px] font-semibold rounded-[10px] cursor-pointer py-[6px] px-[10px]" >
+               <LuChartNoAxesColumn className='' />
+               {action.title} 
+               </Link> 
+            : 
             <CustomButton
                   key={action.id} 
                   onClick={() => buttonClickHandler(action.id)}
                   disabled={false}
-                  style={` ${action.id == 1 ? "bg-gradient " : action.id == 2 ? "glass-card" : "bg-[rgba(9,9,11,255)]"} responsive-btnText justify-start border-[1px] border-[#7f7f80]`}
+                  style={` bg-(--extra-light-yellow) text-(--dark) responsive-btnText justify-start border-[1px] border-[#7f7f80]`}
                     >
                     <action.btnLogo className="" />
                     { action.title }

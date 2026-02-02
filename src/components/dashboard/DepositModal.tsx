@@ -169,16 +169,16 @@ const DepositModal = () => {
 
            
               {/* deposit details */}
-            <div className="flex w-full flex-col gap-[15px]">
-                <div className='w-full flex flex-col gap-[10px]'>
-                    <h2 className="font-bold resp-headerCard"> Amount {`(USDC)`} </h2>
+            <div className="flex w-full flex-col gap-[5px] bg-(--bright-yellow) rounded-[10px] p-[5px]">
+                <div className='w-full flex flex-col'>
+                    <h2 className="font-bold resp-headerCard text-(--paraph-color)"> Amount {`(USDC)`} </h2>
                     <input 
                         value={depositAmount}
                         onChange={(e) => setDepositAmount(e.target.value)}
                         ref={inputRef} type="text" placeholder='0.00' className="w-full glass-card p-[10px] outline-none" />
                 </div>
-                <div className='w-full flex flex-col gap-[10px]'>
-                    <h2 className="font-bold resp-headerCard"> Lock Period {`(Days)`} </h2>
+                <div className='w-full flex flex-col'>
+                    <h2 className="font-bold resp-headerCard text-(--paraph-color)"> Lock Period {`(Days)`} </h2>
                     <input 
                         value={lockPeriod}
                         onChange={(e) => updateLockPeriod(e.target.value)}
@@ -200,7 +200,7 @@ const DepositModal = () => {
 
             <p className='text-(--paraph-color) responsive-paraph'> You will receive PT token representing your deposit, which will generate YT over time. </p>
 
-            <div className="flex flex-col w-full p-[10px] glass-card">
+            <div className="flex flex-col w-full p-[10px] bg-(--bright-yellow) rounded-[10px]">
                 { depositDetails("You will receive", `${depositAmount || 0}PT`) }
                 { depositDetails("Initial YT allocation", `${(Number(depositAmount) * 10) / 100 || 0}YT`) }
                 { depositDetails("Expiry Date", `${new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString()}`) }
@@ -213,7 +213,7 @@ const DepositModal = () => {
                     // await postTxRecord()
                   }}
                   disabled={depositAmount.length <= 0 || Number(depositAmount) == 0 || approvalStatus == "pending" || depositStatus == "pending" ? true : false}
-                  style={`bg-gradient`}
+                  style={`bg-(--bright-yellow)`}
                     >
                   <CreditCard className="" />
                   { approvalStatus == "pending" ? "approving..." : approvalStatus == "success" || depositStatus == "pending" ? "Depositing..." : "Deposit Now" }

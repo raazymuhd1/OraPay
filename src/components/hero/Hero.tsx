@@ -15,12 +15,12 @@ const Hero = () => {
 
         const handleOnMouseEnter = () => {
             console.log(btnRef.current)
-            btnRef.current?.classList.add("btn-shadow")
+            btnRef.current?.classList.remove("btn-shadow")
         }
 
         const handleOnMouseLeave = () => {
             console.log(btnRef.current)
-            btnRef.current?.classList.remove("btn-shadow")
+            btnRef.current?.classList.add("btn-shadow")
         }
 
   return (
