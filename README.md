@@ -1,5 +1,7 @@
 # OraPay Frontend
 
+### Note: Currently only `SEPOLIA TESTNET` supported.
+
 **Learn and Buy Now, Pay Never.**  
 OraPay is a decentralized platform that lets students fund their education using DeFi yield — without ever touching their principal token.
 
@@ -20,10 +22,10 @@ Built with NextJS, TypeScript, TailwindCSS, and Web3 integrations.
 
 ## 🛠 Tech Stack
 
-- [React](https://nextjs.org/)
+- [NextJs](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
-- [Wagmi](https://wagmi.sh/) + [RainbowKit](https://www.rainbowkit.com/) for wallet connection
+- [Wagmi](https://wagmi.sh/) + [Civic]([https://www.rainbowkit.com/](https://docs.civic.com/)) for wallet connection
 
 ---
 
@@ -51,17 +53,6 @@ npm install
 ### 3. Set up environment variables
 Duplicate the .env.example file:
 
-```bash
-cp .env.example .env
-```
-Then fill in the values:
-```bash
-VITE_PUBLIC_RPC_URL=https://polygon-rpc.com
-VITE_PUBLIC_EDUZERO_CONTRACT=0xYourContractAddressHere
-VITE_PUBLIC_CHAIN_ID=137
-VITE_PUBLIC_EXPLORER_URL=https://polygonscan.com
-```
-✅ You can use any supported EVM chain — Polygon, Base, etc.
 
 Start the dev server
 ```bash
@@ -73,4 +64,4 @@ npm run dev
 ```
 
 Open your browser and visit:
-👉 http://localhost:5173
+👉 http://localhost:3002
